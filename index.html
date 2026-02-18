@@ -1,272 +1,535 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Miquéias Mesquita | Tech Lead & FullStack Architect</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        primary: '#3b82f6', 
-                        dark: '#020617',    
-                        card: '#0f172a',    
-                        accent: '#1e293b'   
-                    }
-                }
-            }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Miquéias Mesquita | Arquiteto de Software & Fullstack</title>
+  <meta name="description" content="Desenvolvo sistemas personalizados de gestão, educação e automação financeira que organizam operações e aumentam faturamento. Projetos a partir de 5k e desenvolvimento contínuo." />
+
+  <!-- Open Graph (opcional, mas recomendado) -->
+  <meta property="og:title" content="Miquéias Mesquita | Arquiteto de Software & Fullstack" />
+  <meta property="og:description" content="Sistemas personalizados que organizam operações e aumentam faturamento. Resultados reais em produção." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            primary: '#3b82f6',
+            dark: '#020617',
+            card: '#0f172a',
+            accent: '#1e293b'
+          },
+          boxShadow: {
+            glow: "0 0 0 1px rgba(59,130,246,.25), 0 10px 30px rgba(2,6,23,.6)"
+          }
         }
-    </script>
-    <style>
-        html { scroll-behavior: smooth; }
-        .glass-effect { background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(12px); }
-        .project-card:hover .project-overlay { opacity: 1; }
-        .gradient-text { background: linear-gradient(to r, #3b82f6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        /* Modal Styles */
-        #modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 20px; }
-        #modal.active { display: flex; }
-    </style>
+      }
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+
+    .glass-effect { background: rgba(2, 6, 23, 0.75); backdrop-filter: blur(12px); }
+
+    /* FIX: gradient que não fica invisível fora do Webkit */
+    .gradient-text {
+      background: linear-gradient(to right, #3b82f6, #a855f7);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent; /* padrão */
+    }
+    @supports not (-webkit-text-fill-color: transparent) {
+      /* fallback para browsers que podem falhar com text-fill */
+      .gradient-text { color: #a855f7; background: none; }
+    }
+    @supports (-webkit-text-fill-color: transparent) {
+      .gradient-text { -webkit-text-fill-color: transparent; }
+    }
+
+    #modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #modal.active { display: flex; }
+  </style>
 </head>
+
 <body class="bg-dark text-slate-300 font-sans antialiased">
 
-    <div id="modal" onclick="closeModal()">
-        <span class="absolute top-5 right-10 text-white text-4xl cursor-pointer">&times;</span>
-        <img id="modal-img" src="" class="max-w-full max-h-full rounded-lg shadow-2xl border border-slate-700" onclick="event.stopPropagation()">
+  <!-- Modal imagem -->
+  <div id="modal" onclick="closeModal()">
+    <span class="absolute top-5 right-8 md:right-10 text-white text-4xl cursor-pointer select-none">&times;</span>
+    <img id="modal-img" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl border border-slate-700" onclick="event.stopPropagation()">
+  </div>
+
+  <!-- NAV -->
+  <nav class="fixed w-full z-50 glass-effect border-b border-slate-800">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#top" class="font-bold text-xl text-white tracking-tighter">
+        Miquéias<span class="text-primary">.dev</span>
+      </a>
+
+      <div class="hidden md:flex gap-8 text-sm font-medium">
+        <a href="#solucoes" class="hover:text-primary transition">O que resolvo</a>
+        <a href="#cases" class="hover:text-primary transition">Resultados reais</a>
+        <a href="#metodo" class="hover:text-primary transition">Como trabalho</a>
+        <a href="#sobre" class="hover:text-primary transition">Sobre</a>
+      </div>
+
+      <a href="https://wa.me/5585994181234"
+         class="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
+        Agendar Diagnóstico (30 min)
+      </a>
     </div>
+  </nav>
 
-    <nav class="fixed w-full z-50 glass-effect border-b border-slate-800">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="font-bold text-xl text-white tracking-tighter">Miquéias<span class="text-primary">.dev</span></div>
-            <div class="hidden md:flex gap-8 text-sm font-medium">
-                <a href="#portfolio" class="hover:text-primary transition">Portfólio</a>
-                <a href="#skills" class="hover:text-primary transition">Stack</a>
-            </div>
-            <a href="https://wa.me/5585994181234" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
-                Falar com Miquéias
-            </a>
+  <!-- HERO -->
+  <header id="top" class="pt-44 md:pt-48 pb-24 md:pb-32 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
+        <span class="w-2 h-2 bg-primary rounded-full"></span>
+        Arquiteto de Software & Fullstack Especialista
+      </div>
+
+      <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+        Sistemas personalizados que<br />
+        <span class="gradient-text">organizam e lucram.</span>
+      </h1>
+
+      <p class="text-xl md:text-2xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+        Desenvolvo plataformas de gestão, educação e automação financeira que aumentam receita, reduzem retrabalho e dão visibilidade total da operação.
+      </p>
+
+      <div class="flex flex-col md:flex-row justify-center gap-4 mb-10">
+        <a href="#cases" class="px-10 py-4 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-lg">
+          Ver resultados reais
+        </a>
+        <a href="https://wa.me/5585994181234" class="px-10 py-4 border border-slate-700 hover:border-primary text-white font-bold rounded-2xl transition text-lg">
+          Falar sobre seu projeto
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="p-4 bg-card/40 border border-slate-800 rounded-2xl shadow-glow">
+          <p class="text-2xl font-bold text-white">1.393</p>
+          <p class="text-xs text-slate-500 uppercase">Alunos ativos em produção</p>
         </div>
-    </nav>
+        <div class="p-4 bg-card/40 border border-slate-800 rounded-2xl shadow-glow">
+          <p class="text-2xl font-bold text-white">3x faturamento</p>
+          <p class="text-xs text-slate-500 uppercase">Clínica: 20k → 60k</p>
+        </div>
+        <div class="p-4 bg-card/40 border border-slate-800 rounded-2xl shadow-glow">
+          <p class="text-2xl font-bold text-white">+R$ 30k/mês</p>
+          <p class="text-xs text-slate-500 uppercase">Recuperados em inadimplência</p>
+        </div>
+      </div>
+    </div>
+  </header>
 
-    <header class="pt-40 pb-20 px-6">
-        <div class="max-w-5xl mx-auto text-center">
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
-                Arquitetando Soluções <br>
-                <span class="gradient-text">Escaláveis e Lucrativas</span>
-            </h1>
-            <p class="text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
-                Tech Lead especializado em sistemas complexos, **SaaS, Gestão de Tracking Avançado e Dashboards**.
+  <!-- SOLUÇÕES -->
+  <section id="solucoes" class="py-24 bg-card/50 border-y border-slate-800">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid md:grid-cols-2 gap-14 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+            Sua empresa ainda sofre com processos manuais?
+          </h2>
+
+          <p class="text-lg text-slate-400 mb-8">
+            Programação estratégica não é custo: é o fim de gargalos que estão drenando tempo, dinheiro e previsibilidade.
+          </p>
+
+          <ul class="space-y-4">
+            <li class="flex gap-3 text-slate-200">
+              <svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Operação presa em planilhas, papel ou “sistemas quebrados”
+            </li>
+
+            <li class="flex gap-3 text-slate-200">
+              <svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Falta de visão clara do fluxo de caixa, inadimplência e indicadores
+            </li>
+
+            <li class="flex gap-3 text-slate-200">
+              <svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+              </svg>
+              Dificuldade em integrar pagamentos, vídeos, automações e IA
+            </li>
+          </ul>
+
+          <div class="mt-10 flex flex-wrap gap-3">
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Sistemas de gestão (ERP)</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Automação financeira</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Plataformas educacionais</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Dashboards & BI</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Integrações (APIs)</span>
+          </div>
+        </div>
+
+        <div class="bg-dark p-8 rounded-3xl border border-slate-800 shadow-2xl">
+          <h3 class="text-xl font-bold text-white mb-5">Expertise em Arquitetura</h3>
+
+          <div class="flex flex-wrap gap-2">
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Laravel</span>
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Node.js</span>
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Vue / React</span>
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Docker</span>
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">DigitalOcean</span>
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">APIs REST</span>
+            <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Bancos Relacionais</span>
+          </div>
+
+          <p class="mt-6 text-sm text-slate-400 italic">
+            “Construo sistemas modulares, seguros e escaláveis — evitando retrabalho técnico e permitindo evolução contínua.”
+          </p>
+
+          <div class="mt-6 p-4 rounded-2xl border border-slate-800 bg-card/30">
+            <p class="text-xs text-slate-400 uppercase tracking-widest mb-2">Filtro (pra evitar projetos ruins)</p>
+            <p class="text-sm text-slate-200">
+              Trabalho com projetos estruturados <span class="text-white font-semibold">a partir de 5k</span> e foco em operações reais (não “só layout” e nem “planilha bonita”).
             </p>
-            <div class="flex items-center justify-center gap-2 px-4 py-2 bg-accent/50 rounded-full border border-slate-700 text-sm w-fit mx-auto">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                Disponível para Novos Projetos
-            </div>
+          </div>
         </div>
-    </header>
+      </div>
+    </div>
+  </section>
 
-    <section id="portfolio" class="py-20 px-6">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16">
-                <h2 class="text-3xl font-bold text-white mb-4">Projetos em Destaque</h2>
-                <p class="text-slate-400">Clique na imagem para ampliar ou no link para visitar a plataforma.</p>
+  <!-- CASES -->
+  <section id="cases" class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-white">Resultados comprovados</h2>
+        <p class="text-slate-400 mt-3">Cases em produção com impacto real em receita, cobrança e escala.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Daily Talks -->
+        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('daily_talks_1.jpg')">
+            <img src="daily_talks_1.jpg" class="w-full h-full object-cover" alt="Daily Talks preview">
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Daily Talks</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Plataforma EdTech com integração de pagamentos, vídeo, IA e agendamentos. Sustenta <span class="text-white font-semibold">+1.393 alunos ativos</span>.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Laravel</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Vue</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Mobile</span>
+              </div>
+              <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-primary text-sm font-bold">
+                Visitar →
+              </a>
             </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
-                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('daily_talks_1.jpg')">
-                        <img src="daily_talks_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
-                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
-                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Daily Talks</h3>
-                        <p class="text-sm text-slate-400 mb-4 h-10">Plataforma EdTech com agendamento real-time e integração Vimeo.</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-primary font-bold">VUE/LARAVEL</span>
-                            </div>
-                            <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
-                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
-                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('sistema_habilita_1.jpg')">
-                        <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
-                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
-                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Sistema Habilita</h3>
-                        <p class="text-sm text-slate-400 mb-4 h-10">Gestão financeira e emissão de pagamentos para autoescolas.</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-blue-400 font-bold">FINTECH</span>
-                            </div>
-                            <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
-                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
-                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('ari_dedetizacao_1.png')">
-                        <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover transition group-hover:scale-110">
-                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
-                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Ari Dedetização</h3>
-                        <p class="text-sm text-slate-400 mb-4 h-10">ERP administrativo com controle de OS e fornecedores.</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-yellow-400 font-bold">CRUD/ERP</span>
-                            </div>
-                            <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
-                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
-                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('danuzio_news_1.jpg')">
-                        <img src="danuzio_news_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
-                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
-                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Danuzio News</h3>
-                        <p class="text-sm text-slate-400 mb-4 h-10">Portal premium com Paywall e área de assinantes.</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-purple-400 font-bold">SAAS</span>
-                            </div>
-                            <a href="https://danuzionews.com/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
-                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
-                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('profonline_1.jpg')">
-                        <img src="profonline_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
-                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
-                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">ProfOnline (Educa.IA)</h3>
-                        <p class="text-sm text-slate-400 mb-4 h-10">Simulados inteligentes com Node.js e React.</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">NODE/REACT</span>
-                            </div>
-                            <a href="https://app.profonline.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
-                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
-                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('nucleo_transito_1.jpg')">
-                        <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
-                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
-                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold text-white mb-2">Núcleo de Trânsito</h3>
-                        <p class="text-sm text-slate-400 mb-4 h-10">ERP para clínicas médicas de trânsito e agendamento.</p>
-                        <div class="flex items-center justify-between">
-                            <div class="flex gap-2">
-                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-orange-400 font-bold">HEALTH TECH</span>
-                            </div>
-                            <a href="https://desktopmedical.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
-                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+          </div>
         </div>
-    </section>
 
-    <section id="skills" class="py-20 bg-accent/30 border-y border-slate-800">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-white mb-6">Expertise Técnica & Analytics</h2>
-                    <p class="text-slate-400 mb-8 leading-relaxed">
-                        Implemento estruturas de **Tracking Avançado** (GTM, GA4, Conversion API) para garantir que cada centavo investido em tráfego seja mensurável.
-                    </p>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-card rounded-xl border border-slate-800 text-sm">
-                            <h4 class="text-primary font-bold">Analytics Avançado</h4>
-                            <p class="text-xs">Mensuração de conversão e eventos customizados.</p>
-                        </div>
-                        <div class="p-4 bg-card rounded-xl border border-slate-800 text-sm">
-                            <h4 class="text-primary font-bold">Infraestrutura</h4>
-                            <p class="text-xs">Docker, CI/CD e Cloud Management.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex flex-wrap gap-3">
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Laravel</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Node.js</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">React</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">TypeScript</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Vue.js</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">MySQL</span>
-                </div>
+        <!-- Habilita -->
+        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('sistema_habilita_1.jpg')">
+            <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover" alt="Sistema Habilita preview">
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Sistema Habilita</h3>
+            <p class="text-sm text-green-400 font-bold mb-3">+ R$ 30k/mês recuperados</p>
+            <p class="text-sm text-slate-400 mb-4">
+              Controle de inadimplência, caixa e alertas — eliminando “dívida invisível” e melhorando cobrança.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Financeiro</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Dashboard</span>
+              </div>
+              <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-primary text-sm font-bold">
+                Visitar →
+              </a>
             </div>
+          </div>
         </div>
-    </section>
 
-    <footer class="py-32 px-6 text-center">
-        <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-bold text-white mb-8">Transforme requisitos em lucros.</h2>
-            <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="https://www.linkedin.com/in/miqueiasmesquita/" class="px-8 py-4 bg-white text-dark font-bold rounded-xl hover:bg-slate-200 transition">LinkedIn</a>
-                <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition">Enviar E-mail</a>
+        <!-- Núcleo Trânsito -->
+        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('nucleo_transito_1.jpg')">
+            <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover" alt="Núcleo de Trânsito preview">
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Clínica NTC</h3>
+            <p class="text-sm text-green-400 font-bold mb-3">R$ 20k → R$ 60k/mês</p>
+            <p class="text-sm text-slate-400 mb-4">
+              Saída do “papel” para gestão com cobrança, organização operacional e visão financeira.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Processos</span>
+              </div>
+              <a href="https://desktopmedical.com.br/" target="_blank" class="text-primary text-sm font-bold">
+                Visitar →
+              </a>
             </div>
+          </div>
         </div>
-    </footer>
 
-    <script>
-        const modal = document.getElementById('modal');
-        const modalImg = document.getElementById('modal-img');
+        <!-- Danuzio News -->
+        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('danuzio_news_1.jpg')">
+            <img src="danuzio_news_1.jpg" class="w-full h-full object-cover" alt="Danuzio News preview">
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Danuzio News</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Portal premium com paywall, recorrência e gestão de assinantes.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Paywall</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Assinaturas</span>
+              </div>
+              <a href="https://danuzionews.com/" target="_blank" class="text-primary text-sm font-bold">
+                Visitar →
+              </a>
+            </div>
+          </div>
+        </div>
 
-        function openModal(src) {
-            modal.classList.add('active');
-            modalImg.src = src;
-            document.body.style.overflow = 'hidden'; // Trava o scroll
-        }
+        <!-- ProfOnline -->
+        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('profonline_1.jpg')">
+            <img src="profonline_1.jpg" class="w-full h-full object-cover" alt="ProfOnline preview">
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">ProfOnline</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Plataforma educacional com foco em performance e evolução para escala.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Node</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">React</span>
+              </div>
+              <a href="https://app.profonline.com.br/" target="_blank" class="text-primary text-sm font-bold">
+                Visitar →
+              </a>
+            </div>
+          </div>
+        </div>
 
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Destrava o scroll
-        }
+        <!-- Ari Dedetização -->
+        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('ari_dedetizacao_1.png')">
+            <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover" alt="Ari Dedetização preview">
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Ari Dedetização</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              ERP sob medida para ordens de serviço, logística e faturamento.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">OS</span>
+              </div>
+              <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-primary text-sm font-bold">
+                Visitar →
+              </a>
+            </div>
+          </div>
+        </div>
 
-        // Fechar com tecla Esc
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeModal();
-        });
-    </script>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTODO -->
+  <section id="metodo" class="py-24 bg-primary/5 border-y border-slate-800">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-white">Como trabalho</h2>
+        <p class="text-slate-400 mt-3">Processo claro, entrega por etapas e foco em evolução contínua.</p>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="p-6 bg-card rounded-2xl border border-slate-800">
+          <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">01</p>
+          <h4 class="text-white font-bold mb-2">Diagnóstico</h4>
+          <p class="text-sm text-slate-400">Entendo processo, gargalos e meta do negócio. Saímos com prioridades e plano.</p>
+        </div>
+
+        <div class="p-6 bg-card rounded-2xl border border-slate-800">
+          <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">02</p>
+          <h4 class="text-white font-bold mb-2">Arquitetura</h4>
+          <p class="text-sm text-slate-400">Modelo, módulos, integrações e regras. Evita retrabalho e escala com segurança.</p>
+        </div>
+
+        <div class="p-6 bg-card rounded-2xl border border-slate-800">
+          <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">03</p>
+          <h4 class="text-white font-bold mb-2">Entrega em sprints</h4>
+          <p class="text-sm text-slate-400">Você vê evoluir semana a semana. Ajustes com base no uso real.</p>
+        </div>
+
+        <div class="p-6 bg-card rounded-2xl border border-slate-800">
+          <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">04</p>
+          <h4 class="text-white font-bold mb-2">Evolução contínua</h4>
+          <p class="text-sm text-slate-400">Manutenção + melhorias + novas integrações. Ideal pra carteira fixa de longo prazo.</p>
+        </div>
+      </div>
+
+      <!-- Retainer -->
+      <div class="mt-10 p-8 bg-dark rounded-3xl border border-slate-800 shadow-2xl">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <h3 class="text-2xl font-bold text-white mb-3">Desenvolvimento contínuo</h3>
+            <p class="text-slate-400">
+              Depois do sistema em produção, eu acompanho e evoluo conforme a operação cresce:
+              performance, novos módulos, integrações e melhorias mensais.
+            </p>
+          </div>
+          <div class="bg-card/30 border border-slate-800 rounded-2xl p-6">
+            <p class="text-sm text-slate-300 mb-2">
+              <span class="text-white font-semibold">Projetos:</span> a partir de <span class="text-white font-semibold">R$ 5.000</span>
+            </p>
+            <p class="text-sm text-slate-300">
+              <span class="text-white font-semibold">Retainer:</span> manutenção/evolução entre <span class="text-white font-semibold">R$ 500–R$ 1.000/mês</span> (conforme escopo)
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE / CONTRATAÇÃO -->
+  <section id="sobre" class="py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div>
+          <h2 class="text-3xl font-bold text-white mb-4">Sobre</h2>
+          <p class="text-slate-400 leading-relaxed mb-6">
+            Sou desenvolvedor Fullstack e Arquiteto de Software. Meu foco é construir sistemas sob medida para operações reais:
+            financeiro, cobrança, processos e plataformas educacionais com integrações complexas.
+          </p>
+
+          <div class="space-y-3">
+            <div class="flex gap-3">
+              <span class="mt-1 w-2 h-2 bg-primary rounded-full"></span>
+              <p class="text-slate-300">Experiência em produtos com alto uso e ambiente em produção</p>
+            </div>
+            <div class="flex gap-3">
+              <span class="mt-1 w-2 h-2 bg-primary rounded-full"></span>
+              <p class="text-slate-300">Arquitetura modular, escalabilidade, integrações e dados como decisão</p>
+            </div>
+            <div class="flex gap-3">
+              <span class="mt-1 w-2 h-2 bg-primary rounded-full"></span>
+              <p class="text-slate-300">Disponível para prestação contínua e também contratação (CLT/contrato)</p>
+            </div>
+          </div>
+
+          <div class="mt-8 flex flex-wrap gap-3">
+            <!-- Opcional: substitua pelos seus links -->
+            <a href="https://wa.me/5585994181234" class="px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition">
+              Falar comigo no WhatsApp
+            </a>
+            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-5 py-3 rounded-xl border border-slate-700 hover:border-primary text-white font-bold transition">
+              Enviar e-mail
+            </a>
+          </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="bg-card border border-slate-800 rounded-3xl p-8">
+          <h3 class="text-xl font-bold text-white mb-6">Perguntas rápidas</h3>
+
+          <div class="space-y-5">
+            <div>
+              <p class="text-white font-semibold">Você faz “site simples” ou só layout?</p>
+              <p class="text-sm text-slate-400 mt-1">Não. Meu foco é sistema e operação: regras, processos, integrações e resultados reais.</p>
+            </div>
+
+            <div>
+              <p class="text-white font-semibold">Qual o ticket mínimo?</p>
+              <p class="text-sm text-slate-400 mt-1">Projetos a partir de 5k. Para evolução contínua, planos mensais a partir de 500/mês.</p>
+            </div>
+
+            <div>
+              <p class="text-white font-semibold">Como você evita escopo confuso?</p>
+              <p class="text-sm text-slate-400 mt-1">Diagnóstico + arquitetura antes de desenvolver. Isso reduz retrabalho e dá previsibilidade.</p>
+            </div>
+
+            <div>
+              <p class="text-white font-semibold">Você aceita CLT/contrato?</p>
+              <p class="text-sm text-slate-400 mt-1">Sim — posso atuar em projetos com tempo indeterminado como prestador ou contratação.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <footer class="py-24 px-6 border-t border-slate-800">
+    <div class="max-w-4xl mx-auto bg-gradient-to-br from-card to-accent p-12 rounded-3xl border border-slate-700 text-center shadow-2xl">
+      <h2 class="text-4xl font-bold text-white mb-5">Agende um diagnóstico estratégico.</h2>
+      <p class="text-xl text-slate-400 mb-9 leading-relaxed">
+        Em 30 minutos, mapeamos gargalos, definimos prioridades e desenhamos um plano claro para colocar seu sistema em produção com segurança.
+      </p>
+
+      <div class="flex flex-col md:flex-row justify-center gap-4">
+        <a href="https://wa.me/5585994181234"
+           class="px-12 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-blue-600 transition text-xl shadow-lg shadow-blue-500/30">
+          Chamar no WhatsApp
+        </a>
+        <a href="mailto:miqueiasdesenvolvedor@gmail.com"
+           class="px-12 py-5 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-xl">
+          Enviar e-mail
+        </a>
+      </div>
+
+      <p class="mt-8 text-slate-500 text-sm italic">Miquéias Mesquita — Arquiteto de Software & Fullstack</p>
+    </div>
+  </footer>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const modalImg = document.getElementById('modal-img');
+
+    function openModal(src) {
+      modal.classList.add('active');
+      modalImg.src = src;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
 </body>
 </html>
