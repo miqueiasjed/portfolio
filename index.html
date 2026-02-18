@@ -24,11 +24,20 @@
     <style>
         html { scroll-behavior: smooth; }
         .glass-effect { background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(12px); }
-        .project-card:hover img { transform: scale(1.05); }
+        .project-card:hover .project-overlay { opacity: 1; }
         .gradient-text { background: linear-gradient(to r, #3b82f6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Modal Styles */
+        #modal { display: none; position: fixed; inset: 0; z-index: 999; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 20px; }
+        #modal.active { display: flex; }
     </style>
 </head>
 <body class="bg-dark text-slate-300 font-sans antialiased">
+
+    <div id="modal" onclick="closeModal()">
+        <span class="absolute top-5 right-10 text-white text-4xl cursor-pointer">&times;</span>
+        <img id="modal-img" src="" class="max-w-full max-h-full rounded-lg shadow-2xl border border-slate-700" onclick="event.stopPropagation()">
+    </div>
 
     <nav class="fixed w-full z-50 glass-effect border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -36,10 +45,9 @@
             <div class="hidden md:flex gap-8 text-sm font-medium">
                 <a href="#portfolio" class="hover:text-primary transition">Portfólio</a>
                 <a href="#skills" class="hover:text-primary transition">Stack</a>
-                <a href="#experience" class="hover:text-primary transition">Trajetória</a>
             </div>
             <a href="https://wa.me/5585994181234" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
-                Vamos Conversar
+                Falar com Miquéias
             </a>
         </div>
     </nav>
@@ -51,116 +59,153 @@
                 <span class="gradient-text">Escaláveis e Lucrativas</span>
             </h1>
             <p class="text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
-                Tech Lead focado em transformar complexidade operacional em sistemas eficientes. 
-                Especialista em ecossistemas **SaaS, Gestão de Tracking Avançado e Dashboards de Performance**.
+                Tech Lead especializado em sistemas complexos, **SaaS, Gestão de Tracking Avançado e Dashboards**.
             </p>
-            
-            <div class="flex flex-wrap justify-center gap-4">
-                <div class="flex items-center gap-2 px-4 py-2 bg-accent/50 rounded-full border border-slate-700 text-sm">
-                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                    Disponível para Projetos Estratégicos
-                </div>
+            <div class="flex items-center justify-center gap-2 px-4 py-2 bg-accent/50 rounded-full border border-slate-700 text-sm w-fit mx-auto">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                Disponível para Novos Projetos
             </div>
         </div>
     </header>
 
     <section id="portfolio" class="py-20 px-6">
-    <div class="max-w-7xl mx-auto">
-        <div class="mb-16">
-            <h2 class="text-3xl font-bold text-white mb-4">Sistemas em Operação</h2>
-            <p class="text-slate-400">Uma seleção de plataformas robustas desenvolvidas de ponta a ponta.</p>
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Projetos em Destaque</h2>
+                <p class="text-slate-400">Clique na imagem para ampliar ou no link para visitar a plataforma.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
+                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('daily_talks_1.jpg')">
+                        <img src="daily_talks_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
+                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
+                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Daily Talks</h3>
+                        <p class="text-sm text-slate-400 mb-4 h-10">Plataforma EdTech com agendamento real-time e integração Vimeo.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-primary font-bold">VUE/LARAVEL</span>
+                            </div>
+                            <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
+                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
+                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('sistema_habilita_1.jpg')">
+                        <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
+                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
+                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Sistema Habilita</h3>
+                        <p class="text-sm text-slate-400 mb-4 h-10">Gestão financeira e emissão de pagamentos para autoescolas.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-blue-400 font-bold">FINTECH</span>
+                            </div>
+                            <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
+                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
+                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('ari_dedetizacao_1.png')">
+                        <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover transition group-hover:scale-110">
+                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
+                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Ari Dedetização</h3>
+                        <p class="text-sm text-slate-400 mb-4 h-10">ERP administrativo com controle de OS e fornecedores.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-yellow-400 font-bold">CRUD/ERP</span>
+                            </div>
+                            <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
+                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
+                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('danuzio_news_1.jpg')">
+                        <img src="danuzio_news_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
+                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
+                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Danuzio News</h3>
+                        <p class="text-sm text-slate-400 mb-4 h-10">Portal premium com Paywall e área de assinantes.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-purple-400 font-bold">SAAS</span>
+                            </div>
+                            <a href="https://danuzionews.com/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
+                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
+                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('profonline_1.jpg')">
+                        <img src="profonline_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
+                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
+                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">ProfOnline (Educa.IA)</h3>
+                        <p class="text-sm text-slate-400 mb-4 h-10">Simulados inteligentes com Node.js e React.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">NODE/REACT</span>
+                            </div>
+                            <a href="https://app.profonline.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
+                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition">
+                    <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('nucleo_transito_1.jpg')">
+                        <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover transition group-hover:scale-110">
+                        <div class="project-overlay absolute inset-0 bg-primary/20 opacity-0 transition flex items-center justify-center">
+                            <span class="bg-white text-dark px-4 py-2 rounded-full font-bold text-xs uppercase">Ampliar Preview</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Núcleo de Trânsito</h3>
+                        <p class="text-sm text-slate-400 mb-4 h-10">ERP para clínicas médicas de trânsito e agendamento.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex gap-2">
+                                <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-orange-400 font-bold">HEALTH TECH</span>
+                            </div>
+                            <a href="https://desktopmedical.com.br/" target="_blank" class="text-white hover:text-primary text-sm font-bold flex items-center gap-1">
+                                Visitar <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
-                <div class="overflow-hidden h-48">
-                    <img src="daily_talks_1.jpg" alt="Daily Talks Platform" class="w-full h-full object-cover transition duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">Daily Talks</h3>
-                    <p class="text-sm text-slate-400 mb-4">EdTech completa com agendamento real-time, integração Vimeo API e sistema acadêmico.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-primary font-bold">LARAVEL</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-primary font-bold">VUE.JS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
-                <div class="overflow-hidden h-48">
-                    <img src="sistema_habilita_1.jpg" alt="Dashboard Financeiro Habilita" class="w-full h-full object-cover transition duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">Sistema Habilita</h3>
-                    <p class="text-sm text-slate-400 mb-4">Gestão financeira para autoescolas. Controle de faturamento, boletos e dashboards de saúde do negócio.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-blue-400 font-bold">FINTECH</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-blue-400 font-bold">DASHBOARDS</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
-                <div class="overflow-hidden h-48">
-                    <img src="profonline_1.jpg" alt="ProfOnline Educa IA" class="w-full h-full object-cover transition duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">ProfOnline (Educa.IA)</h3>
-                    <p class="text-sm text-slate-400 mb-4">Plataforma de simulados para concursos com foco em UX. Arquitetura moderna e alto volume de dados.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">NODE.JS</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">REACT</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">TYPESCRIPT</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
-                <div class="overflow-hidden h-48">
-                    <img src="danuzio_news_1.jpg" alt="Portal Danuzio News" class="w-full h-full object-cover transition duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">Danuzio News</h3>
-                    <p class="text-sm text-slate-400 mb-4">Portal de notícias premium com área de assinantes, paywall e integração de newsletter semanal.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-purple-400 font-bold">CONTENT SaaS</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-purple-400 font-bold">PHP</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
-                <div class="overflow-hidden h-48">
-                    <img src="nucleo_transito_1.jpg" alt="ERP Núcleo de Trânsito" class="w-full h-full object-cover transition duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">Núcleo de Trânsito</h3>
-                    <p class="text-sm text-slate-400 mb-4">ERP completo para gestão de clínicas: agendamentos, exames médicos e psicotécnicos e automação DETRAN.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-orange-400 font-bold">ERP</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-orange-400 font-bold">HEALTH TECH</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
-                <div class="overflow-hidden h-48">
-                    <img src="ari_dedetizacao_1.png" alt="Sistema Ari Dedetização" class="w-full h-full object-cover transition duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-xl font-bold text-white mb-2">Ari Dedetização</h3>
-                    <p class="text-sm text-slate-400 mb-4">Sistema administrativo para controle de ordens de serviço, fornecedores e gestão de colaboradores.</p>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-yellow-400 font-bold">MANAGEMENT</span>
-                        <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-yellow-400 font-bold">CRUD</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-</section>
+    </section>
 
     <section id="skills" class="py-20 bg-accent/30 border-y border-slate-800">
         <div class="max-w-6xl mx-auto px-6">
@@ -168,16 +213,16 @@
                 <div>
                     <h2 class="text-3xl font-bold text-white mb-6">Expertise Técnica & Analytics</h2>
                     <p class="text-slate-400 mb-8 leading-relaxed">
-                        Meu foco não é apenas codificar, mas garantir que o dado chegue onde precisa. Implemento estruturas de **Tracking & Analytics** para decisões baseadas em dados reais.
+                        Implemento estruturas de **Tracking Avançado** (GTM, GA4, Conversion API) para garantir que cada centavo investido em tráfego seja mensurável.
                     </p>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-card rounded-xl border border-slate-800">
-                            <h4 class="text-primary font-bold mb-1">Analytics</h4>
-                            <p class="text-xs text-slate-500">GTM, GA4, Pixel Facebook & Conversion API.</p>
+                        <div class="p-4 bg-card rounded-xl border border-slate-800 text-sm">
+                            <h4 class="text-primary font-bold">Analytics Avançado</h4>
+                            <p class="text-xs">Mensuração de conversão e eventos customizados.</p>
                         </div>
-                        <div class="p-4 bg-card rounded-xl border border-slate-800">
-                            <h4 class="text-primary font-bold mb-1">Infrastructure</h4>
-                            <p class="text-xs text-slate-500">Docker, CI/CD, DigitalOcean & AWS.</p>
+                        <div class="p-4 bg-card rounded-xl border border-slate-800 text-sm">
+                            <h4 class="text-primary font-bold">Infraestrutura</h4>
+                            <p class="text-xs">Docker, CI/CD e Cloud Management.</p>
                         </div>
                     </div>
                 </div>
@@ -188,8 +233,6 @@
                     <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">TypeScript</span>
                     <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Vue.js</span>
                     <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">MySQL</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">React Native</span>
-                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">API Rest</span>
                 </div>
             </div>
         </div>
@@ -197,14 +240,33 @@
 
     <footer class="py-32 px-6 text-center">
         <div class="max-w-3xl mx-auto">
-            <h2 class="text-4xl font-bold text-white mb-8">Pronto para elevar o nível técnico do seu projeto?</h2>
+            <h2 class="text-4xl font-bold text-white mb-8">Transforme requisitos em lucros.</h2>
             <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="https://www.linkedin.com/in/miqueiasmesquita/" class="px-8 py-4 bg-white text-dark font-bold rounded-xl hover:bg-slate-200 transition">LinkedIn Professional</a>
-                <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition shadow-lg shadow-blue-500/20">Enviar E-mail</a>
+                <a href="https://www.linkedin.com/in/miqueiasmesquita/" class="px-8 py-4 bg-white text-dark font-bold rounded-xl hover:bg-slate-200 transition">LinkedIn</a>
+                <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition">Enviar E-mail</a>
             </div>
-            <p class="mt-12 text-slate-600 text-sm italic">"Transformando café e requisitos em sistemas de alta performance."</p>
         </div>
     </footer>
 
+    <script>
+        const modal = document.getElementById('modal');
+        const modalImg = document.getElementById('modal-img');
+
+        function openModal(src) {
+            modal.classList.add('active');
+            modalImg.src = src;
+            document.body.style.overflow = 'hidden'; // Trava o scroll
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Destrava o scroll
+        }
+
+        // Fechar com tecla Esc
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
 </body>
 </html>
