@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tech Lead & FullStack Developer | Portfolio Premium</title>
+    <title>Miquéias Mesquita | Tech Lead & FullStack Architect</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,313 +12,197 @@
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'] },
                     colors: {
-                        primary: '#3b82f6', // Azul Tech
-                        dark: '#0f172a',    // Fundo Principal
-                        card: '#1e293b',    // Fundo de Cartões
-                        accent: '#64748b'   // Texto secundário
+                        primary: '#3b82f6', 
+                        dark: '#020617',    
+                        card: '#0f172a',    
+                        accent: '#1e293b'   
                     }
                 }
             }
         }
     </script>
     <style>
-        /* Suavizar rolagem */
         html { scroll-behavior: smooth; }
-        .glass-effect {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(10px);
-        }
+        .glass-effect { background: rgba(2, 6, 23, 0.8); backdrop-filter: blur(12px); }
+        .project-card:hover img { transform: scale(1.05); }
+        .gradient-text { background: linear-gradient(to r, #3b82f6, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body class="bg-dark text-slate-300 font-sans antialiased selection:bg-primary selection:text-white">
+<body class="bg-dark text-slate-300 font-sans antialiased">
 
     <nav class="fixed w-full z-50 glass-effect border-b border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="font-bold text-xl text-white tracking-tighter">Miquéias<span class="text-primary">Mesquita</span></div>
-            <div class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#resumo" class="hover:text-primary transition">Sobre</a>
-                <a href="#competencias" class="hover:text-primary transition">Competências</a>
-                <a href="#experiencia" class="hover:text-primary transition">Cases</a>
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl text-white tracking-tighter">Miquéias<span class="text-primary">.dev</span></div>
+            <div class="hidden md:flex gap-8 text-sm font-medium">
+                <a href="#portfolio" class="hover:text-primary transition">Portfólio</a>
+                <a href="#skills" class="hover:text-primary transition">Stack</a>
+                <a href="#experience" class="hover:text-primary transition">Trajetória</a>
             </div>
-            <a href="https://linkedin.com" target="_blank" class="bg-primary hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold transition">
-                Falar no LinkedIn
+            <a href="https://wa.me/5585994181234" class="bg-primary hover:bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
+                Vamos Conversar
             </a>
         </div>
     </nav>
 
-    <header class="pt-32 pb-20 px-4">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="inline-block py-1 px-3 rounded-full bg-slate-800 text-primary text-xs font-bold uppercase tracking-wider mb-6 border border-slate-700">
-                Disponível para novos desafios
-            </span>
-            <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
-                Tech Lead & FullStack <br>
-                <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400 text-3xl md:text-5xl block mt-2">(Laravel • Vue • React)</span>
+    <header class="pt-40 pb-20 px-6">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                Arquitetando Soluções <br>
+                <span class="gradient-text">Escaláveis e Lucrativas</span>
             </h1>
-            <p class="text-lg md:text-xl text-slate-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Construo sistemas escaláveis e organizo operações com tecnologia. Atuação forte em arquitetura, integrações e gestão de sistemas críticos, conectando código a objetivos de negócio.
+            <p class="text-xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+                Tech Lead focado em transformar complexidade operacional em sistemas eficientes. 
+                Especialista em ecossistemas **SaaS, Gestão de Tracking Avançado e Dashboards de Performance**.
             </p>
             
-            <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
-                <a href="#experiencia" class="w-full md:w-auto px-8 py-3 bg-white text-dark font-bold rounded-lg hover:bg-slate-200 transition text-center">
-                    Ver Projetos e Resultados
-                </a>
-                <a href="#" class="w-full md:w-auto px-8 py-3 border border-slate-600 hover:border-white text-white font-medium rounded-lg transition flex items-center justify-center gap-2">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-                    Baixar CV (PDF)
-                </a>
+            <div class="flex flex-wrap justify-center gap-4">
+                <div class="flex items-center gap-2 px-4 py-2 bg-accent/50 rounded-full border border-slate-700 text-sm">
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    Disponível para Projetos Estratégicos
+                </div>
             </div>
         </div>
     </header>
 
-    <section id="resumo" class="py-16 px-4 bg-card/50 border-y border-slate-800">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-sm font-bold text-primary uppercase tracking-widest mb-4">Resumo Profissional</h2>
-            <p class="text-xl md:text-2xl text-slate-200 leading-relaxed font-light">
-                Sou <strong class="text-white">Desenvolvedor FullStack e Tech Lead</strong> com experiência em produtos digitais, sistemas corporativos e SaaS. Entrego soluções que reduzem retrabalho, aumentam controle operacional e melhoram a tomada de decisão com KPIs e dashboards. Forte histórico em integrações (pagamentos, Vimeo, IA, CRMs) e estruturação de ambientes com Docker e cloud.
-            </p>
-        </div>
-    </section>
-
-    <section id="competencias" class="py-20 px-4">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-white mb-12 text-center">Principais Competências</h2>
-            
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-card p-8 rounded-xl border border-slate-800 hover:border-primary/50 transition duration-300">
-                    <div class="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center text-primary mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-4">Dev & Arquitetura</h3>
-                    <ul class="space-y-2 text-slate-400 text-sm">
-                        <li>• FullStack: Laravel, Vue.js, React</li>
-                        <li>• APIs REST & Serviços Externos</li>
-                        <li>• MySQL (modelagem/performance)</li>
-                        <li>• Docker e Cloud (DigitalOcean)</li>
-                        <li>• Segurança e Clean Code</li>
-                    </ul>
-                </div>
-
-                <div class="bg-card p-8 rounded-xl border border-slate-800 hover:border-primary/50 transition duration-300">
-                    <div class="w-12 h-12 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-4">Liderança & Gestão</h3>
-                    <ul class="space-y-2 text-slate-400 text-sm">
-                        <li>• Decisões arquiteturais</li>
-                        <li>• Priorização de roadmap</li>
-                        <li>• Gestão de sistemas críticos</li>
-                        <li>• Automação de processos</li>
-                        <li>• KPIs e Dashboards</li>
-                    </ul>
-                </div>
-
-                <div class="bg-card p-8 rounded-xl border border-slate-800 hover:border-primary/50 transition duration-300">
-                    <div class="w-12 h-12 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 mb-6">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-4">Produto & Negócio</h3>
-                    <ul class="space-y-2 text-slate-400 text-sm">
-                        <li>• Evolução de produtos digitais</li>
-                        <li>• Otimização de fluxos operacionais</li>
-                        <li>• Validação com stakeholders</li>
-                        <li>• Foco em escala e ROI</li>
-                        <li>• Alinhamento Tech/Business</li>
-                    </ul>
-                </div>
+    <section id="portfolio" class="py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-16">
+                <h2 class="text-3xl font-bold text-white mb-4">Sistemas em Operação</h2>
+                <p class="text-slate-400">Uma seleção de plataformas desenvolvidas de ponta a ponta.</p>
             </div>
-        </div>
-    </section>
 
-    <section class="py-10 bg-slate-900 border-y border-slate-800">
-        <div class="max-w-6xl mx-auto px-4 text-center">
-            <p class="text-sm text-slate-500 mb-6 uppercase tracking-widest">Stack Tecnológica</p>
-            <div class="flex flex-wrap justify-center gap-3">
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">Laravel</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">Vue.js</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">React</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">React Native</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">MySQL</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">Docker</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">DigitalOcean</span>
-                <span class="px-4 py-2 bg-slate-800 rounded text-slate-300 text-sm border border-slate-700">APIs REST</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="experiencia" class="py-20 px-4">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-white mb-12">Experiência & Cases</h2>
-
-            <div class="relative pl-8 md:pl-0 mb-16 group">
-                <div class="hidden md:block absolute left-[-30px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-dark"></div>
-                <h3 class="text-2xl font-bold text-white">Daily Talks — Plataforma de Ensino</h3>
-                <p class="text-primary font-medium mb-4">Plataforma completa com gestão acadêmica, pagamentos e app.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <div class="bg-card p-6 rounded-lg border border-slate-800">
-                    <ul class="space-y-3 text-slate-300">
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Agendamento de aulas particulares e em grupo.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Sistema de avaliação com correções via IA.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Integração Vimeo (API) para portal de aulas e Gateway de pagamentos.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> App mobile em React para alunos e sistema de comissionamento.
-                        </li>
-                    </ul>
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
+                    <div class="overflow-hidden h-48">
+                        <img src="image_e4d8e8.jpg" alt="Daily Talks" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Daily Talks</h3>
+                        <p class="text-sm text-slate-400 mb-4">EdTech completa com agendamento real-time, integração Vimeo API e pagamentos recorrentes.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-primary font-bold">LARAVEL</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-primary font-bold">VUE.JS</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="relative pl-8 md:pl-0 group">
-                <div class="hidden md:block absolute left-[-30px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-dark"></div>
-                <h3 class="text-2xl font-bold text-white">Rede de Autoescolas — Gerente de Sistemas</h3>
-                <p class="text-primary font-medium mb-4">Gestão integral de tecnologia e processos em operação multiunidade.</p>
-                
-                <div class="bg-card p-6 rounded-lg border border-slate-800">
-                    <ul class="space-y-3 text-slate-300">
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Automação operacional (financeiro, CRM, matrículas e aulas).
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Integração de rotinas envolvendo DETRAN.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Implantação de infraestrutura crítica e KPIs estratégicos.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Reestruturação de processos e integração entre setores.
-                        </li>
-                    </ul>
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
+                    <div class="overflow-hidden h-48 text-center bg-slate-100 flex items-center justify-center">
+                        <img src="image_e532fc.jpg" alt="Sistema Habilita" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Sistema Habilita</h3>
+                        <p class="text-sm text-slate-400 mb-4">Dashboard financeiro para autoescolas. Controle de boletos, inadimplência e fluxo de caixa automatizado.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-blue-400 font-bold">FINTECH</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-blue-400 font-bold">DASHBOARDS</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="relative pl-8 md:pl-0 mt-16 group">
-                <div class="hidden md:block absolute left-[-30px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-dark"></div>
-                <h3 class="text-2xl font-bold text-white">Núcleo de Trânsito do Ceará — Gerente de Desenvolvimento de Projetos / FullStack</h3>
-                <p class="text-primary font-medium mb-4">Evolução de sistema completo para gestão de alunos e operações clínicas, com automação e padronização dos processos.</p>
-
-                <div class="bg-card p-6 rounded-lg border border-slate-800">
-                    <ul class="space-y-3 text-slate-300">
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Sistema de gestão de alunos com acompanhamento completo da jornada.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Controle de exames médicos e psicológicos, com status e documentação.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Gestão de médicos e psicólogos com agenda, vínculos e registros.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Módulo de pagamentos com conciliação e relatórios financeiros.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Agendamento clínico com regras de disponibilidade e fluxo operacional.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Controle financeiro diário com fluxo de caixa e indicadores.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Automação e integração de dados para melhoria contínua de processos.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Formação de programador júnior e estruturação do processo de desenvolvimento.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Sistema mais estável e previsível, reduzindo retrabalho na operação.
-                        </li>
-                    </ul>
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
+                    <div class="overflow-hidden h-48">
+                        <img src="image_e52fbd.jpg" alt="ProfOnline" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">ProfOnline (Educa.IA)</h3>
+                        <p class="text-sm text-slate-400 mb-4">Simulados inteligentes para concursos. Arquitetura moderna focada em UX e performance de dados.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">NODE.JS</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">REACT</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-green-400 font-bold">TYPESCRIPT</span>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
+                    <div class="overflow-hidden h-48">
+                        <img src="image_e52bdc.jpg" alt="Danuzio News" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Danuzio News</h3>
+                        <p class="text-sm text-slate-400 mb-4">Portal de conteúdo premium com área de assinantes, paywall e sistema de newsletters integradas.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-purple-400 font-bold">CONTENT SaaS</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-purple-400 font-bold">STRIPE</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
+                    <div class="overflow-hidden h-48">
+                        <img src="image_e52c1d.jpg" alt="Núcleo de Trânsito" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Núcleo de Trânsito</h3>
+                        <p class="text-sm text-slate-400 mb-4">ERP para clínicas de trânsito. Gestão de exames, médicos e integração com órgãos reguladores.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-orange-400 font-bold">ERP</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-orange-400 font-bold">OPERATIONAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card group bg-card border border-slate-800 rounded-2xl overflow-hidden transition duration-500">
+                    <div class="overflow-hidden h-48">
+                        <img src="image_e52b40.png" alt="Ari Dedetização" class="w-full h-full object-cover transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2">Ari Dedetização</h3>
+                        <p class="text-sm text-slate-400 mb-4">Sistema de gestão de serviços externos, clientes e faturamento para empresas de saneamento.</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-yellow-400 font-bold">CADASTROS</span>
+                            <span class="px-2 py-1 bg-slate-800 text-[10px] rounded text-yellow-400 font-bold">CRM</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
+        </div>
+    </section>
 
-            <div class="relative pl-8 md:pl-0 mt-16 group">
-                <div class="hidden md:block absolute left-[-30px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-dark"></div>
-                <h3 class="text-2xl font-bold text-white">Universidade Estadual do Ceará — Desenvolvedor Full Stack</h3>
-                <p class="text-primary font-medium mb-4">Desenvolvimento de um ERP para o projeto Casulo, focado em gestão administrativa, financeira e operacional.</p>
-
-                <div class="bg-card p-6 rounded-lg border border-slate-800">
-                    <ul class="space-y-3 text-slate-300">
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Módulo de gestão de projetos com prazos, metas, atividades e responsáveis.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Controle de almoxarifado com entradas, saídas, estoque mínimo e relatórios.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Sistema de solicitações internas com workflow de aprovação e acompanhamento.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Gestão de rubricas, prazos e parâmetros financeiros dos projetos.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Implementação de telas, regras de negócio e integrações administrativas.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Stack: CodeIgniter, PHP, MySQL, jQuery e arquitetura MVC.
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <span class="text-green-400 mt-1">✓</span> Sistema unificado com menos retrabalho e mais transparência na gestão.
-                        </li>
-                    </ul>
+    <section id="skills" class="py-20 bg-accent/30 border-y border-slate-800">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-6">Expertise Técnica & Analytics</h2>
+                    <p class="text-slate-400 mb-8 leading-relaxed">
+                        Meu foco não é apenas codificar, mas garantir que o dado chegue onde precisa. Implemento estruturas de **Tracking & Analytics** para decisões baseadas em dados reais.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-card rounded-xl border border-slate-800">
+                            <h4 class="text-primary font-bold mb-1">Analytics</h4>
+                            <p class="text-xs text-slate-500">GTM, GA4, Pixel Facebook & Conversion API.</p>
+                        </div>
+                        <div class="p-4 bg-card rounded-xl border border-slate-800">
+                            <h4 class="text-primary font-bold mb-1">Infrastructure</h4>
+                            <p class="text-xs text-slate-500">Docker, CI/CD, DigitalOcean & AWS.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Laravel</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Node.js</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">React</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">TypeScript</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">Vue.js</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">MySQL</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">React Native</span>
+                    <span class="px-4 py-2 bg-slate-800 rounded-lg text-white border border-slate-700">API Rest</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="py-16 bg-gradient-to-br from-slate-900 to-slate-800 border-t border-slate-700">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold text-white mb-8">Diferenciais</h2>
-            <div class="grid md:grid-cols-2 gap-6 text-left">
-                <div class="flex gap-4">
-                    <div class="bg-slate-700 p-2 rounded h-fit"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
-                    <div>
-                        <h4 class="text-white font-bold">Perfil Analítico e Consultivo</h4>
-                        <p class="text-sm text-slate-400">Não apenas escrevo código, ajudo a desenhar a melhor solução.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="bg-slate-700 p-2 rounded h-fit"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></div>
-                    <div>
-                        <h4 class="text-white font-bold">Organização da Complexidade</h4>
-                        <p class="text-sm text-slate-400">Transformo necessidades de negócio confusas em software estruturado.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="bg-slate-700 p-2 rounded h-fit"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg></div>
-                    <div>
-                        <h4 class="text-white font-bold">Comunicação Clara</h4>
-                        <p class="text-sm text-slate-400">Ponte eficiente entre times técnicos e stakeholders não-técnicos.</p>
-                    </div>
-                </div>
-                <div class="flex gap-4">
-                    <div class="bg-slate-700 p-2 rounded h-fit"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg></div>
-                    <div>
-                        <h4 class="text-white font-bold">Foco em Resultado</h4>
-                        <p class="text-sm text-slate-400">Eficiência, controle e escalabilidade como prioridade.</p>
-                    </div>
-                </div>
+    <footer class="py-32 px-6 text-center">
+        <div class="max-w-3xl mx-auto">
+            <h2 class="text-4xl font-bold text-white mb-8">Pronto para elevar o nível técnico do seu projeto?</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="https://www.linkedin.com/in/miqueiasmesquita/" class="px-8 py-4 bg-white text-dark font-bold rounded-xl hover:bg-slate-200 transition">LinkedIn Professional</a>
+                <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition shadow-lg shadow-blue-500/20">Enviar E-mail</a>
             </div>
-        </div>
-    </section>
-
-    <footer class="py-20 px-4 text-center bg-dark">
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Quer conversar sobre como posso<br>contribuir no seu time?</h2>
-        <div class="flex flex-col md:flex-row justify-center gap-4 mt-8">
-            <a href="https://www.linkedin.com/in/miqueiasmesquita/" target="_blank" class="px-8 py-4 bg-primary hover:bg-blue-600 text-white font-bold rounded-lg transition text-lg">
-                LinkedIn
-            </a>
-            <a href="https://wa.me/5585994181234" target="_blank" class="px-8 py-4 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg transition text-lg">
-                WhatsApp
-            </a>
-            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition text-lg">
-                Email
-            </a>
-        </div>
-        <div class="mt-12 pt-8 border-t border-slate-800 text-slate-500 text-sm">
-            &copy; 2026 Tech Lead Portfolio. Todos os direitos reservados.
+            <p class="mt-12 text-slate-600 text-sm italic">"Transformando café e requisitos em sistemas de alta performance."</p>
         </div>
     </footer>
 
