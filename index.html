@@ -56,6 +56,20 @@
       .gradient-text { -webkit-text-fill-color: transparent; }
     }
 
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border: 1px solid #1e293b;
+      color: #94a3b8;
+      background: transparent;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .filter-btn:hover { border-color: #3b82f6; color: #fff; }
+    .filter-btn.active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+
     #modal {
       display: none;
       position: fixed;
@@ -92,12 +106,31 @@
         <a href="#sobre" class="hover:text-primary transition">Sobre</a>
       </div>
 
-      <a href="https://wa.me/5585994181234"
-         aria-label="Agendar Diagnóstico (30 min)"
-         class="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
-        <span class="md:hidden">Agendar</span>
-        <span class="hidden md:inline">Agendar Diagnóstico (30 min)</span>
-      </a>
+      <div class="flex items-center gap-3">
+        <a href="https://wa.me/5585994181234"
+           aria-label="Agendar Diagnóstico (30 min)"
+           class="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
+          <span class="md:hidden">Agendar</span>
+          <span class="hidden md:inline">Agendar Diagnóstico (30 min)</span>
+        </a>
+
+        <button id="menu-toggle" class="md:hidden p-2 text-slate-300 hover:text-white transition" aria-label="Menu">
+          <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+          <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 px-6 py-4 flex flex-col gap-4 text-sm font-medium">
+      <a href="#solucoes" class="hover:text-primary transition" onclick="closeMobileMenu()">O que resolvo</a>
+      <a href="#cases" class="hover:text-primary transition" onclick="closeMobileMenu()">Resultados reais</a>
+      <a href="#metodo" class="hover:text-primary transition" onclick="closeMobileMenu()">Como trabalho</a>
+      <a href="#sobre" class="hover:text-primary transition" onclick="closeMobileMenu()">Sobre</a>
     </div>
   </nav>
 
@@ -105,9 +138,16 @@
   <header id="top" class="pt-44 md:pt-48 pb-24 md:pb-32 px-6">
     <div class="max-w-5xl mx-auto text-center">
 
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-6 text-sm font-semibold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-sm font-semibold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
         <span class="w-2 h-2 bg-primary rounded-full"></span>
         Arquiteto de Software & Fullstack Especialista
+      </div>
+
+      <div class="flex justify-center mb-6">
+        <span class="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-green-400 bg-green-400/10 rounded-full border border-green-400/20">
+          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+          Disponível para novos projetos · 2 vagas abertas para Junho
+        </span>
       </div>
 
       <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
@@ -221,15 +261,25 @@
   <!-- CASES -->
   <section id="cases" class="py-24 px-6">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-14">
+      <div class="text-center mb-10">
         <h2 class="text-3xl font-bold text-white">Resultados comprovados</h2>
         <p class="text-slate-400 mt-3">Cases em produção com impacto real em receita, cobrança e escala.</p>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Filtros -->
+      <div class="flex flex-wrap justify-center gap-2 mb-10">
+        <button class="filter-btn active" data-filter="todos" onclick="filterProjects('todos')">Todos (12)</button>
+        <button class="filter-btn" data-filter="erp" onclick="filterProjects('erp')">ERP & Gestão</button>
+        <button class="filter-btn" data-filter="edtech" onclick="filterProjects('edtech')">EdTech</button>
+        <button class="filter-btn" data-filter="ia" onclick="filterProjects('ia')">IA & Automação</button>
+        <button class="filter-btn" data-filter="portal" onclick="filterProjects('portal')">Portal & Mídia</button>
+        <button class="filter-btn" data-filter="crm" onclick="filterProjects('crm')">CRM</button>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
 
         <!-- Daily Talks -->
-        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="edtech" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('daily_talks_1.jpg')">
             <img src="daily_talks_1.jpg" class="w-full h-full object-cover" alt="Daily Talks preview">
           </div>
@@ -252,7 +302,7 @@
         </div>
 
         <!-- Habilita -->
-        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('sistema_habilita_1.jpg')">
             <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover" alt="Sistema Habilita preview">
           </div>
@@ -275,7 +325,7 @@
         </div>
 
         <!-- Núcleo Trânsito -->
-        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('nucleo_transito_1.jpg')">
             <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover" alt="Núcleo de Trânsito preview">
           </div>
@@ -298,7 +348,7 @@
         </div>
 
         <!-- Danuzio News -->
-        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="portal" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('danuzio_news_1.jpg')">
             <img src="danuzio_news_1.jpg" class="w-full h-full object-cover" alt="Danuzio News preview">
           </div>
@@ -320,7 +370,7 @@
         </div>
 
         <!-- ProfOnline -->
-        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="edtech" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('profonline_1.jpg')">
             <img src="profonline_1.jpg" class="w-full h-full object-cover" alt="ProfOnline preview">
           </div>
@@ -342,7 +392,7 @@
         </div>
 
         <!-- Ari Dedetização -->
-        <div class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('ari_dedetizacao_1.png')">
             <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover" alt="Ari Dedetização preview">
           </div>
@@ -359,6 +409,215 @@
               <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-primary text-sm font-bold">
                 Visitar →
               </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Geopolítica para Investidores -->
+        <div data-category="ia" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-blue-950 to-indigo-900 flex items-center justify-center">
+            <div class="text-center">
+              <p class="text-5xl font-black text-blue-400/30 tracking-tighter">GEO</p>
+              <p class="text-xs text-blue-400/50 uppercase tracking-widest mt-1">IA + Investidores</p>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Geopolítica para Investidores</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Plataforma de inteligência geopolítica com IA: mapa de calor, alertas preditivos, radar de eleições e análise de risco para investidores.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">IA</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">React</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Laravel</span>
+              </div>
+              <span class="text-slate-500 text-xs">Em produção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- OSINT Monitor -->
+        <div data-category="ia" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-slate-900 to-emerald-950 flex items-center justify-center">
+            <div class="text-center">
+              <p class="text-5xl font-black text-emerald-400/30 tracking-tighter">OSINT</p>
+              <p class="text-xs text-emerald-400/50 uppercase tracking-widest mt-1">IA + Automação</p>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">OSINT Monitor</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Monitor de notícias com IA: coleta RSS, classifica breaking news, gera arte automática no Canva e publica no Slack.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Python</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">IA</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Automação</span>
+              </div>
+              <span class="text-slate-500 text-xs">Em produção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portal Marsiglia -->
+        <div data-category="edtech" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-amber-950 to-orange-900 flex items-center justify-center">
+            <div class="text-center">
+              <p class="text-5xl font-black text-amber-400/30 tracking-tighter">PM</p>
+              <p class="text-xs text-amber-400/50 uppercase tracking-widest mt-1">Portal Editorial</p>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Portal Marsiglia</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Portal editorial com cursos, artigos, assinaturas, newsletter e gestão completa de conteúdo com integração Asaas e Kiwify.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Laravel</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Cursos</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Assinaturas</span>
+              </div>
+              <span class="text-slate-500 text-xs">Em produção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SAE Autoescola -->
+        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-violet-950 to-purple-900 flex items-center justify-center">
+            <div class="text-center">
+              <p class="text-5xl font-black text-violet-400/30 tracking-tighter">SAE</p>
+              <p class="text-xs text-violet-400/50 uppercase tracking-widest mt-1">ERP Autoescola</p>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">SAE — Sistema Autoescola</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              ERP completo para autoescola: comercial, exames, financeiro, CRM multi-unidade e integração PagHiper + ManyChat.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">CRM</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Multi-unidade</span>
+              </div>
+              <span class="text-slate-500 text-xs">Em produção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Agenda SaaS Clínicas -->
+        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-teal-950 to-cyan-900 flex items-center justify-center">
+            <div class="text-center">
+              <p class="text-5xl font-black text-teal-400/30 tracking-tighter">SaaS</p>
+              <p class="text-xs text-teal-400/50 uppercase tracking-widest mt-1">Clínicas · Multi-tenant</p>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">Agenda SaaS — Clínicas</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              Plataforma SaaS multi-tenant para clínicas: agendamento, portal do paciente, WhatsApp, CRM e financeiro integrado.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">SaaS</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Multi-tenant</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">WhatsApp</span>
+              </div>
+              <span class="text-slate-500 text-xs">Em produção</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- CRM -->
+        <div data-category="crm" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-rose-950 to-pink-900 flex items-center justify-center">
+            <div class="text-center">
+              <p class="text-5xl font-black text-rose-400/30 tracking-tighter">CRM</p>
+              <p class="text-xs text-rose-400/50 uppercase tracking-widest mt-1">Pipeline · Leads · WhatsApp</p>
+            </div>
+          </div>
+          <div class="p-6 flex-1 flex flex-col">
+            <h3 class="text-xl font-bold text-white mb-2">CRM</h3>
+            <p class="text-sm text-slate-400 mb-4">
+              CRM completo: pipeline de vendas, lead scoring, WhatsApp integrado, landing pages, automações, agendamento e financeiro.
+            </p>
+            <div class="mt-auto flex items-center justify-between gap-3">
+              <div class="flex flex-wrap gap-2">
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Pipeline</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">WhatsApp</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Automação</span>
+              </div>
+              <span class="text-slate-500 text-xs">Em produção</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos" class="py-24 bg-card/50 border-y border-slate-800">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-14">
+        <h2 class="text-3xl font-bold text-white">O que dizem os clientes</h2>
+        <p class="text-slate-400 mt-3">Quem usa os sistemas no dia a dia.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+
+        <!-- Depoimento 1 — substitua pelo texto real -->
+        <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
+          <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+          <p class="text-slate-300 leading-relaxed flex-1 italic">
+            "Substitua por depoimento real do cliente. Ex: O sistema transformou completamente nossa operação, saímos do papel para um controle total em poucos meses."
+          </p>
+          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">DT</div>
+            <div>
+              <p class="text-white font-semibold text-sm">Nome do Cliente</p>
+              <p class="text-slate-500 text-xs">Fundador · Daily Talks</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Depoimento 2 — substitua pelo texto real -->
+        <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
+          <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+          <p class="text-slate-300 leading-relaxed flex-1 italic">
+            "Substitua por depoimento real do cliente. Ex: Antes não tínhamos visibilidade do caixa. Hoje sabemos exatamente onde está cada real e recuperamos mais de 30k por mês."
+          </p>
+          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">HA</div>
+            <div>
+              <p class="text-white font-semibold text-sm">Nome do Cliente</p>
+              <p class="text-slate-500 text-xs">Diretor · Sistema Habilita</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Depoimento 3 — substitua pelo texto real -->
+        <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
+          <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+          <p class="text-slate-300 leading-relaxed flex-1 italic">
+            "Substitua por depoimento real do cliente. Ex: Triplicamos o faturamento depois que o sistema entrou em produção. O controle que ele trouxe mudou tudo na clínica."
+          </p>
+          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">NT</div>
+            <div>
+              <p class="text-white font-semibold text-sm">Nome do Cliente</p>
+              <p class="text-slate-500 text-xs">Gestor · Clínica NTC</p>
             </div>
           </div>
         </div>
@@ -438,7 +697,24 @@
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-start">
         <div>
-          <h2 class="text-3xl font-bold text-white mb-4">Sobre</h2>
+          <!-- Foto — coloque o arquivo foto.jpg dentro da pasta portfolio -->
+          <div class="flex items-center gap-5 mb-8">
+            <div class="relative flex-shrink-0">
+              <img src="foto.jpg" alt="Miquéias Mesquita"
+                   class="w-20 h-20 rounded-full object-cover border-2 border-primary/40 shadow-lg shadow-primary/10"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-700 hidden items-center justify-center text-slate-400 text-2xl font-bold">M</div>
+            </div>
+            <div>
+              <p class="text-white font-bold text-lg leading-tight">Miquéias Mesquita</p>
+              <p class="text-slate-400 text-sm">Arquiteto de Software & Fullstack</p>
+              <span class="inline-flex items-center gap-1.5 mt-1 text-xs text-green-400">
+                <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+                Disponível para novos projetos
+              </span>
+            </div>
+          </div>
+
           <p class="text-slate-400 leading-relaxed mb-6">
             Sou desenvolvedor Fullstack e Arquiteto de Software. Meu foco é construir sistemas sob medida para operações reais:
             financeiro, cobrança, processos e plataformas educacionais com integrações complexas.
@@ -446,21 +722,20 @@
 
           <div class="space-y-3">
             <div class="flex gap-3">
-              <span class="mt-1 w-2 h-2 bg-primary rounded-full"></span>
+              <span class="mt-1 w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
               <p class="text-slate-300">Experiência em produtos com alto uso e ambiente em produção</p>
             </div>
             <div class="flex gap-3">
-              <span class="mt-1 w-2 h-2 bg-primary rounded-full"></span>
+              <span class="mt-1 w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
               <p class="text-slate-300">Arquitetura modular, escalabilidade, integrações e dados como decisão</p>
             </div>
             <div class="flex gap-3">
-              <span class="mt-1 w-2 h-2 bg-primary rounded-full"></span>
+              <span class="mt-1 w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
               <p class="text-slate-300">Disponível para prestação contínua e também contratação (CLT/contrato)</p>
             </div>
           </div>
 
           <div class="mt-8 flex flex-wrap gap-3">
-            <!-- Opcional: substitua pelos seus links -->
             <a href="https://wa.me/5585994181234" class="px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition">
               Falar comigo no WhatsApp
             </a>
@@ -523,6 +798,18 @@
     </div>
   </footer>
 
+  <!-- Botão flutuante WhatsApp -->
+  <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20um%20projeto."
+     id="whatsapp-float"
+     target="_blank"
+     aria-label="Falar no WhatsApp"
+     class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-2xl shadow-green-500/40 transition-all duration-300 translate-y-20 opacity-0">
+    <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span class="text-sm font-bold whitespace-nowrap">Falar no WhatsApp</span>
+  </a>
+
   <script>
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
@@ -541,6 +828,47 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeModal();
     });
+
+    // Filtro de projetos
+    function filterProjects(category) {
+      document.querySelectorAll('#projects-grid [data-category]').forEach(card => {
+        card.style.display = (category === 'todos' || card.dataset.category === category) ? '' : 'none';
+      });
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.filter === category);
+      });
+    }
+
+    // Botão flutuante — aparece após 400px de scroll
+    const floatBtn = document.getElementById('whatsapp-float');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        floatBtn.classList.remove('translate-y-20', 'opacity-0');
+        floatBtn.classList.add('translate-y-0', 'opacity-100');
+      } else {
+        floatBtn.classList.add('translate-y-20', 'opacity-0');
+        floatBtn.classList.remove('translate-y-0', 'opacity-100');
+      }
+    });
+
+    // Menu mobile
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const iconOpen = document.getElementById('icon-open');
+    const iconClose = document.getElementById('icon-close');
+
+    menuToggle.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      iconOpen.classList.toggle('hidden', !isOpen);
+      iconClose.classList.toggle('hidden', isOpen);
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('hidden');
+      iconOpen.classList.remove('hidden');
+      iconClose.classList.add('hidden');
+    }
   </script>
 </body>
 </html>
