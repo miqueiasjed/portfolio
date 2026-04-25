@@ -7,7 +7,6 @@
   <title>Miquéias Mesquita | Arquiteto de Software & Fullstack</title>
   <meta name="description" content="Desenvolvo sistemas personalizados de gestão, educação e automação financeira que organizam operações e aumentam faturamento. Projetos a partir de 5k e desenvolvimento contínuo." />
 
-  <!-- Open Graph (opcional, mas recomendado) -->
   <meta property="og:title" content="Miquéias Mesquita | Arquiteto de Software & Fullstack" />
   <meta property="og:description" content="Sistemas personalizados que organizam operações e aumentam faturamento. Resultados reais em produção." />
   <meta property="og:type" content="website" />
@@ -41,15 +40,13 @@
 
     .glass-effect { background: rgba(2, 6, 23, 0.75); backdrop-filter: blur(12px); }
 
-    /* FIX: gradient que não fica invisível fora do Webkit */
     .gradient-text {
       background: linear-gradient(to right, #3b82f6, #a855f7);
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent; /* padrão */
+      color: transparent;
     }
     @supports not (-webkit-text-fill-color: transparent) {
-      /* fallback para browsers que podem falhar com text-fill */
       .gradient-text { color: #a855f7; background: none; }
     }
     @supports (-webkit-text-fill-color: transparent) {
@@ -69,6 +66,23 @@
     }
     .filter-btn:hover { border-color: #3b82f6; color: #fff; }
     .filter-btn.active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+
+    #lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      border: 1px solid #1e293b;
+      background: transparent;
+      color: #94a3b8;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      letter-spacing: .05em;
+    }
+    #lang-toggle:hover { border-color: #3b82f6; color: #fff; }
 
     #modal {
       display: none;
@@ -100,18 +114,25 @@
       </a>
 
       <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#solucoes" class="hover:text-primary transition">O que resolvo</a>
-        <a href="#cases" class="hover:text-primary transition">Resultados reais</a>
-        <a href="#metodo" class="hover:text-primary transition">Como trabalho</a>
-        <a href="#sobre" class="hover:text-primary transition">Sobre</a>
+        <a href="#solucoes" class="hover:text-primary transition" data-i18n="nav.solucoes">O que resolvo</a>
+        <a href="#cases" class="hover:text-primary transition" data-i18n="nav.cases">Resultados reais</a>
+        <a href="#metodo" class="hover:text-primary transition" data-i18n="nav.metodo">Como trabalho</a>
+        <a href="#sobre" class="hover:text-primary transition" data-i18n="nav.sobre">Sobre</a>
       </div>
 
       <div class="flex items-center gap-3">
+        <button id="lang-toggle" onclick="toggleLang()" aria-label="Switch language">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+          </svg>
+          <span id="lang-label">EN</span>
+        </button>
+
         <a href="https://wa.me/5585994181234"
-           aria-label="Agendar Diagnóstico (30 min)"
+           aria-label="Agendar Diagnóstico"
            class="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
-          <span class="md:hidden">Agendar</span>
-          <span class="hidden md:inline">Agendar Diagnóstico (30 min)</span>
+          <span class="md:hidden" data-i18n="nav.cta.short">Agendar</span>
+          <span class="hidden md:inline" data-i18n="nav.cta">Agendar Diagnóstico (30 min)</span>
         </a>
 
         <button id="menu-toggle" class="md:hidden p-2 text-slate-300 hover:text-white transition" aria-label="Menu">
@@ -127,10 +148,10 @@
 
     <!-- Mobile menu -->
     <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 px-6 py-4 flex flex-col gap-4 text-sm font-medium">
-      <a href="#solucoes" class="hover:text-primary transition" onclick="closeMobileMenu()">O que resolvo</a>
-      <a href="#cases" class="hover:text-primary transition" onclick="closeMobileMenu()">Resultados reais</a>
-      <a href="#metodo" class="hover:text-primary transition" onclick="closeMobileMenu()">Como trabalho</a>
-      <a href="#sobre" class="hover:text-primary transition" onclick="closeMobileMenu()">Sobre</a>
+      <a href="#solucoes" class="hover:text-primary transition" onclick="closeMobileMenu()" data-i18n="nav.solucoes">O que resolvo</a>
+      <a href="#cases" class="hover:text-primary transition" onclick="closeMobileMenu()" data-i18n="nav.cases">Resultados reais</a>
+      <a href="#metodo" class="hover:text-primary transition" onclick="closeMobileMenu()" data-i18n="nav.metodo">Como trabalho</a>
+      <a href="#sobre" class="hover:text-primary transition" onclick="closeMobileMenu()" data-i18n="nav.sobre">Sobre</a>
     </div>
   </nav>
 
@@ -140,46 +161,46 @@
 
       <div class="inline-flex items-center gap-2 px-4 py-1.5 mb-4 text-sm font-semibold tracking-wide text-primary uppercase bg-primary/10 rounded-full border border-primary/20">
         <span class="w-2 h-2 bg-primary rounded-full"></span>
-        Arquiteto de Software & Fullstack Especialista
+        <span data-i18n="hero.badge">Arquiteto de Software & Fullstack Especialista</span>
       </div>
 
       <div class="flex justify-center mb-6">
         <span class="inline-flex items-center gap-2 px-4 py-1.5 text-sm font-semibold text-green-400 bg-green-400/10 rounded-full border border-green-400/20">
           <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          Disponível para novos projetos · 2 vagas abertas para Junho
+          <span data-i18n="hero.available">Disponível para novos projetos · 2 vagas abertas para Junho</span>
         </span>
       </div>
 
-      <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+      <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6" data-i18n="hero.title">
         Sistemas personalizados que<br />
         <span class="gradient-text">organizam e lucram.</span>
       </h1>
 
-      <p class="text-xl md:text-2xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed">
+      <p class="text-xl md:text-2xl text-slate-400 mb-10 max-w-3xl mx-auto leading-relaxed" data-i18n="hero.subtitle">
         Desenvolvo plataformas de gestão, educação e automação financeira que aumentam receita, reduzem retrabalho e dão visibilidade total da operação.
       </p>
 
       <div class="flex flex-col md:flex-row justify-center gap-4 mb-10">
-        <a href="#cases" class="px-10 py-4 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-lg">
+        <a href="#cases" class="px-10 py-4 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-lg" data-i18n="hero.cta1">
           Ver resultados reais
         </a>
-        <a href="https://wa.me/5585994181234" class="px-10 py-4 border border-slate-700 hover:border-primary text-white font-bold rounded-2xl transition text-lg">
+        <a href="https://wa.me/5585994181234" class="px-10 py-4 border border-slate-700 hover:border-primary text-white font-bold rounded-2xl transition text-lg" data-i18n="hero.cta2">
           Falar sobre seu projeto
         </a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
         <div class="p-4 bg-card/40 border border-slate-800 rounded-2xl shadow-glow">
-          <p class="text-2xl font-bold text-white">1.393</p>
-          <p class="text-xs text-slate-500 uppercase">Alunos ativos em produção</p>
+          <p class="text-2xl font-bold text-white" data-i18n="hero.stat1.value">1.393</p>
+          <p class="text-xs text-slate-500 uppercase" data-i18n="hero.stat1.label">Alunos ativos em produção</p>
         </div>
         <div class="p-4 bg-card/40 border border-slate-800 rounded-2xl shadow-glow">
-          <p class="text-2xl font-bold text-white">3x faturamento</p>
-          <p class="text-xs text-slate-500 uppercase">Clínica: 20k → 60k</p>
+          <p class="text-2xl font-bold text-white" data-i18n="hero.stat2.value">3x faturamento</p>
+          <p class="text-xs text-slate-500 uppercase" data-i18n="hero.stat2.label">Clínica: 20k → 60k</p>
         </div>
         <div class="p-4 bg-card/40 border border-slate-800 rounded-2xl shadow-glow">
-          <p class="text-2xl font-bold text-white">+R$ 30k/mês</p>
-          <p class="text-xs text-slate-500 uppercase">Recuperados em inadimplência</p>
+          <p class="text-2xl font-bold text-white" data-i18n="hero.stat3.value">+R$ 30k/mês</p>
+          <p class="text-xs text-slate-500 uppercase" data-i18n="hero.stat3.label">Recuperados em inadimplência</p>
         </div>
       </div>
     </div>
@@ -190,11 +211,11 @@
     <div class="max-w-7xl mx-auto px-6">
       <div class="grid md:grid-cols-2 gap-14 items-center">
         <div>
-          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6" data-i18n="sol.title">
             Sua empresa ainda sofre com processos manuais?
           </h2>
 
-          <p class="text-lg text-slate-400 mb-8">
+          <p class="text-lg text-slate-400 mb-8" data-i18n="sol.subtitle">
             Programação estratégica não é custo: é o fim de gargalos que estão drenando tempo, dinheiro e previsibilidade.
           </p>
 
@@ -203,35 +224,33 @@
               <svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Operação presa em planilhas, papel ou “sistemas quebrados”
+              <span data-i18n="sol.li1">Operação presa em planilhas, papel ou "sistemas quebrados"</span>
             </li>
-
             <li class="flex gap-3 text-slate-200">
               <svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Falta de visão clara do fluxo de caixa, inadimplência e indicadores
+              <span data-i18n="sol.li2">Falta de visão clara do fluxo de caixa, inadimplência e indicadores</span>
             </li>
-
             <li class="flex gap-3 text-slate-200">
               <svg class="w-6 h-6 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
               </svg>
-              Dificuldade em integrar pagamentos, vídeos, automações e IA
+              <span data-i18n="sol.li3">Dificuldade em integrar pagamentos, vídeos, automações e IA</span>
             </li>
           </ul>
 
           <div class="mt-10 flex flex-wrap gap-3">
-            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Sistemas de gestão (ERP)</span>
-            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Automação financeira</span>
-            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Plataformas educacionais</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40" data-i18n="sol.tag1">Sistemas de gestão (ERP)</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40" data-i18n="sol.tag2">Automação financeira</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40" data-i18n="sol.tag3">Plataformas educacionais</span>
             <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Dashboards & BI</span>
-            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40">Integrações (APIs)</span>
+            <span class="px-3 py-1 rounded-full text-xs border border-slate-700 text-slate-300 bg-slate-900/40" data-i18n="sol.tag5">Integrações (APIs)</span>
           </div>
         </div>
 
         <div class="bg-dark p-8 rounded-3xl border border-slate-800 shadow-2xl">
-          <h3 class="text-xl font-bold text-white mb-5">Expertise em Arquitetura</h3>
+          <h3 class="text-xl font-bold text-white mb-5" data-i18n="sol.arch.title">Expertise em Arquitetura</h3>
 
           <div class="flex flex-wrap gap-2">
             <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Laravel</span>
@@ -243,13 +262,13 @@
             <span class="px-3 py-1 bg-slate-800/80 border border-slate-700 rounded-md text-sm text-slate-200">Bancos Relacionais</span>
           </div>
 
-          <p class="mt-6 text-sm text-slate-400 italic">
-            “Construo sistemas modulares, seguros e escaláveis — evitando retrabalho técnico e permitindo evolução contínua.”
+          <p class="mt-6 text-sm text-slate-400 italic" data-i18n="sol.arch.quote">
+            "Construo sistemas modulares, seguros e escaláveis — evitando retrabalho técnico e permitindo evolução contínua."
           </p>
 
           <div class="mt-6 p-4 rounded-2xl border border-slate-800 bg-card/30">
-            <p class="text-xs text-slate-400 uppercase tracking-widest mb-2">Nosso objetivo</p>
-            <p class="text-sm text-slate-200">
+            <p class="text-xs text-slate-400 uppercase tracking-widest mb-2" data-i18n="sol.arch.goal.label">Nosso objetivo</p>
+            <p class="text-sm text-slate-200" data-i18n="sol.arch.goal.text">
               Projetos estruturados e escopos bem definidos, focados em soluções completas e evolução contínua.
             </p>
           </div>
@@ -262,17 +281,17 @@
   <section id="cases" class="py-24 px-6">
     <div class="max-w-7xl mx-auto">
       <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-white">Resultados comprovados</h2>
-        <p class="text-slate-400 mt-3">Cases em produção com impacto real em receita, cobrança e escala.</p>
+        <h2 class="text-3xl font-bold text-white" data-i18n="cases.title">Resultados comprovados</h2>
+        <p class="text-slate-400 mt-3" data-i18n="cases.subtitle">Cases em produção com impacto real em receita, cobrança e escala.</p>
       </div>
 
       <!-- Filtros -->
       <div class="flex flex-wrap justify-center gap-2 mb-10">
-        <button class="filter-btn active" data-filter="todos" onclick="filterProjects('todos')">Todos (12)</button>
-        <button class="filter-btn" data-filter="erp" onclick="filterProjects('erp')">ERP & Gestão</button>
+        <button class="filter-btn active" data-filter="todos" onclick="filterProjects('todos')" data-i18n="filter.all">Todos (12)</button>
+        <button class="filter-btn" data-filter="erp" onclick="filterProjects('erp')" data-i18n="filter.erp">ERP & Gestão</button>
         <button class="filter-btn" data-filter="edtech" onclick="filterProjects('edtech')">EdTech</button>
-        <button class="filter-btn" data-filter="ia" onclick="filterProjects('ia')">IA & Automação</button>
-        <button class="filter-btn" data-filter="portal" onclick="filterProjects('portal')">Portal & Mídia</button>
+        <button class="filter-btn" data-filter="ia" onclick="filterProjects('ia')" data-i18n="filter.ia">IA & Automação</button>
+        <button class="filter-btn" data-filter="portal" onclick="filterProjects('portal')" data-i18n="filter.portal">Portal & Mídia</button>
         <button class="filter-btn" data-filter="crm" onclick="filterProjects('crm')">CRM</button>
       </div>
 
@@ -285,7 +304,7 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">Daily Talks</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.daily.desc">
               Plataforma EdTech com integração de pagamentos, vídeo, IA e agendamentos. Sustenta <span class="text-white font-semibold">+1.393 alunos ativos</span>.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
@@ -294,9 +313,7 @@
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Vue</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Mobile</span>
               </div>
-              <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-primary text-sm font-bold">
-                Visitar →
-              </a>
+              <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-primary text-sm font-bold" data-i18n="proj.visit">Visitar →</a>
             </div>
           </div>
         </div>
@@ -308,18 +325,16 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">Sistema Habilita</h3>
-            <p class="text-sm text-green-400 font-bold mb-3">+ R$ 30k/mês recuperados</p>
-            <p class="text-sm text-slate-400 mb-4">
-              Controle de inadimplência, caixa e alertas — eliminando “dívida invisível” e melhorando cobrança.
+            <p class="text-sm text-green-400 font-bold mb-3" data-i18n="proj.habilita.result">+ R$ 30k/mês recuperados</p>
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.habilita.desc">
+              Controle de inadimplência, caixa e alertas — eliminando "dívida invisível" e melhorando cobrança.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Financeiro</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.financial">Financeiro</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Dashboard</span>
               </div>
-              <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-primary text-sm font-bold">
-                Visitar →
-              </a>
+              <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-primary text-sm font-bold" data-i18n="proj.visit">Visitar →</a>
             </div>
           </div>
         </div>
@@ -332,17 +347,15 @@
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">Clínica NTC</h3>
             <p class="text-sm text-green-400 font-bold mb-3">R$ 20k → R$ 60k/mês</p>
-            <p class="text-sm text-slate-400 mb-4">
-              Saída do “papel” para gestão com cobrança, organização operacional e visão financeira.
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.ntc.desc">
+              Saída do "papel" para gestão com cobrança, organização operacional e visão financeira.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Processos</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.processes">Processos</span>
               </div>
-              <a href="https://desktopmedical.com.br/" target="_blank" class="text-primary text-sm font-bold">
-                Visitar →
-              </a>
+              <a href="https://desktopmedical.com.br/" target="_blank" class="text-primary text-sm font-bold" data-i18n="proj.visit">Visitar →</a>
             </div>
           </div>
         </div>
@@ -354,17 +367,15 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">Danuzio News</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.danuzio.desc">
               Portal premium com paywall, recorrência e gestão de assinantes.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Paywall</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Assinaturas</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.subscriptions">Assinaturas</span>
               </div>
-              <a href="https://danuzionews.com/" target="_blank" class="text-primary text-sm font-bold">
-                Visitar →
-              </a>
+              <a href="https://danuzionews.com/" target="_blank" class="text-primary text-sm font-bold" data-i18n="proj.visit">Visitar →</a>
             </div>
           </div>
         </div>
@@ -376,7 +387,7 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">ProfOnline</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.profonline.desc">
               Plataforma educacional com foco em performance e evolução para escala.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
@@ -384,9 +395,7 @@
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Node</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">React</span>
               </div>
-              <a href="https://app.profonline.com.br/" target="_blank" class="text-primary text-sm font-bold">
-                Visitar →
-              </a>
+              <a href="https://app.profonline.com.br/" target="_blank" class="text-primary text-sm font-bold" data-i18n="proj.visit">Visitar →</a>
             </div>
           </div>
         </div>
@@ -398,7 +407,7 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">Ari Dedetização</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.ari.desc">
               ERP sob medida para ordens de serviço, logística e faturamento.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
@@ -406,9 +415,7 @@
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">OS</span>
               </div>
-              <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-primary text-sm font-bold">
-                Visitar →
-              </a>
+              <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-primary text-sm font-bold" data-i18n="proj.visit">Visitar →</a>
             </div>
           </div>
         </div>
@@ -418,21 +425,21 @@
           <div class="relative overflow-hidden h-48 bg-gradient-to-br from-blue-950 to-indigo-900 flex items-center justify-center">
             <div class="text-center">
               <p class="text-5xl font-black text-blue-400/30 tracking-tighter">GEO</p>
-              <p class="text-xs text-blue-400/50 uppercase tracking-widest mt-1">IA + Investidores</p>
+              <p class="text-xs text-blue-400/50 uppercase tracking-widest mt-1" data-i18n="proj.geo.label">IA + Investidores</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-2">Geopolítica para Investidores</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <h3 class="text-xl font-bold text-white mb-2" data-i18n="proj.geo.title">Geopolítica para Investidores</h3>
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.geo.desc">
               Plataforma de inteligência geopolítica com IA: mapa de calor, alertas preditivos, radar de eleições e análise de risco para investidores.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">IA</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">AI</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">React</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Laravel</span>
               </div>
-              <span class="text-slate-500 text-xs">Em produção</span>
+              <span class="text-slate-500 text-xs" data-i18n="proj.live">Em produção</span>
             </div>
           </div>
         </div>
@@ -442,21 +449,21 @@
           <div class="relative overflow-hidden h-48 bg-gradient-to-br from-slate-900 to-emerald-950 flex items-center justify-center">
             <div class="text-center">
               <p class="text-5xl font-black text-emerald-400/30 tracking-tighter">OSINT</p>
-              <p class="text-xs text-emerald-400/50 uppercase tracking-widest mt-1">IA + Automação</p>
+              <p class="text-xs text-emerald-400/50 uppercase tracking-widest mt-1" data-i18n="proj.osint.label">IA + Automação</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">OSINT Monitor</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.osint.desc">
               Monitor de notícias com IA: coleta RSS, classifica breaking news, gera arte automática no Canva e publica no Slack.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Python</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">IA</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Automação</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">AI</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.automation">Automação</span>
               </div>
-              <span class="text-slate-500 text-xs">Em produção</span>
+              <span class="text-slate-500 text-xs" data-i18n="proj.live">Em produção</span>
             </div>
           </div>
         </div>
@@ -466,21 +473,21 @@
           <div class="relative overflow-hidden h-48 bg-gradient-to-br from-amber-950 to-orange-900 flex items-center justify-center">
             <div class="text-center">
               <p class="text-5xl font-black text-amber-400/30 tracking-tighter">PM</p>
-              <p class="text-xs text-amber-400/50 uppercase tracking-widest mt-1">Portal Editorial</p>
+              <p class="text-xs text-amber-400/50 uppercase tracking-widest mt-1" data-i18n="proj.marsiglia.label">Portal Editorial</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">Portal Marsiglia</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.marsiglia.desc">
               Portal editorial com cursos, artigos, assinaturas, newsletter e gestão completa de conteúdo com integração Asaas e Kiwify.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Laravel</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Cursos</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Assinaturas</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.courses">Cursos</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.subscriptions">Assinaturas</span>
               </div>
-              <span class="text-slate-500 text-xs">Em produção</span>
+              <span class="text-slate-500 text-xs" data-i18n="proj.live">Em produção</span>
             </div>
           </div>
         </div>
@@ -490,21 +497,21 @@
           <div class="relative overflow-hidden h-48 bg-gradient-to-br from-violet-950 to-purple-900 flex items-center justify-center">
             <div class="text-center">
               <p class="text-5xl font-black text-violet-400/30 tracking-tighter">SAE</p>
-              <p class="text-xs text-violet-400/50 uppercase tracking-widest mt-1">ERP Autoescola</p>
+              <p class="text-xs text-violet-400/50 uppercase tracking-widest mt-1" data-i18n="proj.sae.label">ERP Autoescola</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-2">SAE — Sistema Autoescola</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <h3 class="text-xl font-bold text-white mb-2" data-i18n="proj.sae.title">SAE — Sistema Autoescola</h3>
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.sae.desc">
               ERP completo para autoescola: comercial, exames, financeiro, CRM multi-unidade e integração PagHiper + ManyChat.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">CRM</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Multi-unidade</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.multiunit">Multi-unidade</span>
               </div>
-              <span class="text-slate-500 text-xs">Em produção</span>
+              <span class="text-slate-500 text-xs" data-i18n="proj.live">Em produção</span>
             </div>
           </div>
         </div>
@@ -514,12 +521,12 @@
           <div class="relative overflow-hidden h-48 bg-gradient-to-br from-teal-950 to-cyan-900 flex items-center justify-center">
             <div class="text-center">
               <p class="text-5xl font-black text-teal-400/30 tracking-tighter">SaaS</p>
-              <p class="text-xs text-teal-400/50 uppercase tracking-widest mt-1">Clínicas · Multi-tenant</p>
+              <p class="text-xs text-teal-400/50 uppercase tracking-widest mt-1" data-i18n="proj.agenda.label">Clínicas · Multi-tenant</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-2">Agenda SaaS — Clínicas</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <h3 class="text-xl font-bold text-white mb-2" data-i18n="proj.agenda.title">Agenda SaaS — Clínicas</h3>
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.agenda.desc">
               Plataforma SaaS multi-tenant para clínicas: agendamento, portal do paciente, WhatsApp, CRM e financeiro integrado.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
@@ -528,7 +535,7 @@
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Multi-tenant</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">WhatsApp</span>
               </div>
-              <span class="text-slate-500 text-xs">Em produção</span>
+              <span class="text-slate-500 text-xs" data-i18n="proj.live">Em produção</span>
             </div>
           </div>
         </div>
@@ -543,16 +550,16 @@
           </div>
           <div class="p-6 flex-1 flex flex-col">
             <h3 class="text-xl font-bold text-white mb-2">CRM</h3>
-            <p class="text-sm text-slate-400 mb-4">
+            <p class="text-sm text-slate-400 mb-4" data-i18n="proj.crm.desc">
               CRM completo: pipeline de vendas, lead scoring, WhatsApp integrado, landing pages, automações, agendamento e financeiro.
             </p>
             <div class="mt-auto flex items-center justify-between gap-3">
               <div class="flex flex-wrap gap-2">
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Pipeline</span>
                 <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">WhatsApp</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Automação</span>
+                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700" data-i18n="tag.automation">Automação</span>
               </div>
-              <span class="text-slate-500 text-xs">Em produção</span>
+              <span class="text-slate-500 text-xs" data-i18n="proj.live">Em produção</span>
             </div>
           </div>
         </div>
@@ -565,52 +572,52 @@
   <section id="depoimentos" class="py-24 bg-card/50 border-y border-slate-800">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-14">
-        <h2 class="text-3xl font-bold text-white">O que dizem os clientes</h2>
-        <p class="text-slate-400 mt-3">Quem usa os sistemas no dia a dia.</p>
+        <h2 class="text-3xl font-bold text-white" data-i18n="dep.title">O que dizem os clientes</h2>
+        <p class="text-slate-400 mt-3" data-i18n="dep.subtitle">Quem usa os sistemas no dia a dia.</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
 
-        <!-- Depoimento 1 — substitua pelo texto real -->
+        <!-- Depoimento 1 -->
         <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
           <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
           </svg>
-          <p class="text-slate-300 leading-relaxed flex-1 italic">
+          <p class="text-slate-300 leading-relaxed flex-1 italic" data-i18n="dep.1.text">
             "Substitua por depoimento real do cliente. Ex: O sistema transformou completamente nossa operação, saímos do papel para um controle total em poucos meses."
           </p>
           <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
             <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">DT</div>
             <div>
-              <p class="text-white font-semibold text-sm">Nome do Cliente</p>
-              <p class="text-slate-500 text-xs">Fundador · Daily Talks</p>
+              <p class="text-white font-semibold text-sm" data-i18n="dep.1.name">Nome do Cliente</p>
+              <p class="text-slate-500 text-xs" data-i18n="dep.1.role">Fundador · Daily Talks</p>
             </div>
           </div>
         </div>
 
-        <!-- Depoimento 2 — substitua pelo texto real -->
+        <!-- Depoimento 2 -->
         <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
           <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
           </svg>
-          <p class="text-slate-300 leading-relaxed flex-1 italic">
+          <p class="text-slate-300 leading-relaxed flex-1 italic" data-i18n="dep.2.text">
             "Substitua por depoimento real do cliente. Ex: Antes não tínhamos visibilidade do caixa. Hoje sabemos exatamente onde está cada real e recuperamos mais de 30k por mês."
           </p>
           <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
             <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">HA</div>
             <div>
-              <p class="text-white font-semibold text-sm">Nome do Cliente</p>
-              <p class="text-slate-500 text-xs">Diretor · Sistema Habilita</p>
+              <p class="text-white font-semibold text-sm" data-i18n="dep.2.name">Nome do Cliente</p>
+              <p class="text-slate-500 text-xs" data-i18n="dep.2.role">Diretor · Sistema Habilita</p>
             </div>
           </div>
         </div>
 
-        <!-- Depoimento 3 — Gessé Rodrigues · Ari Dedetização -->
+        <!-- Depoimento 3 — Gessé Rodrigues -->
         <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
           <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
           </svg>
-          <p class="text-slate-300 leading-relaxed flex-1 italic">
+          <p class="text-slate-300 leading-relaxed flex-1 italic" data-i18n="dep.3.text">
             "A plataforma tem se mostrado muito eficiente no dia a dia operacional, trazendo organização, praticidade e mais controle sobre os serviços executados. A agilidade na resolução de demandas é um grande diferencial — as solicitações são tratadas com rapidez, minimizando impactos na operação. Sem dúvida, uma ferramenta que agrega valor contribuindo diretamente para a qualidade, rastreabilidade e eficiência das operações."
           </p>
           <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
@@ -630,69 +637,57 @@
   <section id="metodo" class="py-24 bg-primary/5 border-y border-slate-800">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-14">
-        <h2 class="text-3xl font-bold text-white">Como trabalho</h2>
-        <p class="text-slate-400 mt-3">Processo claro, entrega por etapas e foco em evolução contínua.</p>
+        <h2 class="text-3xl font-bold text-white" data-i18n="met.title">Como trabalho</h2>
+        <p class="text-slate-400 mt-3" data-i18n="met.subtitle">Processo claro, entrega por etapas e foco em evolução contínua.</p>
       </div>
 
       <div class="grid md:grid-cols-4 gap-6">
         <div class="p-6 bg-card rounded-2xl border border-slate-800">
           <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">01</p>
-          <h4 class="text-white font-bold mb-2">Diagnóstico</h4>
-          <p class="text-sm text-slate-400">Entendo processo, gargalos e meta do negócio. Saímos com prioridades e plano.</p>
+          <h4 class="text-white font-bold mb-2" data-i18n="met.s1.title">Diagnóstico</h4>
+          <p class="text-sm text-slate-400" data-i18n="met.s1.desc">Entendo processo, gargalos e meta do negócio. Saímos com prioridades e plano.</p>
         </div>
-
         <div class="p-6 bg-card rounded-2xl border border-slate-800">
           <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">02</p>
-          <h4 class="text-white font-bold mb-2">Arquitetura</h4>
-          <p class="text-sm text-slate-400">Modelo, módulos, integrações e regras. Evita retrabalho e escala com segurança.</p>
+          <h4 class="text-white font-bold mb-2" data-i18n="met.s2.title">Arquitetura</h4>
+          <p class="text-sm text-slate-400" data-i18n="met.s2.desc">Modelo, módulos, integrações e regras. Evita retrabalho e escala com segurança.</p>
         </div>
-
         <div class="p-6 bg-card rounded-2xl border border-slate-800">
           <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">03</p>
-          <h4 class="text-white font-bold mb-2">Entrega em sprints</h4>
-          <p class="text-sm text-slate-400">Você vê evoluir semana a semana. Ajustes com base no uso real.</p>
+          <h4 class="text-white font-bold mb-2" data-i18n="met.s3.title">Entrega em sprints</h4>
+          <p class="text-sm text-slate-400" data-i18n="met.s3.desc">Você vê evoluir semana a semana. Ajustes com base no uso real.</p>
         </div>
-
         <div class="p-6 bg-card rounded-2xl border border-slate-800">
           <p class="text-xs text-slate-500 uppercase tracking-widest mb-2">04</p>
-          <h4 class="text-white font-bold mb-2">Evolução contínua</h4>
-          <p class="text-sm text-slate-400">Manutenção + melhorias + novas integrações. Ideal pra carteira fixa de longo prazo.</p>
+          <h4 class="text-white font-bold mb-2" data-i18n="met.s4.title">Evolução contínua</h4>
+          <p class="text-sm text-slate-400" data-i18n="met.s4.desc">Manutenção + melhorias + novas integrações. Ideal pra carteira fixa de longo prazo.</p>
         </div>
       </div>
 
-      <!-- Retainer -->
       <div class="mt-10 p-8 bg-dark rounded-3xl border border-slate-800 shadow-2xl">
         <div class="grid md:grid-cols-2 gap-8 items-center">
-          
           <div>
-            <h3 class="text-2xl font-bold text-white mb-3">Projetos sob medida</h3>
-            <p class="text-slate-400 leading-relaxed">
+            <h3 class="text-2xl font-bold text-white mb-3" data-i18n="met.cta.title">Projetos sob medida</h3>
+            <p class="text-slate-400 leading-relaxed" data-i18n="met.cta.desc">
               Cada sistema é desenvolvido conforme escopo, complexidade e impacto esperado na operação.
               Trabalho com soluções estruturadas e foco em evolução contínua.
             </p>
           </div>
-      
           <div class="bg-card/30 border border-slate-800 rounded-2xl p-6 text-center">
-            <p class="text-sm text-slate-300 mb-4">
+            <p class="text-sm text-slate-300 mb-4" data-i18n="met.cta.question">
               Quer entender como isso se aplicaria ao seu negócio?
             </p>
-      
             <a href="https://wa.me/5585994181234"
-               class="inline-block px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">
-               Falar sobre meu projeto
-            </a>
-      
-            <p class="mt-3 text-xs text-slate-500">
-              Diagnóstico estratégico sem compromisso
-            </p>
+               class="inline-block px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition shadow-lg shadow-blue-500/30"
+               data-i18n="met.cta.btn">Falar sobre meu projeto</a>
+            <p class="mt-3 text-xs text-slate-500" data-i18n="met.cta.note">Diagnóstico estratégico sem compromisso</p>
           </div>
-      
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SOBRE / CONTRATAÇÃO -->
+  <!-- SOBRE -->
   <section id="sobre" class="py-24 px-6">
     <div class="max-w-6xl mx-auto">
       <div class="grid md:grid-cols-2 gap-12 items-start">
@@ -707,15 +702,15 @@
             </div>
             <div>
               <p class="text-white font-bold text-lg leading-tight">Miquéias Mesquita</p>
-              <p class="text-slate-400 text-sm">Arquiteto de Software & Fullstack</p>
+              <p class="text-slate-400 text-sm" data-i18n="sobre.role">Arquiteto de Software & Fullstack</p>
               <span class="inline-flex items-center gap-1.5 mt-1 text-xs text-green-400">
                 <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
-                Disponível para novos projetos
+                <span data-i18n="sobre.available">Disponível para novos projetos</span>
               </span>
             </div>
           </div>
 
-          <p class="text-slate-400 leading-relaxed mb-6">
+          <p class="text-slate-400 leading-relaxed mb-6" data-i18n="sobre.bio">
             Sou desenvolvedor Fullstack e Arquiteto de Software. Meu foco é construir sistemas sob medida para operações reais:
             financeiro, cobrança, processos e plataformas educacionais com integrações complexas.
           </p>
@@ -723,23 +718,23 @@
           <div class="space-y-3">
             <div class="flex gap-3">
               <span class="mt-1 w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
-              <p class="text-slate-300">Experiência em produtos com alto uso e ambiente em produção</p>
+              <p class="text-slate-300" data-i18n="sobre.li1">Experiência em produtos com alto uso e ambiente em produção</p>
             </div>
             <div class="flex gap-3">
               <span class="mt-1 w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
-              <p class="text-slate-300">Arquitetura modular, escalabilidade, integrações e dados como decisão</p>
+              <p class="text-slate-300" data-i18n="sobre.li2">Arquitetura modular, escalabilidade, integrações e dados como decisão</p>
             </div>
             <div class="flex gap-3">
               <span class="mt-1 w-2 h-2 bg-primary rounded-full flex-shrink-0"></span>
-              <p class="text-slate-300">Disponível para prestação contínua e também contratação (CLT/contrato)</p>
+              <p class="text-slate-300" data-i18n="sobre.li3">Disponível para prestação contínua e também contratação (CLT/contrato)</p>
             </div>
           </div>
 
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="https://wa.me/5585994181234" class="px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition">
+            <a href="https://wa.me/5585994181234" class="px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition" data-i18n="sobre.wa">
               Falar comigo no WhatsApp
             </a>
-            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-5 py-3 rounded-xl border border-slate-700 hover:border-primary text-white font-bold transition">
+            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-5 py-3 rounded-xl border border-slate-700 hover:border-primary text-white font-bold transition" data-i18n="sobre.email">
               Enviar e-mail
             </a>
           </div>
@@ -747,27 +742,23 @@
 
         <!-- FAQ -->
         <div class="bg-card border border-slate-800 rounded-3xl p-8">
-          <h3 class="text-xl font-bold text-white mb-6">Perguntas rápidas</h3>
-
+          <h3 class="text-xl font-bold text-white mb-6" data-i18n="faq.title">Perguntas rápidas</h3>
           <div class="space-y-5">
             <div>
-              <p class="text-white font-semibold">Você faz “site simples” ou só layout?</p>
-              <p class="text-sm text-slate-400 mt-1">Não. Meu foco é sistema e operação: regras, processos, integrações e resultados reais.</p>
+              <p class="text-white font-semibold" data-i18n="faq.q1">Você faz "site simples" ou só layout?</p>
+              <p class="text-sm text-slate-400 mt-1" data-i18n="faq.a1">Não. Meu foco é sistema e operação: regras, processos, integrações e resultados reais.</p>
             </div>
-
             <div>
-              <p class="text-white font-semibold">Qual o ticket mínimo?</p>
-              <p class="text-sm text-slate-400 mt-1">Projetos a partir de 5k. Para evolução contínua, planos mensais a partir de 500/mês.</p>
+              <p class="text-white font-semibold" data-i18n="faq.q2">Qual o ticket mínimo?</p>
+              <p class="text-sm text-slate-400 mt-1" data-i18n="faq.a2">Projetos a partir de 5k. Para evolução contínua, planos mensais a partir de 500/mês.</p>
             </div>
-
             <div>
-              <p class="text-white font-semibold">Como você evita escopo confuso?</p>
-              <p class="text-sm text-slate-400 mt-1">Diagnóstico + arquitetura antes de desenvolver. Isso reduz retrabalho e dá previsibilidade.</p>
+              <p class="text-white font-semibold" data-i18n="faq.q3">Como você evita escopo confuso?</p>
+              <p class="text-sm text-slate-400 mt-1" data-i18n="faq.a3">Diagnóstico + arquitetura antes de desenvolver. Isso reduz retrabalho e dá previsibilidade.</p>
             </div>
-
             <div>
-              <p class="text-white font-semibold">Você aceita CLT/contrato?</p>
-              <p class="text-sm text-slate-400 mt-1">Sim — posso atuar em projetos com tempo indeterminado como prestador ou contratação.</p>
+              <p class="text-white font-semibold" data-i18n="faq.q4">Você aceita CLT/contrato?</p>
+              <p class="text-sm text-slate-400 mt-1" data-i18n="faq.a4">Sim — posso atuar em projetos com tempo indeterminado como prestador ou contratação.</p>
             </div>
           </div>
         </div>
@@ -778,22 +769,18 @@
   <!-- CTA FINAL -->
   <footer class="py-24 px-6 border-t border-slate-800">
     <div class="max-w-4xl mx-auto bg-gradient-to-br from-card to-accent p-12 rounded-3xl border border-slate-700 text-center shadow-2xl">
-      <h2 class="text-4xl font-bold text-white mb-5">Agende um diagnóstico estratégico.</h2>
-      <p class="text-xl text-slate-400 mb-9 leading-relaxed">
+      <h2 class="text-4xl font-bold text-white mb-5" data-i18n="footer.title">Agende um diagnóstico estratégico.</h2>
+      <p class="text-xl text-slate-400 mb-9 leading-relaxed" data-i18n="footer.desc">
         Em 30 minutos, mapeamos gargalos, definimos prioridades e desenhamos um plano claro para colocar seu sistema em produção com segurança.
       </p>
-
       <div class="flex flex-col md:flex-row justify-center gap-4">
         <a href="https://wa.me/5585994181234"
-           class="px-12 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-blue-600 transition text-xl shadow-lg shadow-blue-500/30">
-          Chamar no WhatsApp
-        </a>
+           class="px-12 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-blue-600 transition text-xl shadow-lg shadow-blue-500/30"
+           data-i18n="footer.wa">Chamar no WhatsApp</a>
         <a href="mailto:miqueiasdesenvolvedor@gmail.com"
-           class="px-12 py-5 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-xl">
-          Enviar e-mail
-        </a>
+           class="px-12 py-5 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-xl"
+           data-i18n="footer.email">Enviar e-mail</a>
       </div>
-
       <p class="mt-8 text-slate-500 text-sm italic">Miquéias Mesquita — Arquiteto de Software & Fullstack</p>
     </div>
   </footer>
@@ -807,10 +794,289 @@
     <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
     </svg>
-    <span class="text-sm font-bold whitespace-nowrap">Falar no WhatsApp</span>
+    <span class="text-sm font-bold whitespace-nowrap" data-i18n="float.wa">Falar no WhatsApp</span>
   </a>
 
   <script>
+    // ── i18n ──────────────────────────────────────────────────────────────────
+    const i18n = {
+      pt: {
+        // nav
+        'nav.solucoes': 'O que resolvo',
+        'nav.cases': 'Resultados reais',
+        'nav.metodo': 'Como trabalho',
+        'nav.sobre': 'Sobre',
+        'nav.cta': 'Agendar Diagnóstico (30 min)',
+        'nav.cta.short': 'Agendar',
+        // hero
+        'hero.badge': 'Arquiteto de Software & Fullstack Especialista',
+        'hero.available': 'Disponível para novos projetos · 2 vagas abertas para Junho',
+        'hero.title': 'Sistemas personalizados que<br /><span class="gradient-text">organizam e lucram.</span>',
+        'hero.subtitle': 'Desenvolvo plataformas de gestão, educação e automação financeira que aumentam receita, reduzem retrabalho e dão visibilidade total da operação.',
+        'hero.cta1': 'Ver resultados reais',
+        'hero.cta2': 'Falar sobre seu projeto',
+        'hero.stat1.value': '1.393',
+        'hero.stat1.label': 'Alunos ativos em produção',
+        'hero.stat2.value': '3x faturamento',
+        'hero.stat2.label': 'Clínica: 20k → 60k',
+        'hero.stat3.value': '+R$ 30k/mês',
+        'hero.stat3.label': 'Recuperados em inadimplência',
+        // soluções
+        'sol.title': 'Sua empresa ainda sofre com processos manuais?',
+        'sol.subtitle': 'Programação estratégica não é custo: é o fim de gargalos que estão drenando tempo, dinheiro e previsibilidade.',
+        'sol.li1': 'Operação presa em planilhas, papel ou "sistemas quebrados"',
+        'sol.li2': 'Falta de visão clara do fluxo de caixa, inadimplência e indicadores',
+        'sol.li3': 'Dificuldade em integrar pagamentos, vídeos, automações e IA',
+        'sol.tag1': 'Sistemas de gestão (ERP)',
+        'sol.tag2': 'Automação financeira',
+        'sol.tag3': 'Plataformas educacionais',
+        'sol.tag5': 'Integrações (APIs)',
+        'sol.arch.title': 'Expertise em Arquitetura',
+        'sol.arch.quote': '"Construo sistemas modulares, seguros e escaláveis — evitando retrabalho técnico e permitindo evolução contínua."',
+        'sol.arch.goal.label': 'Nosso objetivo',
+        'sol.arch.goal.text': 'Projetos estruturados e escopos bem definidos, focados em soluções completas e evolução contínua.',
+        // cases
+        'cases.title': 'Resultados comprovados',
+        'cases.subtitle': 'Cases em produção com impacto real em receita, cobrança e escala.',
+        'filter.all': 'Todos (12)',
+        'filter.erp': 'ERP & Gestão',
+        'filter.ia': 'IA & Automação',
+        'filter.portal': 'Portal & Mídia',
+        // projects
+        'proj.visit': 'Visitar →',
+        'proj.live': 'Em produção',
+        'proj.daily.desc': 'Plataforma EdTech com integração de pagamentos, vídeo, IA e agendamentos. Sustenta <span class="text-white font-semibold">+1.393 alunos ativos</span>.',
+        'proj.habilita.result': '+ R$ 30k/mês recuperados',
+        'proj.habilita.desc': 'Controle de inadimplência, caixa e alertas — eliminando "dívida invisível" e melhorando cobrança.',
+        'proj.ntc.desc': 'Saída do "papel" para gestão com cobrança, organização operacional e visão financeira.',
+        'proj.danuzio.desc': 'Portal premium com paywall, recorrência e gestão de assinantes.',
+        'proj.profonline.desc': 'Plataforma educacional com foco em performance e evolução para escala.',
+        'proj.ari.desc': 'ERP sob medida para ordens de serviço, logística e faturamento.',
+        'proj.geo.label': 'IA + Investidores',
+        'proj.geo.title': 'Geopolítica para Investidores',
+        'proj.geo.desc': 'Plataforma de inteligência geopolítica com IA: mapa de calor, alertas preditivos, radar de eleições e análise de risco para investidores.',
+        'proj.osint.label': 'IA + Automação',
+        'proj.osint.desc': 'Monitor de notícias com IA: coleta RSS, classifica breaking news, gera arte automática no Canva e publica no Slack.',
+        'proj.marsiglia.label': 'Portal Editorial',
+        'proj.marsiglia.desc': 'Portal editorial com cursos, artigos, assinaturas, newsletter e gestão completa de conteúdo com integração Asaas e Kiwify.',
+        'proj.sae.label': 'ERP Autoescola',
+        'proj.sae.title': 'SAE — Sistema Autoescola',
+        'proj.sae.desc': 'ERP completo para autoescola: comercial, exames, financeiro, CRM multi-unidade e integração PagHiper + ManyChat.',
+        'proj.agenda.label': 'Clínicas · Multi-tenant',
+        'proj.agenda.title': 'Agenda SaaS — Clínicas',
+        'proj.agenda.desc': 'Plataforma SaaS multi-tenant para clínicas: agendamento, portal do paciente, WhatsApp, CRM e financeiro integrado.',
+        'proj.crm.desc': 'CRM completo: pipeline de vendas, lead scoring, WhatsApp integrado, landing pages, automações, agendamento e financeiro.',
+        // tags
+        'tag.financial': 'Financeiro',
+        'tag.processes': 'Processos',
+        'tag.subscriptions': 'Assinaturas',
+        'tag.courses': 'Cursos',
+        'tag.automation': 'Automação',
+        'tag.multiunit': 'Multi-unidade',
+        // depoimentos
+        'dep.title': 'O que dizem os clientes',
+        'dep.subtitle': 'Quem usa os sistemas no dia a dia.',
+        'dep.1.text': '"Substitua por depoimento real do cliente. Ex: O sistema transformou completamente nossa operação, saímos do papel para um controle total em poucos meses."',
+        'dep.1.name': 'Nome do Cliente',
+        'dep.1.role': 'Fundador · Daily Talks',
+        'dep.2.text': '"Substitua por depoimento real do cliente. Ex: Antes não tínhamos visibilidade do caixa. Hoje sabemos exatamente onde está cada real e recuperamos mais de 30k por mês."',
+        'dep.2.name': 'Nome do Cliente',
+        'dep.2.role': 'Diretor · Sistema Habilita',
+        'dep.3.text': '"A plataforma tem se mostrado muito eficiente no dia a dia operacional, trazendo organização, praticidade e mais controle sobre os serviços executados. A agilidade na resolução de demandas é um grande diferencial — as solicitações são tratadas com rapidez, minimizando impactos na operação. Sem dúvida, uma ferramenta que agrega valor contribuindo diretamente para a qualidade, rastreabilidade e eficiência das operações."',
+        // método
+        'met.title': 'Como trabalho',
+        'met.subtitle': 'Processo claro, entrega por etapas e foco em evolução contínua.',
+        'met.s1.title': 'Diagnóstico',
+        'met.s1.desc': 'Entendo processo, gargalos e meta do negócio. Saímos com prioridades e plano.',
+        'met.s2.title': 'Arquitetura',
+        'met.s2.desc': 'Modelo, módulos, integrações e regras. Evita retrabalho e escala com segurança.',
+        'met.s3.title': 'Entrega em sprints',
+        'met.s3.desc': 'Você vê evoluir semana a semana. Ajustes com base no uso real.',
+        'met.s4.title': 'Evolução contínua',
+        'met.s4.desc': 'Manutenção + melhorias + novas integrações. Ideal pra carteira fixa de longo prazo.',
+        'met.cta.title': 'Projetos sob medida',
+        'met.cta.desc': 'Cada sistema é desenvolvido conforme escopo, complexidade e impacto esperado na operação. Trabalho com soluções estruturadas e foco em evolução contínua.',
+        'met.cta.question': 'Quer entender como isso se aplicaria ao seu negócio?',
+        'met.cta.btn': 'Falar sobre meu projeto',
+        'met.cta.note': 'Diagnóstico estratégico sem compromisso',
+        // sobre
+        'sobre.role': 'Arquiteto de Software & Fullstack',
+        'sobre.available': 'Disponível para novos projetos',
+        'sobre.bio': 'Sou desenvolvedor Fullstack e Arquiteto de Software. Meu foco é construir sistemas sob medida para operações reais: financeiro, cobrança, processos e plataformas educacionais com integrações complexas.',
+        'sobre.li1': 'Experiência em produtos com alto uso e ambiente em produção',
+        'sobre.li2': 'Arquitetura modular, escalabilidade, integrações e dados como decisão',
+        'sobre.li3': 'Disponível para prestação contínua e também contratação (CLT/contrato)',
+        'sobre.wa': 'Falar comigo no WhatsApp',
+        'sobre.email': 'Enviar e-mail',
+        // faq
+        'faq.title': 'Perguntas rápidas',
+        'faq.q1': 'Você faz "site simples" ou só layout?',
+        'faq.a1': 'Não. Meu foco é sistema e operação: regras, processos, integrações e resultados reais.',
+        'faq.q2': 'Qual o ticket mínimo?',
+        'faq.a2': 'Projetos a partir de 5k. Para evolução contínua, planos mensais a partir de 500/mês.',
+        'faq.q3': 'Como você evita escopo confuso?',
+        'faq.a3': 'Diagnóstico + arquitetura antes de desenvolver. Isso reduz retrabalho e dá previsibilidade.',
+        'faq.q4': 'Você aceita CLT/contrato?',
+        'faq.a4': 'Sim — posso atuar em projetos com tempo indeterminado como prestador ou contratação.',
+        // footer
+        'footer.title': 'Agende um diagnóstico estratégico.',
+        'footer.desc': 'Em 30 minutos, mapeamos gargalos, definimos prioridades e desenhamos um plano claro para colocar seu sistema em produção com segurança.',
+        'footer.wa': 'Chamar no WhatsApp',
+        'footer.email': 'Enviar e-mail',
+        'float.wa': 'Falar no WhatsApp',
+      },
+
+      en: {
+        // nav
+        'nav.solucoes': 'What I solve',
+        'nav.cases': 'Real results',
+        'nav.metodo': 'How I work',
+        'nav.sobre': 'About',
+        'nav.cta': 'Book a Call (30 min)',
+        'nav.cta.short': 'Book',
+        // hero
+        'hero.badge': 'Software Architect & Fullstack Specialist',
+        'hero.available': 'Available for new projects · 2 spots open for June',
+        'hero.title': 'Custom systems that<br /><span class="gradient-text">organize and scale.</span>',
+        'hero.subtitle': 'I build management platforms, education tools, and financial automation that increase revenue, reduce rework, and give full operational visibility.',
+        'hero.cta1': 'See real results',
+        'hero.cta2': 'Talk about your project',
+        'hero.stat1.value': '1,393',
+        'hero.stat1.label': 'Active students in production',
+        'hero.stat2.value': '3x revenue',
+        'hero.stat2.label': 'Clinic: 20k → 60k',
+        'hero.stat3.value': '+R$30k/mo',
+        'hero.stat3.label': 'Recovered from defaults',
+        // soluções
+        'sol.title': 'Is your business still stuck with manual processes?',
+        'sol.subtitle': 'Strategic software development is not a cost — it ends the bottlenecks draining your time, money, and predictability.',
+        'sol.li1': 'Operations trapped in spreadsheets, paper, or "broken systems"',
+        'sol.li2': 'No clear visibility into cash flow, overdue payments, or KPIs',
+        'sol.li3': 'Difficulty integrating payments, video, automations, and AI',
+        'sol.tag1': 'Management Systems (ERP)',
+        'sol.tag2': 'Financial Automation',
+        'sol.tag3': 'Educational Platforms',
+        'sol.tag5': 'Integrations (APIs)',
+        'sol.arch.title': 'Architecture Expertise',
+        'sol.arch.quote': '"I build modular, secure, and scalable systems — preventing technical rework and enabling continuous growth."',
+        'sol.arch.goal.label': 'Our goal',
+        'sol.arch.goal.text': 'Structured projects with well-defined scopes, focused on complete solutions and continuous evolution.',
+        // cases
+        'cases.title': 'Proven results',
+        'cases.subtitle': 'Live systems with real impact on revenue, collections, and scale.',
+        'filter.all': 'All (12)',
+        'filter.erp': 'ERP & Management',
+        'filter.ia': 'AI & Automation',
+        'filter.portal': 'Portal & Media',
+        // projects
+        'proj.visit': 'Visit →',
+        'proj.live': 'Live',
+        'proj.daily.desc': 'EdTech platform with payments, video, AI, and scheduling. Sustains <span class="text-white font-semibold">+1,393 active students</span>.',
+        'proj.habilita.result': '+ R$30k/mo recovered',
+        'proj.habilita.desc': 'Default control, cash flow, and alerts — eliminating "invisible debt" and improving collections.',
+        'proj.ntc.desc': 'Moved from paper-based to full management with billing, operational organization, and financial visibility.',
+        'proj.danuzio.desc': 'Premium news portal with paywall, recurring billing, and subscriber management.',
+        'proj.profonline.desc': 'Educational platform focused on performance and built for scale.',
+        'proj.ari.desc': 'Custom ERP for work orders, field logistics, and invoicing.',
+        'proj.geo.label': 'AI + Investors',
+        'proj.geo.title': 'Geopolitics for Investors',
+        'proj.geo.desc': 'Geopolitical intelligence platform powered by AI: heat maps, predictive alerts, election radar, and risk analysis for investors.',
+        'proj.osint.label': 'AI + Automation',
+        'proj.osint.desc': 'AI-powered news monitor: RSS collection, breaking-news classification, auto-generated Canva artwork, and Slack publishing.',
+        'proj.marsiglia.label': 'Editorial Portal',
+        'proj.marsiglia.desc': 'Editorial portal with courses, articles, subscriptions, newsletter, and full content management with Asaas and Kiwify integration.',
+        'proj.sae.label': 'Driving School ERP',
+        'proj.sae.title': 'SAE — Driving School System',
+        'proj.sae.desc': 'Full ERP for driving schools: sales, exams, financials, multi-unit CRM, and PagHiper + ManyChat integration.',
+        'proj.agenda.label': 'Clinics · Multi-tenant',
+        'proj.agenda.title': 'Scheduling SaaS — Clinics',
+        'proj.agenda.desc': 'Multi-tenant SaaS platform for clinics: scheduling, patient portal, WhatsApp, CRM, and integrated financials.',
+        'proj.crm.desc': 'Full-featured CRM: sales pipeline, lead scoring, integrated WhatsApp, landing pages, automations, scheduling, and financials.',
+        // tags
+        'tag.financial': 'Finance',
+        'tag.processes': 'Processes',
+        'tag.subscriptions': 'Subscriptions',
+        'tag.courses': 'Courses',
+        'tag.automation': 'Automation',
+        'tag.multiunit': 'Multi-unit',
+        // depoimentos
+        'dep.title': 'What clients say',
+        'dep.subtitle': 'Those who use the systems every day.',
+        'dep.1.text': '"Replace with a real client quote. E.g.: The system completely transformed our operation — we went from paper to full control in just a few months."',
+        'dep.1.name': 'Client Name',
+        'dep.1.role': 'Founder · Daily Talks',
+        'dep.2.text': '"Replace with a real client quote. E.g.: We had zero visibility into our cash flow. Now we know exactly where every penny is and recover over 30k a month."',
+        'dep.2.name': 'Client Name',
+        'dep.2.role': 'Director · Sistema Habilita',
+        'dep.3.text': '"The platform has proven to be very efficient in day-to-day operations, bringing organization, practicality, and greater control over services performed. The agility in resolving requests is a major differentiator — issues are handled quickly, minimizing operational impact and ensuring field work continues without interruption. Without a doubt, a tool that adds real value by directly contributing to quality, traceability, and operational efficiency."',
+        // método
+        'met.title': 'How I work',
+        'met.subtitle': 'Clear process, phased delivery, and a continuous improvement mindset.',
+        'met.s1.title': 'Discovery',
+        'met.s1.desc': 'I understand your process, bottlenecks, and business goals. We leave with clear priorities and a plan.',
+        'met.s2.title': 'Architecture',
+        'met.s2.desc': 'Data model, modules, integrations, and business rules. Prevents rework and scales safely.',
+        'met.s3.title': 'Sprint delivery',
+        'met.s3.desc': 'You see progress week by week. Adjustments based on real-world usage.',
+        'met.s4.title': 'Continuous growth',
+        'met.s4.desc': 'Maintenance + improvements + new integrations. Ideal for long-term retainer clients.',
+        'met.cta.title': 'Custom projects',
+        'met.cta.desc': 'Each system is developed according to scope, complexity, and expected operational impact. I work with structured solutions focused on continuous evolution.',
+        'met.cta.question': 'Want to understand how this would apply to your business?',
+        'met.cta.btn': 'Talk about my project',
+        'met.cta.note': 'Strategic consultation, no commitment',
+        // sobre
+        'sobre.role': 'Software Architect & Fullstack',
+        'sobre.available': 'Available for new projects',
+        'sobre.bio': 'I am a Fullstack Developer and Software Architect. My focus is building custom systems for real business operations: finance, collections, processes, and educational platforms with complex integrations.',
+        'sobre.li1': 'Experience with high-usage products in live production environments',
+        'sobre.li2': 'Modular architecture, scalability, integrations, and data-driven decisions',
+        'sobre.li3': 'Available for ongoing engagements and direct hiring (contract/full-time)',
+        'sobre.wa': 'Chat with me on WhatsApp',
+        'sobre.email': 'Send an email',
+        // faq
+        'faq.title': 'Quick Q&A',
+        'faq.q1': 'Do you build "simple websites" or just layouts?',
+        'faq.a1': 'No. My focus is systems and operations: business rules, processes, integrations, and real results.',
+        'faq.q2': 'What is the minimum project size?',
+        'faq.a2': 'Projects starting at R$5k. For ongoing work, monthly retainers starting at R$500/mo.',
+        'faq.q3': 'How do you avoid scope creep?',
+        'faq.a3': 'Discovery + architecture before any development. This reduces rework and creates predictability.',
+        'faq.q4': 'Are you open to full-time / contract roles?',
+        'faq.a4': 'Yes — I can work on long-term projects as a contractor or as a full-time hire.',
+        // footer
+        'footer.title': 'Book a strategic consultation.',
+        'footer.desc': 'In 30 minutes we map bottlenecks, set priorities, and outline a clear plan to get your system live safely.',
+        'footer.wa': 'Chat on WhatsApp',
+        'footer.email': 'Send an email',
+        'float.wa': 'Chat on WhatsApp',
+      }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'pt';
+
+    function applyLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang === 'pt' ? 'pt-BR' : 'en';
+      document.title = lang === 'pt'
+        ? 'Miquéias Mesquita | Arquiteto de Software & Fullstack'
+        : 'Miquéias Mesquita | Software Architect & Fullstack';
+      document.querySelector('meta[name="description"]').content = lang === 'pt'
+        ? 'Desenvolvo sistemas personalizados de gestão, educação e automação financeira que organizam operações e aumentam faturamento.'
+        : 'I build custom management systems, educational platforms, and financial automation that increase revenue and scale operations.';
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n;
+        if (i18n[lang][key] !== undefined) el.innerHTML = i18n[lang][key];
+      });
+      document.getElementById('lang-label').textContent = lang === 'pt' ? 'EN' : 'PT';
+      localStorage.setItem('lang', lang);
+    }
+
+    function toggleLang() {
+      applyLang(currentLang === 'pt' ? 'en' : 'pt');
+    }
+
+    // ── Modal ──────────────────────────────────────────────────────────────────
     const modal = document.getElementById('modal');
     const modalImg = document.getElementById('modal-img');
 
@@ -819,17 +1085,13 @@
       modalImg.src = src;
       document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
       modal.classList.remove('active');
       document.body.style.overflow = 'auto';
     }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeModal();
-    });
-
-    // Filtro de projetos
+    // ── Filtro ─────────────────────────────────────────────────────────────────
     function filterProjects(category) {
       document.querySelectorAll('#projects-grid [data-category]').forEach(card => {
         card.style.display = (category === 'todos' || card.dataset.category === category) ? '' : 'none';
@@ -839,7 +1101,7 @@
       });
     }
 
-    // Botão flutuante — aparece após 400px de scroll
+    // ── Botão flutuante ────────────────────────────────────────────────────────
     const floatBtn = document.getElementById('whatsapp-float');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 400) {
@@ -851,11 +1113,11 @@
       }
     });
 
-    // Menu mobile
+    // ── Menu mobile ────────────────────────────────────────────────────────────
     const menuToggle = document.getElementById('menu-toggle');
     const mobileMenu = document.getElementById('mobile-menu');
-    const iconOpen = document.getElementById('icon-open');
-    const iconClose = document.getElementById('icon-close');
+    const iconOpen   = document.getElementById('icon-open');
+    const iconClose  = document.getElementById('icon-close');
 
     menuToggle.addEventListener('click', () => {
       const isOpen = !mobileMenu.classList.contains('hidden');
@@ -863,12 +1125,14 @@
       iconOpen.classList.toggle('hidden', !isOpen);
       iconClose.classList.toggle('hidden', isOpen);
     });
-
     function closeMobileMenu() {
       mobileMenu.classList.add('hidden');
       iconOpen.classList.remove('hidden');
       iconClose.classList.add('hidden');
     }
+
+    // ── Init ───────────────────────────────────────────────────────────────────
+    applyLang(currentLang);
   </script>
 </body>
 </html>
