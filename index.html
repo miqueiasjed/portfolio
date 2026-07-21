@@ -4,33 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Miquéias Mesquita | Transformo operações manuais em sistemas digitais</title>
-  <meta name="description" content="Seu negócio ainda depende de papel, planilha e WhatsApp bagunçado? Transformo operações desorganizadas em sistemas digitais claros e previsíveis. Cases reais com resultados comprovados." />
+  <title>Miquéias Mesquita | Engenheiro de Operações Digitais</title>
+  <meta name="description" content="Sua empresa cresce, mas a operação não acompanha? Acho o gargalo escondido atrás do crescimento e construo o sistema que faz marketing, CRM, financeiro e equipe conversarem entre si." />
 
-  <meta property="og:title" content="Miquéias Mesquita | Transformo operações manuais em sistemas digitais" />
-  <meta property="og:description" content="Saída do improviso operacional para uma operação digital clara, previsível e com mais controle." />
+  <meta property="og:title" content="Miquéias Mesquita | Engenheiro de Operações Digitais" />
+  <meta property="og:description" content="Toda empresa digital parece organizada... até crescer. Acho o gargalo e construo o sistema que faz tudo conversar." />
   <meta property="og:type" content="website" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
           colors: {
-            primary: '#3b82f6',
-            dark: '#020617',
-            card: '#0f172a',
-            accent: '#1e293b',
-            amber: '#f59e0b',
+            black: '#1d1d1f',
+            zinc: {
+              50:  '#f5f5f5',
+              100: '#ececec',
+              200: '#e2e2e2',
+              300: '#d1d1d1',
+              400: '#aeaeae',
+              500: '#8e8e8e',
+              600: '#6e6e6e',
+              700: '#4a4a4a',
+              800: '#333333',
+              900: '#242424',
+              950: '#1d1d1f',
+            },
+            dark: '#1d1d1f',
+            card: '#2c2c2e',
+            accent: '#3a3a3c',
           },
           boxShadow: {
-            glow: "0 0 0 1px rgba(59,130,246,.25), 0 10px 30px rgba(2,6,23,.6)",
-            amber: "0 0 0 1px rgba(245,158,11,.2), 0 8px 24px rgba(2,6,23,.5)"
+            glow: "0 1px 2px rgba(0,0,0,.04), 0 12px 24px rgba(0,0,0,.06)",
+            '2xl': "0 20px 60px -12px rgba(0,0,0,.18)",
           }
         }
       }
@@ -41,46 +56,35 @@
     html { scroll-behavior: smooth; }
 
     .glass-effect {
-      background: rgba(2, 6, 23, 0.80);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(14px);
     }
 
-    .gradient-text {
-      background: linear-gradient(to right, #3b82f6, #a855f7);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    @supports not (-webkit-text-fill-color: transparent) {
-      .gradient-text { color: #a855f7; background: none; }
-    }
-    @supports (-webkit-text-fill-color: transparent) {
-      .gradient-text { -webkit-text-fill-color: transparent; }
+    .blueprint-grid {
+      background-image:
+        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
     }
 
-    .amber-text {
-      background: linear-gradient(to right, #f59e0b, #f97316);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    @supports (-webkit-text-fill-color: transparent) {
-      .amber-text { -webkit-text-fill-color: transparent; }
+    .signature {
+      font-family: 'JetBrains Mono', monospace;
     }
 
     .filter-btn {
-      padding: 6px 16px;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      border: 1px solid #1e293b;
-      color: #94a3b8;
+      padding: 10px 16px 12px;
+      margin-bottom: -1px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: #8e8e8e;
       background: transparent;
       cursor: pointer;
       transition: all .2s;
     }
-    .filter-btn:hover { border-color: #3b82f6; color: #fff; }
-    .filter-btn.active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+    .filter-btn:hover { color: #1d1d1f; }
+    .filter-btn.active { color: #1d1d1f; border-bottom-color: #1d1d1f; font-weight: 600; }
 
     #modal {
       display: none;
@@ -95,15 +99,15 @@
     #modal.active { display: flex; }
 
     .bandeira-card {
-      border-left: 3px solid #f59e0b;
+      border-left: 3px solid #ffffff;
     }
 
     .dor-card:hover {
-      border-color: rgba(245, 158, 11, 0.3);
+      border-color: rgba(0, 0, 0, 0.2);
     }
 
     .historia-line {
-      border-left: 2px solid #1e40af;
+      border-left: 2px solid #d1d1d1;
       padding-left: 1.5rem;
       position: relative;
     }
@@ -112,55 +116,56 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: #3b82f6;
+      background: #1d1d1f;
       position: absolute;
       left: -6px;
       top: 6px;
     }
 
-    .manifesto-section {
-      background: linear-gradient(135deg, #0a0f1e 0%, #0c1628 50%, #091020 100%);
+    .tese-section {
+      background: #1d1d1f;
     }
 
     @keyframes pulse-slow {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0.4; }
     }
     .pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
   </style>
 </head>
 
-<body class="bg-dark text-slate-300 font-sans antialiased">
+<body class="bg-white text-zinc-700 font-sans antialiased">
 
   <!-- Modal imagem -->
   <div id="modal" onclick="closeModal()">
     <span class="absolute top-5 right-8 md:right-10 text-white text-4xl cursor-pointer select-none">&times;</span>
-    <img id="modal-img" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl border border-slate-700" onclick="event.stopPropagation()">
+    <img id="modal-img" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl border border-zinc-700" onclick="event.stopPropagation()">
   </div>
 
   <!-- NAV -->
-  <nav class="fixed w-full z-50 glass-effect border-b border-slate-800">
+  <nav class="fixed w-full z-50 glass-effect border-b border-zinc-200">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="#top" class="font-bold text-xl text-white tracking-tighter">
-        Miquéias<span class="text-primary">.dev</span>
+      <a href="#top" class="flex items-baseline gap-3">
+        <span class="font-bold text-xl text-zinc-950 tracking-tight">Miquéias Mesquita</span>
+        <span class="hidden lg:inline signature text-[10px] uppercase tracking-widest text-zinc-500 border border-zinc-300 rounded-full px-2 py-1">Engenheiro de Operações Digitais</span>
       </a>
 
       <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#problema" class="hover:text-primary transition">O problema</a>
-        <a href="#cases" class="hover:text-primary transition">Cases reais</a>
-        <a href="#metodo" class="hover:text-primary transition">Como funciona</a>
-        <a href="#sobre" class="hover:text-primary transition">Sobre mim</a>
+        <a href="#problema" class="hover:text-black transition">O gargalo</a>
+        <a href="#cases" class="hover:text-black transition">Provas</a>
+        <a href="#metodo" class="hover:text-black transition">Método</a>
+        <a href="#sobre" class="hover:text-black transition">Sobre</a>
       </div>
 
       <div class="flex items-center gap-3">
         <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20entender%20como%20funciona%20o%20diagn%C3%B3stico."
            aria-label="Quero meu diagnóstico"
-           class="bg-primary hover:bg-blue-600 text-white px-6 py-2.5 rounded-full text-sm font-bold transition shadow-lg shadow-blue-500/20">
+           class="bg-black hover:bg-zinc-800 text-white px-6 py-2.5 rounded-full text-sm font-bold transition">
           <span class="md:hidden">Diagnóstico</span>
           <span class="hidden md:inline">Quero meu diagnóstico gratuito</span>
         </a>
 
-        <button id="menu-toggle" class="md:hidden p-2 text-slate-300 hover:text-white transition" aria-label="Menu">
+        <button id="menu-toggle" class="md:hidden p-2 text-zinc-600 hover:text-black transition" aria-label="Menu">
           <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
@@ -172,196 +177,248 @@
     </div>
 
     <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-800 px-6 py-4 flex flex-col gap-4 text-sm font-medium">
-      <a href="#problema" class="hover:text-primary transition" onclick="closeMobileMenu()">O problema</a>
-      <a href="#cases" class="hover:text-primary transition" onclick="closeMobileMenu()">Cases reais</a>
-      <a href="#metodo" class="hover:text-primary transition" onclick="closeMobileMenu()">Como funciona</a>
-      <a href="#sobre" class="hover:text-primary transition" onclick="closeMobileMenu()">Sobre mim</a>
+    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-200 px-6 py-4 flex flex-col gap-4 text-sm font-medium">
+      <a href="#problema" class="hover:text-black transition" onclick="closeMobileMenu()">O gargalo</a>
+      <a href="#cases" class="hover:text-black transition" onclick="closeMobileMenu()">Provas</a>
+      <a href="#metodo" class="hover:text-black transition" onclick="closeMobileMenu()">Método</a>
+      <a href="#sobre" class="hover:text-black transition" onclick="closeMobileMenu()">Sobre</a>
     </div>
   </nav>
 
   <!-- HERO -->
-  <header id="top" class="pt-44 md:pt-48 pb-24 md:pb-32 px-6">
+  <header id="top" class="blueprint-grid pt-44 md:pt-48 pb-24 md:pb-32 px-6">
     <div class="max-w-5xl mx-auto text-center">
 
+      <span class="signature inline-block text-xs uppercase tracking-widest text-zinc-500 border border-zinc-300 rounded-full px-4 py-1.5 mb-8">
+        Engenheiro de Operações Digitais
+      </span>
 
-      <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
-        Seu negócio ainda<br />
-        <span class="gradient-text">trabalha mais que você.</span>
+      <h1 class="text-5xl md:text-7xl font-extrabold text-zinc-950 leading-tight mb-6">
+        Toda empresa digital<br />
+        parece organizada<span class="text-zinc-300">...</span><br />
+        <span class="border-b-4 border-black/20 pb-1">até crescer.</span>
       </h1>
 
-      <p class="text-xl md:text-2xl text-slate-400 mb-4 max-w-3xl mx-auto leading-relaxed">
-        Você não precisa de mais um sistema bonito.<br class="hidden md:block">
-        Você precisa parar de depender de papel, planilha e memória para operar.
+      <p class="text-xl md:text-2xl text-zinc-600 mb-4 max-w-3xl mx-auto leading-relaxed">
+        Empresas não deixam de crescer por falta de tecnologia.<br class="hidden md:block">
+        Deixam de crescer porque a operação não acompanha o crescimento.
       </p>
-      <p class="text-lg text-slate-500 mb-10 max-w-2xl mx-auto">
-        Transformo processos manuais e desorganizados em operações digitais claras, automatizadas e previsíveis para que o sistema trabalhe mais e você pense melhor.
+      <p class="text-lg text-zinc-500 mb-10 max-w-2xl mx-auto">
+        Acho o gargalo escondido atrás do seu crescimento e construo o sistema que faz marketing, CRM, financeiro e equipe conversarem entre si.
       </p>
 
       <div class="flex flex-col md:flex-row justify-center gap-4 mb-14">
-        <a href="#cases" class="px-10 py-4 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-lg">
-          Ver transformações reais
+        <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20entender%20como%20funciona%20o%20diagn%C3%B3stico." class="px-10 py-4 bg-black text-white font-bold rounded-2xl hover:bg-zinc-800 transition text-lg">
+          Quero meu diagnóstico gratuito
         </a>
-        <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20entender%20como%20funciona%20o%20diagn%C3%B3stico." class="px-10 py-4 border border-slate-700 hover:border-primary text-white font-bold rounded-2xl transition text-lg">
-          Quero um diagnóstico gratuito
+        <a href="#cases" class="px-10 py-4 border border-zinc-300 hover:border-black text-zinc-950 font-bold rounded-2xl transition text-lg">
+          Ver onde já achei o gargalo
         </a>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        <div class="p-5 bg-card/40 border border-slate-800 rounded-2xl shadow-glow text-left">
-          <p class="text-2xl font-bold text-white mb-1">+1.393</p>
-          <p class="text-xs text-slate-500 uppercase tracking-wide">alunos ativos na plataforma Daily Talks</p>
+        <div class="p-5 bg-zinc-50/60 border border-zinc-200 rounded-2xl shadow-glow text-left">
+          <p class="signature text-2xl font-bold text-zinc-950 mb-1">+1.393</p>
+          <p class="text-xs text-zinc-500 uppercase tracking-wide">alunos ativos numa única plataforma</p>
         </div>
-        <div class="p-5 bg-card/40 border border-slate-800 rounded-2xl shadow-glow text-left">
-          <p class="text-2xl font-bold text-white mb-1">20k → 60k/mês</p>
-          <p class="text-xs text-slate-500 uppercase tracking-wide">faturamento triplicado em clínica de trânsito</p>
+        <div class="p-5 bg-zinc-50/60 border border-zinc-200 rounded-2xl shadow-glow text-left">
+          <p class="signature text-2xl font-bold text-zinc-950 mb-1">20k → 60k/mês</p>
+          <p class="text-xs text-zinc-500 uppercase tracking-wide">faturamento triplicado numa clínica</p>
         </div>
-        <div class="p-5 bg-card/40 border border-slate-800 rounded-2xl shadow-glow text-left">
-          <p class="text-2xl font-bold text-white mb-1">+R$ 30k/mês</p>
-          <p class="text-xs text-slate-500 uppercase tracking-wide">recuperados em inadimplência com sistema de cobrança</p>
+        <div class="p-5 bg-zinc-50/60 border border-zinc-200 rounded-2xl shadow-glow text-left">
+          <p class="signature text-2xl font-bold text-zinc-950 mb-1">+R$ 30k/mês</p>
+          <p class="text-xs text-zinc-500 uppercase tracking-wide">recuperados de uma inadimplência que ninguém via</p>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- O PROBLEMA -->
-  <section id="problema" class="py-24 bg-card/50 border-y border-slate-800">
+  <!-- O GARGALO -->
+  <section id="problema" class="py-24 bg-zinc-50/40 border-y border-zinc-200">
     <div class="max-w-7xl mx-auto px-6">
 
       <div class="text-center mb-14">
-        <p class="text-sm font-semibold text-amber-400 uppercase tracking-widest mb-3">O problema que eu resolvo</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-          Você reconhece alguma dessas situações?
+        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">O inimigo</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4">
+          O que trava sua empresa tem nome: gambiarra.
         </h2>
-        <p class="text-slate-400 max-w-2xl mx-auto">
-          A maioria dos negócios não tem problema de trabalho. Tem problema de processo.
+        <p class="text-zinc-600 max-w-2xl mx-auto">
+          Planilha fazendo papel de sistema. Campo errado no CRM. Doze ferramentas que não conversam entre si. Isso é o que uma operação sem clareza parece por dentro.
         </p>
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
 
-        <div class="dor-card p-6 bg-dark border border-slate-800 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
+          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold mb-2">Você não sabe exatamente onde está seu dinheiro</h3>
-          <p class="text-sm text-slate-400">Quem pagou, quem está em aberto, quanto vai entrar esse mês tudo no achismo ou espalhado em planilhas que só uma pessoa entende.</p>
+          <h3 class="text-zinc-950 font-bold mb-2">Você não sabe exatamente onde está seu dinheiro</h3>
+          <p class="text-sm text-zinc-600">Quem pagou, quem está em aberto, quanto entra esse mês. Tudo no achismo ou espalhado em planilhas que só uma pessoa entende.</p>
         </div>
 
-        <div class="dor-card p-6 bg-dark border border-slate-800 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
+          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold mb-2">Informações importantes ficam perdidas no WhatsApp</h3>
-          <p class="text-sm text-slate-400">Um cliente sumiu? Um retorno ficou esquecido? A conversa que importava estava no histórico de mensagens que ninguém lê mais.</p>
+          <h3 class="text-zinc-950 font-bold mb-2">Informações importantes se perdem no meio das conversas</h3>
+          <p class="text-sm text-zinc-600">Um cliente sumiu? Um retorno ficou esquecido? A conversa que importava está perdida no histórico de mensagens que ninguém mais lê.</p>
         </div>
 
-        <div class="dor-card p-6 bg-dark border border-slate-800 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
+          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold mb-2">Você é o sistema do próprio negócio</h3>
-          <p class="text-sm text-slate-400">Tudo depende de você. Se você tirar um dia, a operação trava. Você não consegue sair do operacional porque o negócio não funciona sem sua memória.</p>
+          <h3 class="text-zinc-950 font-bold mb-2">Você é o sistema do próprio negócio</h3>
+          <p class="text-sm text-zinc-600">Tudo depende de você. Se você sair amanhã, sua empresa continua de pé? Na maioria dos casos, a resposta é não.</p>
         </div>
 
-        <div class="dor-card p-6 bg-dark border border-slate-800 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
+          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold mb-2">Você já tentou sistemas prontos e nenhum serviu</h3>
-          <p class="text-sm text-slate-400">Caro demais, engessado demais ou genérico demais. O sistema não foi feito para a sua operação, você foi obrigado a dobrar sua operação para caber no sistema.</p>
+          <h3 class="text-zinc-950 font-bold mb-2">Você já tentou ferramenta pronta. Nenhuma serviu</h3>
+          <p class="text-sm text-zinc-600">Cara demais, engessada demais ou genérica demais. A ferramenta não foi feita para sua operação, e você acabou dobrando sua operação para caber nela.</p>
         </div>
 
-        <div class="dor-card p-6 bg-dark border border-slate-800 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
+          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold mb-2">Clientes caem no esquecimento</h3>
-          <p class="text-sm text-slate-400">Quem veio há 3 meses e não voltou? Quem está próximo de renovar? Quem nunca foi cobrado? Sem rastreamento, você perde receita que já tinha conquistado.</p>
+          <h3 class="text-zinc-950 font-bold mb-2">Clientes caem no esquecimento</h3>
+          <p class="text-sm text-zinc-600">Quem veio há três meses e não voltou? Quem está prestes a renovar? Quem nunca foi cobrado? Sem rastreio, você perde receita que já tinha conquistado.</p>
         </div>
 
-        <div class="dor-card p-6 bg-dark border border-slate-800 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-red-500/10 border border-red-500/20 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
+          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
             </svg>
           </div>
-          <h3 class="text-white font-bold mb-2">Você trabalha muito mas o negócio não escala</h3>
-          <p class="text-sm text-slate-400">O problema não é falta de esforço. É que uma operação desorganizada não sustenta crescimento, cada novo cliente traz mais caos, não mais resultado.</p>
+          <h3 class="text-zinc-950 font-bold mb-2">Você trabalha muito, mas o negócio não escala</h3>
+          <p class="text-sm text-zinc-600">O problema raramente é esforço. Uma operação sem clareza não sustenta crescimento: cada cliente novo traz mais caos, não mais resultado.</p>
         </div>
 
       </div>
 
       <!-- Frase de bandeira -->
-      <div class="max-w-4xl mx-auto p-8 bg-dark border border-amber-500/20 rounded-3xl shadow-amber text-center">
-        <p class="text-2xl md:text-3xl font-bold text-white mb-3">
-          "Tecnologia sem clareza só acelera a bagunça."
+      <div class="max-w-4xl mx-auto p-8 bg-white border border-zinc-300 rounded-3xl shadow-glow text-center">
+        <p class="text-2xl md:text-3xl font-bold text-zinc-950 mb-3">
+          "Achei uma empresa perdendo R$ 80 mil por mês por causa de um campo errado no CRM."
         </p>
-        <p class="text-slate-400 text-lg">
-          Antes de criar um sistema, é preciso entender o processo, a dor e o objetivo do negócio. Porque automatizar o caos é só ter caos mais rápido.
+        <p class="text-zinc-600 text-lg">
+          Antes de construir qualquer sistema, é preciso achar o gargalo. Sistema em cima de processo confuso só faz a confusão andar mais rápido.
         </p>
         <div class="mt-6 flex flex-wrap justify-center gap-2">
-          <span class="px-3 py-1 rounded-full text-xs border border-amber-500/30 text-amber-400 bg-amber-500/5">Clínicas & Consultórios</span>
-          <span class="px-3 py-1 rounded-full text-xs border border-amber-500/30 text-amber-400 bg-amber-500/5">Autoescolas</span>
-          <span class="px-3 py-1 rounded-full text-xs border border-amber-500/30 text-amber-400 bg-amber-500/5">Negócios de Atendimento</span>
-          <span class="px-3 py-1 rounded-full text-xs border border-amber-500/30 text-amber-400 bg-amber-500/5">Recorrência & Assinaturas</span>
+          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Mentores & Criadores de Curso</span>
+          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Gestores de Comunidade</span>
+          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Clínicas & Consultórios</span>
+          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Recorrência & Assinaturas</span>
         </div>
       </div>
 
     </div>
   </section>
 
-  <!-- MANIFESTO -->
-  <section class="manifesto-section py-24 border-b border-slate-800">
+  <!-- TESE / ACHEI O GARGALO -->
+  <section class="tese-section py-24 border-b border-zinc-800">
     <div class="max-w-6xl mx-auto px-6">
       <div class="grid md:grid-cols-2 gap-16 items-center">
 
         <div>
-          <p class="text-sm font-semibold text-amber-400 uppercase tracking-widest mb-4">Por que faço o que faço</p>
-          <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-            Acredito que tecnologia começa na dor, não no código.
+          <p class="signature text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-4">A tese</p>
+          <h2 class="text-4xl md:text-5xl font-black text-white mb-6 signature">
+            Achei o gargalo.
           </h2>
-          <div class="space-y-4 text-slate-400 leading-relaxed">
+          <div class="space-y-4 text-zinc-400 leading-relaxed">
             <p>
-              Eu acredito que tecnologia não começa no código, começa na dor. Antes de criar qualquer sistema, é preciso entender o processo, o gargalo e o objetivo real do negócio.
+              Toda empresa que cresce parece organizada, até o volume aumentar. Aí o processo que era suficiente para vinte clientes começa a rachar com duzentos.
             </p>
             <p>
-              Eu acredito que pequenos negócios também merecem inteligência, organização e automação, não só as grandes empresas.
-            </p>
-            <p>
-              Eu acredito que uma boa solução digital não é a mais complexa. É a que resolve o problema certo, da forma mais clara possível.
+              O gargalo quase nunca está na falta de tecnologia. Está no campo que ninguém preenche direito, na cobrança que ninguém segue até o fim, no conhecimento que mora só na cabeça de uma pessoa.
             </p>
             <p class="text-white font-medium">
-              No fim, meu trabalho não é apenas criar sistemas. É transformar confusão em clareza, processo manual em operação digital e esforço solto em crescimento com direção.
+              Meu trabalho começa ali: acho onde a operação está rachando e construo o sistema que segura o crescimento, em vez de travar nele.
             </p>
           </div>
         </div>
 
         <div class="space-y-5">
-          <div class="bandeira-card p-6 bg-dark/80 border border-slate-800 rounded-2xl">
-            <h4 class="text-white font-bold mb-2">O sistema deve trabalhar mais que o dono</h4>
-            <p class="text-sm text-slate-400">Se você precisa estar presente em tudo, o problema não é você, é que seu negócio não tem processo. Meu trabalho é mudar isso.</p>
+          <div class="bandeira-card p-6 bg-card/60 border border-zinc-800 rounded-2xl">
+            <h4 class="text-white font-bold mb-2">A empresa continua de pé mesmo quando você não está olhando</h4>
+            <p class="text-sm text-zinc-400">Se uma pessoa some amanhã, o processo segue rodando. O negócio para de morar na sua memória.</p>
           </div>
-          <div class="bandeira-card p-6 bg-dark/80 border border-slate-800 rounded-2xl">
-            <h4 class="text-white font-bold mb-2">Clareza vem antes da automação</h4>
-            <p class="text-sm text-slate-400">Antes de automatizar, é preciso organizar. Antes de criar o sistema, é preciso entender a dor. Clareza é o único caminho para automatizar com resultado.</p>
+          <div class="bandeira-card p-6 bg-card/60 border border-zinc-800 rounded-2xl">
+            <h4 class="text-white font-bold mb-2">Clareza vem antes do sistema</h4>
+            <p class="text-sm text-zinc-400">Organizar o fluxo real é o primeiro passo. Sem isso, todo sistema novo só acelera a bagunça antiga.</p>
           </div>
-          <div class="bandeira-card p-6 bg-dark/80 border border-slate-800 rounded-2xl">
-            <h4 class="text-white font-bold mb-2">Menos ferramenta, mais solução</h4>
-            <p class="text-sm text-slate-400">Não é sobre mais uma ferramenta solta no seu stack. É sobre uma solução conectada ao processo real da sua operação, que gera alívio, não mais complexidade.</p>
+          <div class="bandeira-card p-6 bg-card/60 border border-zinc-800 rounded-2xl">
+            <h4 class="text-white font-bold mb-2">Menos ferramenta solta, mais operação conectada</h4>
+            <p class="text-sm text-zinc-400">Doze ferramentas que não conversam pesam mais do que zero. O que resolve é tudo funcionando junto, no mesmo lugar.</p>
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAL -->
+  <section class="blueprint-grid py-24 px-6 border-b border-zinc-200">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">O diferencial</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4">O portal, o CRM e o financeiro são seus de verdade</h2>
+        <p class="text-zinc-600 max-w-2xl mx-auto">
+          A maioria dos implementadores configura a ferramenta de outra empresa e cobra mensalidade por isso. Aqui a estrutura nasce sob medida: portal, CRM e financeiro não são plataforma alugada de terceiro, são a base própria da sua operação, moldada ao seu processo.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
+          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 1</p>
+          <h4 class="text-zinc-950 font-bold text-lg mb-2">Portal</h4>
+          <p class="text-sm text-zinc-600">Onde o cliente acompanha, aprende e acessa. Sem mensalidade de plataforma de terceiro.</p>
+        </div>
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
+          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 2</p>
+          <h4 class="text-zinc-950 font-bold text-lg mb-2">CRM + rastreio</h4>
+          <p class="text-sm text-zinc-600">Histórico de cada cliente e de onde ele veio, num só lugar.</p>
+        </div>
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
+          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 3</p>
+          <h4 class="text-zinc-950 font-bold text-lg mb-2">Financeiro</h4>
+          <p class="text-sm text-zinc-600">Pagamento, renovação e margem real, sem depender de planilha.</p>
+        </div>
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
+          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 4</p>
+          <h4 class="text-zinc-950 font-bold text-lg mb-2">Módulo de Inteligência</h4>
+          <p class="text-sm text-zinc-600">Churn, tempo de permanência e LTV calculados sozinhos, por canal de origem.</p>
+        </div>
+      </div>
+
+      <div class="flex justify-center mb-8">
+        <div class="h-10 w-px bg-zinc-300"></div>
+      </div>
+
+      <div class="max-w-xl mx-auto p-6 bg-white border border-zinc-300 rounded-2xl text-center shadow-glow mb-8">
+        <p class="text-zinc-950 font-bold mb-1">Sua operação, sob controle</p>
+        <p class="text-sm text-zinc-600">Visão completa do ciclo do seu cliente, do primeiro contato até a renovação, tudo dentro da mesma estrutura.</p>
+      </div>
+
+      <div class="max-w-2xl mx-auto p-6 bg-zinc-950 border border-zinc-800 rounded-2xl text-center">
+        <p class="text-white text-sm leading-relaxed">
+          Uma pesquisa recente do setor de assinaturas mostra: 45% dos donos de curso não sabem sua taxa de cancelamento, 47% não sabem quanto tempo em média um cliente fica, 60% não sabem quanto cada cliente vale no total. É estatística de mercado, não opinião minha, e é exatamente o que o Módulo de Inteligência calcula sozinho.
+        </p>
       </div>
     </div>
   </section>
@@ -369,286 +426,213 @@
   <!-- CASES -->
   <section id="cases" class="py-24 px-6">
     <div class="max-w-7xl mx-auto">
-      <div class="text-center mb-10">
-        <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-3">Resultados reais</p>
-        <h2 class="text-3xl font-bold text-white mb-3">Operações que transformei</h2>
-        <p class="text-slate-400 mt-3 max-w-2xl mx-auto">
-          Cada projeto nasceu de um problema real, não de uma venda de ferramenta. O ponto de partida foi sempre a dor, não a tecnologia.
-        </p>
+      <div class="grid md:grid-cols-[1fr_auto] gap-8 md:gap-16 md:items-end mb-12">
+        <div>
+          <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Achei o gargalo em...</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4 max-w-xl">Empresas onde já achei o gargalo</h2>
+          <p class="text-zinc-600 max-w-xl">
+            De clínica a autoescola, de curso online a portal editorial: o nicho muda, a lógica nunca. Hoje meu foco está nos especialistas digitais que já vendem, mas sentem a operação travar o crescimento.
+          </p>
+        </div>
+        <div class="md:text-right md:pl-10 md:border-l md:border-zinc-200 flex-shrink-0">
+          <p class="signature text-4xl font-bold text-zinc-950 mb-1">9</p>
+          <p class="text-xs text-zinc-500 uppercase tracking-widest leading-relaxed max-w-[180px] md:ml-auto">operações reais onde já achei o gargalo</p>
+        </div>
       </div>
 
       <!-- Filtros -->
-      <div class="flex flex-wrap justify-center gap-2 mb-10">
+      <div class="flex flex-wrap gap-x-1 border-b border-zinc-200 mb-12 -ml-4">
         <button class="filter-btn active" data-filter="todos" onclick="filterProjects('todos')">Todos</button>
         <button class="filter-btn" data-filter="clinica" onclick="filterProjects('clinica')">Clínicas & Saúde</button>
         <button class="filter-btn" data-filter="erp" onclick="filterProjects('erp')">Gestão & ERP</button>
         <button class="filter-btn" data-filter="edtech" onclick="filterProjects('edtech')">Educação</button>
-        <button class="filter-btn" data-filter="ia" onclick="filterProjects('ia')">IA & Automação</button>
+        <button class="filter-btn" data-filter="bastidor" onclick="filterProjects('bastidor')">Bastidor & Dados</button>
         <button class="filter-btn" data-filter="portal" onclick="filterProjects('portal')">Portal & Assinatura</button>
       </div>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
 
         <!-- Núcleo Trânsito -->
-        <div data-category="clinica" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="clinica" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('nucleo_transito_1.jpg')">
-            <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover" alt="Clínica NTC preview">
+            <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Clínica NTC preview">
             <div class="absolute top-3 left-3">
-              <span class="px-2 py-1 text-[10px] rounded-full bg-green-500/20 border border-green-500/30 text-green-400 font-bold">Transformação real</span>
+              <span class="px-2 py-1 text-[10px] rounded-full bg-black/70 border border-white/20 text-white font-bold">Transformação real</span>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Clínica de Trânsito NTC</h3>
-            <p class="text-sm text-green-400 font-bold mb-3">R$ 20k → R$ 60k/mês de faturamento</p>
-            <p class="text-sm text-slate-400 mb-4">
-              Operação 100% no papel. Sem controle de agenda, cobrança ou financeiro. Desenvolvemos sistema completo de gestão, o faturamento triplicou durante a pandemia.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">Clínica de Trânsito NTC</h3>
+            <p class="text-sm text-zinc-950 font-bold mb-3">R$ 20k → R$ 60k/mês de faturamento</p>
+            <p class="text-sm text-zinc-600 mb-4">
+              Operação 100% no papel. Sem controle de agenda, cobrança ou financeiro. Construímos o sistema de gestão e o faturamento triplicou durante a pandemia.
             </p>
-            <div class="mt-auto flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Cobrança</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Gestão</span>
-              </div>
-              <a href="https://desktopmedical.com.br/" target="_blank" class="text-primary text-sm font-bold">Ver sistema →</a>
+            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Gestão · Cobrança · Financeiro</p>
+              <a href="https://desktopmedical.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver sistema →</a>
             </div>
           </div>
         </div>
 
         <!-- Habilita -->
-        <div data-category="clinica" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="clinica" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('sistema_habilita_1.jpg')">
-            <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover" alt="Sistema Habilita preview">
+            <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Sistema Habilita preview">
             <div class="absolute top-3 left-3">
-              <span class="px-2 py-1 text-[10px] rounded-full bg-green-500/20 border border-green-500/30 text-green-400 font-bold">Transformação real</span>
+              <span class="px-2 py-1 text-[10px] rounded-full bg-black/70 border border-white/20 text-white font-bold">Transformação real</span>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Sistema Habilita</h3>
-            <p class="text-sm text-green-400 font-bold mb-3">+R$ 30k/mês recuperados em inadimplência</p>
-            <p class="text-sm text-slate-400 mb-4">
-              "Dívida invisível" acumulando sem controle. Criamos sistema com alertas de inadimplência, controle de caixa e régua de cobrança automatizada.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">Sistema Habilita</h3>
+            <p class="text-sm text-zinc-950 font-bold mb-3">+R$ 30k/mês recuperados em inadimplência</p>
+            <p class="text-sm text-zinc-600 mb-4">
+              Dívida que ninguém cobrava porque ninguém sabia que existia. Construímos alertas de inadimplência, controle de caixa e uma régua de cobrança que roda sozinha.
             </p>
-            <div class="mt-auto flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Financeiro</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Dashboard</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Cobrança</span>
-              </div>
-              <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-primary text-sm font-bold">Ver sistema →</a>
+            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Financeiro · Dashboard · Cobrança</p>
+              <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver sistema →</a>
             </div>
           </div>
         </div>
 
         <!-- Agenda SaaS Clínicas -->
-        <div data-category="clinica" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-teal-950 to-cyan-900 flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-5xl font-black text-teal-400/30 tracking-tighter">SaaS</p>
-              <p class="text-xs text-teal-400/50 uppercase tracking-widest mt-1">Clínicas · Multi-tenant</p>
+        <div data-category="clinica" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center">
+            <div class="text-center transition-transform duration-500 group-hover:scale-105">
+              <p class="signature text-5xl font-black text-zinc-700 tracking-tighter">SaaS</p>
+              <p class="signature text-xs text-zinc-600 uppercase tracking-widest mt-1">Clínicas · Multiunidade</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Agenda SaaS - Clínicas</h3>
-            <p class="text-sm text-slate-500 mb-3 text-xs uppercase tracking-wide">Em produção</p>
-            <p class="text-sm text-slate-400 mb-4">
-              Plataforma multi-tenant para clínicas e consultórios: agendamento, portal do paciente, WhatsApp integrado, CRM e financeiro em um só lugar.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">Agenda SaaS - Clínicas</h3>
+            <p class="signature text-zinc-500 mb-3 text-xs uppercase tracking-wide">Em produção</p>
+            <p class="text-sm text-zinc-600 mb-4">
+              Estrutura para várias clínicas ao mesmo tempo: agendamento, portal do paciente, WhatsApp conectado, CRM e financeiro num só lugar.
             </p>
-            <div class="mt-auto flex flex-wrap gap-2">
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">SaaS</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Multi-tenant</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">WhatsApp</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">CRM</span>
+            <div class="mt-auto pt-4 border-t border-zinc-200">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Multiunidade · WhatsApp conectado · CRM</p>
             </div>
           </div>
         </div>
 
         <!-- SAE Autoescola -->
-        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-violet-950 to-purple-900 flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-5xl font-black text-violet-400/30 tracking-tighter">SAE</p>
-              <p class="text-xs text-violet-400/50 uppercase tracking-widest mt-1">7 anos de laboratório</p>
+        <div data-category="erp" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center">
+            <div class="text-center transition-transform duration-500 group-hover:scale-105">
+              <p class="signature text-5xl font-black text-zinc-700 tracking-tighter">SAE</p>
+              <p class="signature text-xs text-zinc-600 uppercase tracking-widest mt-1">7 anos de laboratório</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">SAE - Sistema Autoescola</h3>
-            <p class="text-sm text-slate-500 mb-3 text-xs uppercase tracking-wide">7 anos de operação real</p>
-            <p class="text-sm text-slate-400 mb-4">
-              Operação manual sem métricas, CRM ou controle. Construí ERP completo: comercial, exames, financeiro, CRM multi-unidade e automações. É onde aprendi que eu não apenas programava, eu transformava operações.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">SAE - Sistema Autoescola</h3>
+            <p class="signature text-zinc-500 mb-3 text-xs uppercase tracking-wide">7 anos de operação real</p>
+            <p class="text-sm text-zinc-600 mb-4">
+              Operação manual, sem métrica, CRM ou controle. Construí o sistema completo: comercial, exames, financeiro, CRM multiunidade e os fluxos que hoje rodam sozinhos. Foi ali que entendi que o processo vem antes do código.
             </p>
-            <div class="mt-auto flex flex-wrap gap-2">
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">CRM</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Multi-unidade</span>
+            <div class="mt-auto pt-4 border-t border-zinc-200">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">ERP · CRM · Multiunidade</p>
             </div>
           </div>
         </div>
 
         <!-- Ari Dedetização -->
-        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="erp" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('ari_dedetizacao_1.png')">
-            <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover" alt="Ari Dedetização preview">
+            <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Ari Dedetização preview">
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Ari Dedetização</h3>
-            <p class="text-sm text-slate-500 mb-3 text-xs uppercase tracking-wide">Gestão de serviços de campo</p>
-            <p class="text-sm text-slate-400 mb-4">
-              ERP sob medida para ordens de serviço, logística de campo e faturamento. Saída do papel e WhatsApp para rastreabilidade total da operação.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">Ari Dedetização</h3>
+            <p class="signature text-zinc-500 mb-3 text-xs uppercase tracking-wide">Gestão de serviços de campo</p>
+            <p class="text-sm text-zinc-600 mb-4">
+              Sistema sob medida para ordem de serviço, logística de campo e faturamento. Saída do papel e da mensagem avulsa para rastreio completo da operação.
             </p>
-            <div class="mt-auto flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">ERP</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Ordens de serviço</span>
-              </div>
-              <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-primary text-sm font-bold">Ver sistema →</a>
+            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">ERP · Ordens de serviço</p>
+              <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver sistema →</a>
             </div>
           </div>
         </div>
 
-        <!-- CRM -->
-        <div data-category="erp" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-rose-950 to-pink-900 flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-5xl font-black text-rose-400/30 tracking-tighter">CRM</p>
-              <p class="text-xs text-rose-400/50 uppercase tracking-widest mt-1">Pipeline · Leads · WhatsApp</p>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">CRM para Negócios de Atendimento</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Leads perdidos no WhatsApp, follow-ups esquecidos, vendas caindo no vazio. O CRM trouxe pipeline visual, lead scoring, automações e financeiro, nada mais cai no esquecimento.
+        <!-- Danúzio - Operação Completa (featured) -->
+        <div data-category="bastidor" class="group bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col lg:col-span-2 hover:border-zinc-600 transition">
+          <div class="p-8 flex-1 flex flex-col">
+            <p class="signature text-[11px] text-zinc-500 uppercase tracking-widest mb-3">Operação completa · acompanhamento mensal</p>
+            <h3 class="text-2xl font-bold text-white mb-2">Danúzio</h3>
+            <p class="text-sm text-zinc-400 mb-6 max-w-2xl">
+              Sou todo o time técnico de um criador de conteúdo, num modelo de acompanhamento mensal. Quatro sistemas rodando integrados sob a mesma operação, a prova viva da promessa central: a operação continua porque eu sou a estrutura técnica dela, não porque alguém está olhando o tempo todo.
             </p>
-            <div class="mt-auto flex flex-wrap gap-2">
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Pipeline de vendas</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">WhatsApp integrado</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Automação</span>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-auto">
+              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
+                <p class="text-white font-bold text-sm mb-1">Danúzio News</p>
+                <p class="text-xs text-zinc-500">Portal com assinatura recorrente. A publicação roda sozinha.</p>
+              </div>
+              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
+                <p class="text-white font-bold text-sm mb-1">Geopolítica para Investidores</p>
+                <p class="text-xs text-zinc-500">Mapa de calor e alerta antecipado para quem precisa decidir rápido.</p>
+              </div>
+              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
+                <p class="text-white font-bold text-sm mb-1">OSINT Monitor</p>
+                <p class="text-xs text-zinc-500">Coleta, classifica e publica sozinho, 24 horas.</p>
+              </div>
+              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
+                <p class="text-white font-bold text-sm mb-1">CRM de Atendimento</p>
+                <p class="text-xs text-zinc-500">Pipeline visual e financeiro no mesmo lugar.</p>
+              </div>
             </div>
           </div>
         </div>
 
         <!-- Daily Talks -->
-        <div data-category="edtech" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="edtech" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('daily_talks_1.jpg')">
-            <img src="daily_talks_1.jpg" class="w-full h-full object-cover" alt="Daily Talks preview">
+            <img src="daily_talks_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Daily Talks preview">
             <div class="absolute top-3 left-3">
-              <span class="px-2 py-1 text-[10px] rounded-full bg-blue-500/20 border border-blue-500/30 text-blue-400 font-bold">+1.393 alunos ativos</span>
+              <span class="px-2 py-1 text-[10px] rounded-full bg-black/70 border border-white/20 text-white font-bold">+1.393 alunos ativos</span>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Daily Talks</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Plataforma EdTech completa: pagamentos, vídeo, IA, agendamentos e app mobile. Sustenta mais de 1.393 alunos ativos em produção com alta disponibilidade.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">Daily Talks</h3>
+            <p class="text-sm text-zinc-600 mb-4">
+              Estrutura completa de ensino: pagamento, vídeo, agendamento e aplicativo, sustentando mais de 1.393 alunos ativos em produção, com alta disponibilidade.
             </p>
-            <div class="mt-auto flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Portal do Aluno</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Pagamentos</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">App Mobile</span>
-              </div>
-              <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-primary text-sm font-bold">Ver plataforma →</a>
+            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Portal do Aluno · Pagamentos · Aplicativo</p>
+              <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver plataforma →</a>
             </div>
           </div>
         </div>
 
         <!-- ProfOnline -->
-        <div data-category="edtech" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
+        <div data-category="edtech" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
           <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('profonline_1.jpg')">
-            <img src="profonline_1.jpg" class="w-full h-full object-cover" alt="ProfOnline preview">
+            <img src="profonline_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="ProfOnline preview">
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">ProfOnline</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Plataforma de ensino online que tirou o professor do improviso, aulas, alunos, pagamentos e conteúdo organizados num único ambiente digital, pronto para crescer sem caos.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">ProfOnline</h3>
+            <p class="text-sm text-zinc-600 mb-4">
+              Estrutura que tirou o professor do improviso. Aula, aluno, pagamento e conteúdo organizados num único ambiente, pronto para crescer sem virar bagunça.
             </p>
-            <div class="mt-auto flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Plataforma EaD</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Portal do Aluno</span>
-              </div>
-              <a href="https://app.profonline.com.br/" target="_blank" class="text-primary text-sm font-bold">Ver plataforma →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- OSINT Monitor -->
-        <div data-category="ia" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-slate-900 to-emerald-950 flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-5xl font-black text-emerald-400/30 tracking-tighter">OSINT</p>
-              <p class="text-xs text-emerald-400/50 uppercase tracking-widest mt-1">IA + Automação</p>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">OSINT Monitor</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Processo 100% manual virou automação completa: coleta, classificação de breaking news, geração de arte e publicação, tudo sem intervenção humana. O que levava horas passou a levar segundos.
-            </p>
-            <div class="mt-auto flex flex-wrap gap-2">
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Automação</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">IA</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Publicação automática</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Geopolítica para Investidores -->
-        <div data-category="ia" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-blue-950 to-indigo-900 flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-5xl font-black text-blue-400/30 tracking-tighter">GEO</p>
-              <p class="text-xs text-blue-400/50 uppercase tracking-widest mt-1">IA + Investidores</p>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Geopolítica para Investidores</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Transformei dados geopolíticos dispersos em inteligência acionável: mapa de calor, alertas preditivos e radar de eleições. O investidor para de garimpar informação e começa a tomar decisão.
-            </p>
-            <div class="mt-auto flex flex-wrap gap-2">
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">IA</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Inteligência de dados</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Alertas automáticos</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Danuzio News -->
-        <div data-category="portal" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('danuzio_news_1.jpg')">
-            <img src="danuzio_news_1.jpg" class="w-full h-full object-cover" alt="Danuzio News preview">
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Danuzio News</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Portal premium com paywall, recorrência de assinaturas e gestão completa de assinantes. Automações de publicação que eliminaram trabalho manual diário.
-            </p>
-            <div class="mt-auto flex items-center justify-between gap-3">
-              <div class="flex flex-wrap gap-2">
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Paywall</span>
-                <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Assinaturas</span>
-              </div>
-              <a href="https://danuzionews.com/" target="_blank" class="text-primary text-sm font-bold">Ver portal →</a>
+            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Estrutura de Ensino · Portal do Aluno</p>
+              <a href="https://app.profonline.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver plataforma →</a>
             </div>
           </div>
         </div>
 
         <!-- Portal Marsiglia -->
-        <div data-category="portal" class="bg-card border border-slate-800 rounded-2xl overflow-hidden flex flex-col hover:border-primary/50 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-amber-950 to-orange-900 flex items-center justify-center">
-            <div class="text-center">
-              <p class="text-5xl font-black text-amber-400/30 tracking-tighter">PM</p>
-              <p class="text-xs text-amber-400/50 uppercase tracking-widest mt-1">Portal Editorial</p>
+        <div data-category="portal" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
+          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center">
+            <div class="text-center transition-transform duration-500 group-hover:scale-105">
+              <p class="signature text-5xl font-black text-zinc-700 tracking-tighter">PM</p>
+              <p class="signature text-xs text-zinc-600 uppercase tracking-widest mt-1">Portal Editorial</p>
             </div>
           </div>
           <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-white mb-1">Portal Marsiglia</h3>
-            <p class="text-sm text-slate-400 mb-4">
-              Operação editorial saiu de ferramentas fragmentadas para um único portal: cursos, artigos, assinaturas e newsletter integrados. O criador parou de gerenciar plataformas e voltou a criar.
+            <h3 class="text-xl font-bold text-zinc-950 mb-1">Portal Marsiglia</h3>
+            <p class="text-sm text-zinc-600 mb-4">
+              Operação editorial saiu de ferramentas soltas para um único portal: curso, artigo, assinatura e newsletter no mesmo lugar. Quem criava conteúdo parou de administrar plataforma e voltou a criar.
             </p>
-            <div class="mt-auto flex flex-wrap gap-2">
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Cursos</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Assinaturas</span>
-              <span class="px-2 py-1 text-[10px] rounded bg-slate-800 text-slate-200 border border-slate-700">Newsletter</span>
+            <div class="mt-auto pt-4 border-t border-zinc-200">
+              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Cursos · Assinaturas · Newsletter</p>
             </div>
           </div>
         </div>
@@ -658,80 +642,80 @@
   </section>
 
   <!-- DEPOIMENTOS -->
-  <section id="depoimentos" class="py-24 bg-card/50 border-y border-slate-800">
+  <section id="depoimentos" class="py-24 bg-zinc-50/40 border-y border-zinc-200">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-14">
-        <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-3">Quem usa na prática</p>
-        <h2 class="text-3xl font-bold text-white">Resultados e relatos reais</h2>
-        <p class="text-slate-400 mt-3">Números documentados e o que os clientes disseram sobre o impacto no dia a dia.</p>
+        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Quem usa na prática</p>
+        <h2 class="text-3xl font-bold text-zinc-950">Resultados documentados</h2>
+        <p class="text-zinc-600 mt-3">Números registrados e o que os clientes disseram sobre o impacto no dia a dia.</p>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
 
         <!-- Resultado documentado 1 - NTC -->
-        <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-5 hover:border-green-500/20 transition">
+        <div class="bg-white border border-zinc-200 rounded-2xl p-8 flex flex-col gap-5 hover:border-zinc-400 transition">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center">
+              <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
               </svg>
             </div>
-            <span class="text-xs font-bold text-green-400 uppercase tracking-widest">Resultado documentado</span>
+            <span class="signature text-xs font-bold text-zinc-500 uppercase tracking-widest">Resultado documentado</span>
           </div>
           <div class="flex-1">
-            <p class="text-3xl font-black text-white mb-1">1M+ no bolso.</p>
-            <p class="text-slate-400 text-sm mb-4">faturamento mensal triplicado durante a pandemia</p>
-            <p class="text-slate-400 text-sm leading-relaxed">
+            <p class="text-3xl font-black text-zinc-950 mb-1">1M+ no bolso.</p>
+            <p class="text-zinc-600 text-sm mb-4">faturamento mensal triplicado durante a pandemia</p>
+            <p class="text-zinc-600 text-sm leading-relaxed">
               Clínica de trânsito operava 100% no papel, sem controle de agenda, cobrança ou financeiro. Com o sistema de gestão, conquistaram clareza total da operação e triplicaram o faturamento.
             </p>
           </div>
-          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
-            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">NTC</div>
+          <div class="flex items-center gap-4 pt-4 border-t border-zinc-200">
+            <div class="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 text-sm font-bold">NTC</div>
             <div>
-              <p class="text-white font-semibold text-sm">Clínica de Trânsito NTC</p>
-              <p class="text-slate-500 text-xs">Gestão & Cobrança · Ceará</p>
+              <p class="text-zinc-950 font-semibold text-sm">Clínica de Trânsito NTC</p>
+              <p class="text-zinc-500 text-xs">Gestão & Cobrança · Ceará</p>
             </div>
           </div>
         </div>
 
         <!-- Resultado documentado 2 - Habilita -->
-        <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-5 hover:border-green-500/20 transition">
+        <div class="bg-white border border-zinc-200 rounded-2xl p-8 flex flex-col gap-5 hover:border-zinc-400 transition">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center">
-              <svg class="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center">
+              <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
               </svg>
             </div>
-            <span class="text-xs font-bold text-green-400 uppercase tracking-widest">Resultado documentado</span>
+            <span class="signature text-xs font-bold text-zinc-500 uppercase tracking-widest">Resultado documentado</span>
           </div>
           <div class="flex-1">
-            <p class="text-3xl font-black text-white mb-1">+R$ 30k/mês</p>
-            <p class="text-slate-400 text-sm mb-4">recuperados em inadimplência invisível</p>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              A autoescola tinha dívidas que ninguém cobrava porque ninguém sabia que existiam. O sistema de controle financeiro e régua de cobrança tornou o invisível visível e recuperável.
+            <p class="text-3xl font-black text-zinc-950 mb-1">+R$ 30k/mês</p>
+            <p class="text-zinc-600 text-sm mb-4">recuperados em inadimplência invisível</p>
+            <p class="text-zinc-600 text-sm leading-relaxed">
+              A autoescola tinha dívidas que ninguém cobrava porque ninguém sabia que existiam. O sistema de controle financeiro e a régua de cobrança tornaram o invisível visível e recuperável.
             </p>
           </div>
-          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
-            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">HA</div>
+          <div class="flex items-center gap-4 pt-4 border-t border-zinc-200">
+            <div class="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 text-sm font-bold">HA</div>
             <div>
-              <p class="text-white font-semibold text-sm">Sistema Habilita</p>
-              <p class="text-slate-500 text-xs">Financeiro & Cobrança · Ceará</p>
+              <p class="text-zinc-950 font-semibold text-sm">Sistema Habilita</p>
+              <p class="text-zinc-500 text-xs">Financeiro & Cobrança · Ceará</p>
             </div>
           </div>
         </div>
 
-        <div class="bg-dark border border-slate-800 rounded-2xl p-8 flex flex-col gap-6 hover:border-primary/30 transition">
-          <svg class="w-8 h-8 text-primary/40" fill="currentColor" viewBox="0 0 24 24">
+        <div class="bg-white border border-zinc-200 rounded-2xl p-8 flex flex-col gap-6 hover:border-zinc-400 transition">
+          <svg class="w-8 h-8 text-zinc-200" fill="currentColor" viewBox="0 0 24 24">
             <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
           </svg>
-          <p class="text-slate-300 leading-relaxed flex-1 italic">
+          <p class="text-zinc-700 leading-relaxed flex-1 italic">
             "A plataforma tem se mostrado muito eficiente no dia a dia operacional, trazendo organização, praticidade e mais controle sobre os serviços executados. A agilidade na resolução de demandas é um grande diferencial, as solicitações são tratadas com rapidez, minimizando impactos na operação."
           </p>
-          <div class="flex items-center gap-4 pt-4 border-t border-slate-800">
-            <div class="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-400 text-sm font-bold">GR</div>
+          <div class="flex items-center gap-4 pt-4 border-t border-zinc-200">
+            <div class="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 text-sm font-bold">GR</div>
             <div>
-              <p class="text-white font-semibold text-sm">Gessé Rodrigues</p>
-              <p class="text-slate-500 text-xs">Ari Dedetização</p>
+              <p class="text-zinc-950 font-semibold text-sm">Gessé Rodrigues</p>
+              <p class="text-zinc-500 text-xs">Ari Dedetização</p>
             </div>
           </div>
         </div>
@@ -741,64 +725,102 @@
   </section>
 
   <!-- MÉTODO -->
-  <section id="metodo" class="py-24 px-6 border-b border-slate-800">
+  <section id="metodo" class="py-24 px-6 border-b border-zinc-200">
     <div class="max-w-6xl mx-auto">
       <div class="text-center mb-14">
-        <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-3">O processo</p>
-        <h2 class="text-3xl font-bold text-white mb-3">Como transformo sua operação</h2>
-        <p class="text-slate-400 max-w-xl mx-auto">
-          Não começo pelo sistema. Começo pela dor. Cada etapa existe para garantir que a solução resolve o problema certo.
+        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Método OPS · Operação Previsível e Sustentável</p>
+        <h2 class="text-3xl font-bold text-zinc-950 mb-3">Como eu acho o gargalo e construo o sistema</h2>
+        <p class="text-zinc-600 max-w-xl mx-auto">
+          Três movimentos. Nenhum começa pela ferramenta, e cada um termina num documento ou numa tela, não numa ideia.
         </p>
       </div>
 
-      <div class="grid md:grid-cols-4 gap-6 mb-14">
-        <div class="p-6 bg-card rounded-2xl border border-slate-800 relative">
-          <div class="w-8 h-8 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-primary text-sm font-bold">01</span>
+      <div class="grid md:grid-cols-3 gap-6 mb-14">
+        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-200 relative">
+          <div class="w-8 h-8 bg-zinc-200 border border-zinc-300 rounded-lg flex items-center justify-center mb-4">
+            <span class="signature text-zinc-700 text-sm font-bold">01</span>
           </div>
-          <h4 class="text-white font-bold mb-2">Entendo a dor</h4>
-          <p class="text-sm text-slate-400">Diagnóstico da operação real: processo, gargalo e objetivo do negócio. Você sai com clareza do problema, mesmo que não me contrate.</p>
+          <h4 class="text-zinc-950 font-bold mb-2">Diagnóstico</h4>
+          <p class="text-sm text-zinc-600 mb-4">Mapeio o caos: processo, dado, dependência e ponto único de falha. Você sai sabendo onde a operação perde dinheiro, mesmo que não sigamos juntos.</p>
+          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200"><strong class="text-zinc-700">Você recebe:</strong> relatório de diagnóstico em PDF, visual e seu para sempre.</p>
         </div>
-        <div class="p-6 bg-card rounded-2xl border border-slate-800">
-          <div class="w-8 h-8 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-primary text-sm font-bold">02</span>
+        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-200">
+          <div class="w-8 h-8 bg-zinc-200 border border-zinc-300 rounded-lg flex items-center justify-center mb-4">
+            <span class="signature text-zinc-700 text-sm font-bold">02</span>
           </div>
-          <h4 class="text-white font-bold mb-2">Organizo o processo</h4>
-          <p class="text-sm text-slate-400">Clareza vem antes da automação. Mapeio o fluxo, identifico o que precisa mudar e construo a arquitetura da solução, sem retrabalho.</p>
+          <h4 class="text-zinc-950 font-bold mb-2">Organização</h4>
+          <p class="text-sm text-zinc-600 mb-4">Documento e estruturo o fluxo antes de qualquer sistema. O processo para de morar na cabeça de uma pessoa só.</p>
+          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200"><strong class="text-zinc-700">Você recebe:</strong> documento de escopo e cronograma visível.</p>
         </div>
-        <div class="p-6 bg-card rounded-2xl border border-slate-800">
-          <div class="w-8 h-8 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-primary text-sm font-bold">03</span>
+        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-200">
+          <div class="w-8 h-8 bg-zinc-200 border border-zinc-300 rounded-lg flex items-center justify-center mb-4">
+            <span class="signature text-zinc-700 text-sm font-bold">03</span>
           </div>
-          <h4 class="text-white font-bold mb-2">Transformo em digital</h4>
-          <p class="text-sm text-slate-400">Desenvolvimento em etapas com você acompanhando a evolução. Você vê o sistema ganhar vida semana a semana, nada de sumir por meses.</p>
-        </div>
-        <div class="p-6 bg-card rounded-2xl border border-slate-800">
-          <div class="w-8 h-8 bg-primary/20 border border-primary/30 rounded-lg flex items-center justify-center mb-4">
-            <span class="text-primary text-sm font-bold">04</span>
-          </div>
-          <h4 class="text-white font-bold mb-2">Acompanho e evoluo</h4>
-          <p class="text-sm text-slate-400">Operações crescem. Novas automações, integrações e melhorias para que o sistema continue servindo o negócio e não o contrário.</p>
+          <h4 class="text-zinc-950 font-bold mb-2">Implementação</h4>
+          <p class="text-sm text-zinc-600 mb-4">Portal, CRM, financeiro e rastreio funcionando juntos, moldados ao seu processo. Você aprova, sua equipe opera.</p>
+          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200"><strong class="text-zinc-700">Você recebe:</strong> updates semanais e uma demonstração ao vivo no fim.</p>
         </div>
       </div>
 
-      <div class="p-8 bg-dark rounded-3xl border border-slate-800 shadow-2xl">
+      <!-- Ponto A / Ponto B -->
+      <div class="grid md:grid-cols-2 gap-6 mb-14">
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
+          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-4">Ponto A · hoje</p>
+          <ul class="space-y-3 text-sm text-zinc-600">
+            <li>Grupo de WhatsApp fazendo papel de CRM, mensagem esquecida no meio do caminho</li>
+            <li>Planilha como financeiro, sem margem real</li>
+            <li>Não sabe quantos clientes ativos tem agora</li>
+            <li>Operação presa à memória de uma pessoa só</li>
+          </ul>
+        </div>
+        <div class="p-6 bg-white border border-zinc-300 rounded-2xl shadow-glow">
+          <p class="signature text-xs uppercase tracking-widest text-zinc-700 mb-4">Ponto B · depois</p>
+          <ul class="space-y-3 text-sm text-zinc-700">
+            <li>Painel mostra o estado da operação em 30 segundos</li>
+            <li>Histórico de cada cliente, pagamento e canal de origem num só lugar</li>
+            <li>Sabe quantos clientes estão saindo por mês antes de saírem</li>
+            <li>Sabe de onde vêm os clientes que mais ficam e mais pagam</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 mb-14">
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
+          <p class="text-sm text-zinc-950 font-bold mb-1">"Já tentei e não funcionou."</p>
+          <p class="text-sm text-zinc-600">Diagnóstico antes de qualquer contrato, mostrando onde falhou antes e por que agora é diferente.</p>
+        </div>
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
+          <p class="text-sm text-zinc-950 font-bold mb-1">"Não tenho tempo para implementar."</p>
+          <p class="text-sm text-zinc-600">Eu implemento. Você só aprova cada etapa.</p>
+        </div>
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
+          <p class="text-sm text-zinc-950 font-bold mb-1">"E se minha equipe não usar?"</p>
+          <p class="text-sm text-zinc-600">Treinamento da equipe incluído na entrega.</p>
+        </div>
+        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
+          <p class="text-sm text-zinc-950 font-bold mb-1">"E se eu precisar mudar depois?"</p>
+          <p class="text-sm text-zinc-600">Suporte pós-entrega incluído, com prazo definido conforme o escopo.</p>
+        </div>
+      </div>
+
+      <div class="p-8 bg-zinc-50 rounded-3xl border border-zinc-200 shadow-2xl">
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <h3 class="text-2xl font-bold text-white mb-3">O diagnóstico é o ponto de partida</h3>
-            <p class="text-slate-400 leading-relaxed">
-              Em 30 minutos de conversa, mapeio sua operação, identifico os maiores gargalos e você sai com clareza do que precisa, sem compromisso. Se fizer sentido seguirmos juntos, apresento uma proposta. Se não, você já leva algo de valor.
+            <h3 class="text-2xl font-bold text-zinc-950 mb-3">O diagnóstico é o ponto de partida</h3>
+            <p class="text-zinc-600 leading-relaxed mb-4">
+              Em 30 minutos de conversa, mapeio sua operação e aponto onde ela está travando. Sem compromisso. Se fizer sentido seguir, te mostro uma proposta. Se não, você já sai com algo de valor.
             </p>
+            <p class="text-sm text-zinc-500">Trinta dias antes do fim do projeto, conversamos sobre acompanhamento mensal, para o sistema continuar evoluindo junto com sua operação.</p>
           </div>
-          <div class="bg-card/30 border border-slate-800 rounded-2xl p-6 text-center">
-            <p class="text-sm text-slate-300 mb-4">
+          <div class="bg-white border border-zinc-200 rounded-2xl p-6 text-center">
+            <p class="text-sm text-zinc-700 mb-4">
               Pronto para entender o que está travando sua operação?
             </p>
             <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20quero%20fazer%20um%20diagn%C3%B3stico%20da%20minha%20opera%C3%A7%C3%A3o."
-               class="inline-block px-8 py-3 bg-primary text-white font-bold rounded-xl hover:bg-blue-600 transition shadow-lg shadow-blue-500/30">
+               class="inline-block px-8 py-3 bg-black text-white font-bold rounded-xl hover:bg-zinc-800 transition">
               Quero meu diagnóstico gratuito
             </a>
-            <p class="mt-3 text-xs text-slate-500">30 minutos · Sem compromisso · Você sai com clareza</p>
+            <p class="mt-3 text-xs text-zinc-500">30 minutos · sem compromisso · você sai sabendo onde está o gargalo</p>
           </div>
         </div>
       </div>
@@ -811,72 +833,74 @@
       <div class="grid md:grid-cols-2 gap-16 items-start">
 
         <div>
-          <div class="flex items-center gap-5 mb-8">
+          <div class="flex items-center gap-5 mb-4">
             <div class="relative flex-shrink-0">
               <img src="foto.jpg" alt="Miquéias Mesquita"
-                   class="w-20 h-20 rounded-full object-cover border-2 border-primary/40 shadow-lg shadow-primary/10"
+                   class="w-20 h-20 rounded-full object-cover border-2 border-zinc-200 grayscale"
                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-700 hidden items-center justify-center text-slate-400 text-2xl font-bold">M</div>
+              <div class="w-20 h-20 rounded-full bg-zinc-200 border-2 border-zinc-300 hidden items-center justify-center text-zinc-600 text-2xl font-bold">M</div>
             </div>
             <div>
-              <p class="text-white font-bold text-lg leading-tight">Miquéias Mesquita</p>
-              <span class="inline-flex items-center gap-1.5 mt-1 text-xs text-green-400">
-                <span class="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse"></span>
+              <p class="text-zinc-950 font-bold text-lg leading-tight">Miquéias Mesquita</p>
+              <span class="inline-flex items-center gap-1.5 mt-1 text-xs text-zinc-500">
+                <span class="w-1.5 h-1.5 bg-black rounded-full pulse-slow"></span>
                 Disponível para novos projetos
               </span>
             </div>
           </div>
 
-          <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-4">Minha história</p>
+          <p class="signature text-[10px] uppercase tracking-widest text-zinc-500 border border-zinc-300 rounded-full px-3 py-1 inline-block mb-8">Engenheiro de Operações Digitais</p>
+
+          <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-4">Minha história</p>
 
           <div class="space-y-6">
             <div class="historia-line">
-              <p class="text-sm text-slate-500 uppercase tracking-widest mb-1">A virada</p>
-              <p class="text-slate-300">Depois de anos trabalhando em empresas, percebi que minha maior habilidade não era programar, era pegar problema, ruído, papel, planilha e confusão e transformar em uma solução digital clara. Eu não era um programador, era um transformador de operações.</p>
+              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">A virada</p>
+              <p class="text-zinc-700">Depois de anos empregado, percebi que minha habilidade real não era programar. Era pegar processo confuso, papel, planilha, ruído, e transformar em algo que qualquer pessoa da equipe conseguisse operar.</p>
             </div>
             <div class="historia-line">
-              <p class="text-sm text-slate-500 uppercase tracking-widest mb-1">A autoescola — 7 anos de laboratório real</p>
-              <p class="text-slate-300">Operação 100% manual. Sem CRM, sem métricas, sem controle. Construí sistemas, setores, metas, equipe comercial e automações do zero. Foi onde aprendi que tecnologia não é sobre o código, é sobre o processo que ele resolve.</p>
+              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">A autoescola · 7 anos de laboratório real</p>
+              <p class="text-zinc-700">Operação 100% manual. Sem CRM, sem métrica, sem controle. Construí sistema, setor, meta, equipe comercial e os fluxos que hoje rodam sozinhos, do zero. Foi ali que entendi que o processo vem primeiro e o código só sustenta o que já faz sentido.</p>
             </div>
             <div class="historia-line">
-              <p class="text-sm text-slate-500 uppercase tracking-widest mb-1">A clínica na pandemia</p>
-              <p class="text-slate-300">Empresa 100% no papel. Criamos sistema de cobrança e gestão online. Enquanto o mundo parava, o faturamento chegou perto de R$ 1 milhão. Esse foi meu maior case de prova e confirmou minha tese.</p>
+              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">A clínica na pandemia</p>
+              <p class="text-zinc-700">Empresa 100% no papel. Construímos o sistema de cobrança e gestão. Enquanto o mercado parava, o faturamento chegou perto de R$ 1 milhão. Foi minha maior prova de que essa tese se sustenta.</p>
             </div>
             <div class="historia-line">
-              <p class="text-sm text-slate-500 uppercase tracking-widest mb-1">Propósito</p>
-              <p class="text-slate-300">Resolvo problemas reais, transformando processos confusos e manuais em soluções claras e úteis. Usando tecnologia, estratégia e valores cristãos para servir pessoas e negócios, com dignidade e propósito.</p>
+              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">Propósito</p>
+              <p class="text-zinc-700">Resolvo problema real: processo confuso virando solução clara e útil. Uso técnica, estratégia e valores cristãos para servir gente e negócio, com dignidade.</p>
             </div>
           </div>
 
           <div class="mt-8 flex flex-wrap gap-3">
-            <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20conversar." class="px-5 py-3 rounded-xl bg-primary text-white font-bold hover:bg-blue-600 transition">
+            <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20conversar." class="px-5 py-3 rounded-xl bg-black text-white font-bold hover:bg-zinc-800 transition">
               Falar comigo no WhatsApp
             </a>
-            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-5 py-3 rounded-xl border border-slate-700 hover:border-primary text-white font-bold transition">
+            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-5 py-3 rounded-xl border border-zinc-300 hover:border-black text-zinc-950 font-bold transition">
               Enviar e-mail
             </a>
           </div>
         </div>
 
         <!-- FAQ -->
-        <div class="bg-card border border-slate-800 rounded-3xl p-8">
-          <h3 class="text-xl font-bold text-white mb-6">Perguntas que sempre aparecem</h3>
+        <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8">
+          <h3 class="text-xl font-bold text-zinc-950 mb-6">Perguntas que sempre aparecem</h3>
           <div class="space-y-6">
-            <div class="pb-6 border-b border-slate-800">
-              <p class="text-white font-semibold mb-2">Você faz para qualquer tipo de negócio?</p>
-              <p class="text-sm text-slate-400">Meu foco atual são clínicas, consultórios, autoescolas e negócios de atendimento com agenda, cobrança e recorrência. Se seu negócio tem esses processos, provavelmente tenho solução pra você.</p>
+            <div class="pb-6 border-b border-zinc-200">
+              <p class="text-zinc-950 font-semibold mb-2">Você atende qualquer tipo de negócio?</p>
+              <p class="text-sm text-zinc-600">O nicho importa menos que o estágio. Trabalho com empresas que já vendem, mas cuja operação virou o gargalo do próprio crescimento: hoje, principalmente mentores, criadores de curso, gestores de comunidade e negócios de atendimento com agenda, cobrança e recorrência.</p>
             </div>
-            <div class="pb-6 border-b border-slate-800">
-              <p class="text-white font-semibold mb-2">Como funciona o diagnóstico gratuito?</p>
-              <p class="text-sm text-slate-400">É uma conversa de 30 minutos por WhatsApp ou vídeo. Entendemos sua operação, identificamos os gargalos e você sai com clareza do que precisa, mesmo que não me contrate.</p>
+            <div class="pb-6 border-b border-zinc-200">
+              <p class="text-zinc-950 font-semibold mb-2">Como funciona o diagnóstico gratuito?</p>
+              <p class="text-sm text-zinc-600">Uma conversa de 30 minutos, por WhatsApp ou vídeo. Mapeamos sua operação, aponto onde ela trava e você sai com clareza, mesmo que não sigamos juntos depois.</p>
             </div>
-            <div class="pb-6 border-b border-slate-800">
-              <p class="text-white font-semibold mb-2">Você usa sistemas prontos ou desenvolve tudo do zero?</p>
-              <p class="text-sm text-slate-400">Começo pelo diagnóstico da operação. Se um sistema existente resolve melhor, vou recomendar. Se o negócio precisa de algo sob medida, desenvolvemos. Minha lealdade é com o resultado, não com a tecnologia.</p>
+            <div class="pb-6 border-b border-zinc-200">
+              <p class="text-zinc-950 font-semibold mb-2">Você entra e muda tudo de uma vez?</p>
+              <p class="text-sm text-zinc-600">Não. Primeiro olho o processo real, documento o que precisa mudar e só depois construo. Sistema sem processo organizado por trás só multiplica a bagunça mais rápido.</p>
             </div>
-            <div class="pb-6 border-b border-slate-800">
-              <p class="text-white font-semibold mb-2">Quanto tempo leva para o sistema funcionar?</p>
-              <p class="text-sm text-slate-400">Depende do escopo. Operações menores podem ter as primeiras funcionalidades em 2-3 semanas. Sistemas maiores são entregues em etapas, você acompanha a evolução semana a semana.</p>
+            <div class="pb-6 border-b border-zinc-200">
+              <p class="text-zinc-950 font-semibold mb-2">Quanto tempo leva para a operação funcionar?</p>
+              <p class="text-sm text-zinc-600">Depende do escopo. Se o modelo de negócio já está definido, a primeira entrega sai em uma semana. Se vamos construir juntos, o prazo chega a 60 dias, sempre em etapas que você acompanha.</p>
             </div>
           </div>
         </div>
@@ -886,27 +910,27 @@
   </section>
 
   <!-- CTA FINAL -->
-  <footer class="py-24 px-6 border-t border-slate-800">
-    <div class="max-w-4xl mx-auto bg-gradient-to-br from-card to-accent p-12 rounded-3xl border border-slate-700 text-center shadow-2xl">
-      <p class="text-sm font-semibold text-primary uppercase tracking-widest mb-4">O próximo passo é simples</p>
-      <h2 class="text-4xl font-bold text-white mb-5">Pronto para sair do improviso?</h2>
-      <p class="text-xl text-slate-400 mb-3 leading-relaxed">
-        Em 30 minutos, mapeamos sua operação, identificamos os gargalos e você sai com clareza do caminho, sem compromisso.
+  <footer class="py-24 px-6 border-t border-zinc-200">
+    <div class="max-w-4xl mx-auto bg-gradient-to-br from-card to-accent p-12 rounded-3xl border border-zinc-700 text-center shadow-2xl">
+      <p class="signature text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-4">O próximo passo é simples</p>
+      <h2 class="text-4xl font-bold text-white mb-5">Pronto para achar o seu gargalo?</h2>
+      <p class="text-xl text-zinc-400 mb-3 leading-relaxed">
+        Em 30 minutos, mapeamos sua operação, aponto onde ela trava e você sai com clareza do caminho, sem compromisso.
       </p>
-      <p class="text-slate-500 mb-9">
-        Você não precisa saber o que precisa. Só precisa chegar na conversa com o problema real.
+      <p class="text-zinc-500 mb-9">
+        Chegue com a dor real. O resto eu ajudo a nomear.
       </p>
       <div class="flex flex-col md:flex-row justify-center gap-4">
         <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20quero%20fazer%20um%20diagn%C3%B3stico%20gratuito%20da%20minha%20opera%C3%A7%C3%A3o."
-           class="px-12 py-5 bg-primary text-white font-bold rounded-2xl hover:bg-blue-600 transition text-xl shadow-lg shadow-blue-500/30">
+           class="px-12 py-5 bg-white text-black font-bold rounded-2xl hover:bg-zinc-200 transition text-xl">
           Quero meu diagnóstico gratuito
         </a>
         <a href="mailto:miqueiasdesenvolvedor@gmail.com"
-           class="px-12 py-5 bg-white text-dark font-bold rounded-2xl hover:bg-slate-200 transition text-xl">
+           class="px-12 py-5 border border-zinc-700 hover:border-white text-white font-bold rounded-2xl transition text-xl">
           Enviar e-mail
         </a>
       </div>
-      <p class="mt-8 text-slate-500 text-sm">Miquéias Mesquita · Transformo operações manuais em sistemas digitais</p>
+      <p class="mt-8 text-zinc-500 text-sm">Miquéias Mesquita · Engenheiro de Operações Digitais</p>
     </div>
   </footer>
 
