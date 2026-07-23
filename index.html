@@ -1,1047 +1,1204 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Miquéias Mesquita | Engenheiro de Operações Digitais</title>
-  <meta name="description" content="Sua empresa cresce, mas a operação não acompanha? Acho o gargalo escondido atrás do crescimento e construo o sistema que faz marketing, CRM, financeiro e equipe conversarem entre si." />
-
-  <meta property="og:title" content="Miquéias Mesquita | Engenheiro de Operações Digitais" />
-  <meta property="og:description" content="Toda empresa digital parece organizada... até crescer. Acho o gargalo e construo o sistema que faz tudo conversar." />
-  <meta property="og:type" content="website" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          },
-          colors: {
-            black: '#1d1d1f',
-            zinc: {
-              50:  '#f5f5f5',
-              100: '#ececec',
-              200: '#e2e2e2',
-              300: '#d1d1d1',
-              400: '#aeaeae',
-              500: '#8e8e8e',
-              600: '#6e6e6e',
-              700: '#4a4a4a',
-              800: '#333333',
-              900: '#242424',
-              950: '#1d1d1f',
-            },
-            dark: '#1d1d1f',
-            card: '#2c2c2e',
-            accent: '#3a3a3c',
-          },
-          boxShadow: {
-            glow: "0 1px 2px rgba(0,0,0,.04), 0 12px 24px rgba(0,0,0,.06)",
-            '2xl': "0 20px 60px -12px rgba(0,0,0,.18)",
-          }
-        }
-      }
-    }
-  </script>
-
+  <meta name="description" content="Encontro o fluxo que trava mentorias e negócios de educação digital. O Mapa do Gargalo entrega processo, sistema, responsável e indicador definidos.">
+  <meta property="og:title" content="Miquéias Mesquita | Engenheiro de Operações Digitais">
+  <meta property="og:description" content="O crescimento para quando a operação não acompanha. Conheça o Mapa do Gargalo.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#F7F7F5">
   <style>
-    html { scroll-behavior: smooth; }
-
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(14px);
+    :root {
+      --ink: #17181b;
+      --paper: #f7f7f5;
+      --white: #ffffff;
+      --graphite: #3a3d42;
+      --muted: #6c7078;
+      --line: #e3e4e6;
+      --signal: #2457ff;
+      --signal-soft: #eef2ff;
+      --success: #2f7658;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 30px;
+      --shadow: 0 18px 55px rgba(23, 24, 27, 0.08);
+      --max: 1180px;
     }
 
-    .blueprint-grid {
-      background-image:
-        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-      background-size: 42px 42px;
+    * {
+      box-sizing: border-box;
     }
 
-    .signature {
-      font-family: 'JetBrains Mono', monospace;
+    html {
+      scroll-behavior: smooth;
     }
 
-    .filter-btn {
-      padding: 10px 16px 12px;
-      margin-bottom: -1px;
-      font-size: 0.85rem;
-      font-weight: 500;
-      border: none;
-      border-bottom: 2px solid transparent;
-      color: #8e8e8e;
-      background: transparent;
-      cursor: pointer;
-      transition: all .2s;
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 18px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
     }
-    .filter-btn:hover { color: #1d1d1f; }
-    .filter-btn.active { color: #1d1d1f; border-bottom-color: #1d1d1f; font-weight: 600; }
 
-    #modal {
-      display: none;
+    a {
+      color: inherit;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--signal);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
       position: fixed;
-      inset: 0;
-      z-index: 999;
-      background: rgba(0,0,0,0.92);
+      top: 12px;
+      left: 12px;
+      z-index: 100;
+      padding: 10px 14px;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 8px;
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 950px;
+      margin-bottom: 26px;
+      font-size: clamp(3.1rem, 7.4vw, 6.7rem);
+      font-weight: 600;
+      letter-spacing: -0.065em;
+      line-height: 0.96;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: clamp(2.2rem, 4vw, 4rem);
+      font-weight: 600;
+      letter-spacing: -0.045em;
+      line-height: 1.02;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .lead {
+      max-width: 780px;
+      color: var(--graphite);
+      font-size: clamp(1.15rem, 2vw, 1.48rem);
+      line-height: 1.45;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 54px;
       align-items: center;
       justify-content: center;
-      padding: 20px;
-    }
-    #modal.active { display: flex; }
-
-    .bandeira-card {
-      border-left: 3px solid #ffffff;
-    }
-
-    .dor-card:hover {
-      border-color: rgba(0, 0, 0, 0.2);
+      padding: 14px 22px;
+      border: 1px solid var(--ink);
+      border-radius: var(--radius-sm);
+      font-size: 0.96rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
     }
 
-    .historia-line {
-      border-left: 2px solid #d1d1d1;
-      padding-left: 1.5rem;
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-primary {
+      color: var(--white);
+      background: var(--signal);
+      border-color: var(--signal);
+    }
+
+    .button-secondary {
+      color: var(--ink);
+      background: transparent;
+      border-color: #c8c9cc;
+    }
+
+    .button-dark {
+      color: var(--ink);
+      background: var(--white);
+      border-color: var(--white);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      border-bottom: 1px solid rgba(227, 228, 230, 0.86);
+      background: rgba(247, 247, 245, 0.92);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      display: flex;
+      min-height: 76px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      text-decoration: none;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+    }
+
+    .brand strong {
+      font-size: 0.98rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .brand span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+    }
+
+    .nav-links a {
+      color: var(--graphite);
+      font-size: 0.82rem;
+      font-weight: 500;
+      text-decoration: none;
+    }
+
+    .nav-links .nav-cta {
+      padding: 10px 14px;
+      color: var(--white);
+      background: var(--ink);
+      border-radius: 10px;
+    }
+
+    .hero {
+      padding: 104px 0 74px;
+      overflow: hidden;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-top: 36px;
+    }
+
+    .hero-note {
+      max-width: 260px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .flow-panel {
+      margin-top: 76px;
+      padding: 0;
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid #d5d6d8;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+    }
+
+    .flow-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 18px 22px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .flow-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .flow-head .status {
+      color: var(--signal);
+    }
+
+    .flow {
       position: relative;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
+      padding: 48px 26px 34px;
     }
-    .historia-line::before {
-      content: '';
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-      background: #1d1d1f;
+
+    .flow::before {
       position: absolute;
-      left: -6px;
-      top: 6px;
+      top: 81px;
+      right: 9%;
+      left: 9%;
+      height: 2px;
+      background: var(--line);
+      content: "";
     }
 
-    .tese-section {
-      background: #1d1d1f;
+    .flow-step {
+      position: relative;
+      z-index: 1;
     }
 
-    @keyframes pulse-slow {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+    .flow-dot {
+      display: block;
+      width: 14px;
+      height: 14px;
+      margin: 26px auto 18px;
+      background: var(--white);
+      border: 2px solid var(--graphite);
+      border-radius: 50%;
     }
-    .pulse-slow { animation: pulse-slow 3s ease-in-out infinite; }
+
+    .flow-card {
+      min-height: 120px;
+      padding: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+    }
+
+    .flow-card small {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 0.66rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .flow-card strong {
+      display: block;
+      font-size: 0.94rem;
+      line-height: 1.25;
+    }
+
+    .flow-step.is-gargalo .flow-dot {
+      background: var(--signal);
+      border-color: var(--signal);
+      box-shadow: 0 0 0 8px var(--signal-soft);
+    }
+
+    .flow-step.is-gargalo .flow-card {
+      background: var(--signal-soft);
+      border-color: var(--signal);
+    }
+
+    .flow-step.is-gargalo small,
+    .flow-step.is-gargalo strong {
+      color: #173aa7;
+    }
+
+    .flow-caption {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 18px;
+      padding: 20px 22px;
+      background: #fbfbfa;
+      border-top: 1px solid var(--line);
+    }
+
+    .flow-caption p {
+      margin: 0;
+      color: var(--graphite);
+      font-size: 0.86rem;
+    }
+
+    .flow-caption strong {
+      color: var(--ink);
+    }
+
+    .proof-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 26px;
+      overflow: hidden;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .proof-stat {
+      padding: 24px;
+      background: var(--paper);
+    }
+
+    .proof-stat strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .proof-stat span {
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.35;
+    }
+
+    section {
+      padding: 110px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-intro {
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      gap: 60px;
+      margin-bottom: 54px;
+    }
+
+    .section-intro p:last-child {
+      margin-bottom: 0;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 22px;
+    }
+
+    .product-card {
+      padding: 32px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .product-card.primary {
+      border-color: #b7c6ff;
+      box-shadow: var(--shadow);
+    }
+
+    .product-card .price {
+      margin: 16px 0 18px;
+      font-size: 2.1rem;
+      font-weight: 600;
+      letter-spacing: -0.045em;
+    }
+
+    .product-card .price small {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .product-card p {
+      color: var(--graphite);
+    }
+
+    .clean-list {
+      margin: 22px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .clean-list li {
+      position: relative;
+      padding: 11px 0 11px 24px;
+      border-top: 1px solid var(--line);
+      color: var(--graphite);
+      font-size: 0.9rem;
+    }
+
+    .clean-list li::before {
+      position: absolute;
+      top: 19px;
+      left: 2px;
+      width: 7px;
+      height: 7px;
+      background: var(--signal);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .continuity {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .continuity article {
+      padding: 18px;
+      background: #fbfbfa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+    }
+
+    .continuity h3 {
+      font-size: 1rem;
+    }
+
+    .continuity p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .method {
+      color: var(--white);
+      background: var(--ink);
+      border-color: var(--ink);
+    }
+
+    .method .eyebrow,
+    .method .lead {
+      color: #b7bac1;
+    }
+
+    .method-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 50px;
+    }
+
+    .method-step {
+      padding: 28px;
+      background: #202227;
+      border: 1px solid #35383f;
+      border-radius: var(--radius-md);
+    }
+
+    .method-number {
+      display: inline-flex;
+      width: 36px;
+      height: 36px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 40px;
+      color: var(--ink);
+      background: var(--white);
+      border-radius: 50%;
+      font-size: 0.74rem;
+      font-weight: 600;
+    }
+
+    .method-step p {
+      margin-bottom: 20px;
+      color: #b7bac1;
+      font-size: 0.9rem;
+    }
+
+    .method-step small {
+      display: block;
+      padding-top: 18px;
+      color: var(--white);
+      border-top: 1px solid #35383f;
+      font-size: 0.76rem;
+    }
+
+    .fit-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .fit-card {
+      padding: 30px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .fit-card.good {
+      background: var(--white);
+    }
+
+    .fit-card.later {
+      background: transparent;
+    }
+
+    .fit-card h3 {
+      margin-bottom: 22px;
+    }
+
+    .case-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .case {
+      overflow: hidden;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+    }
+
+    .case-image {
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #e8e8e5;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .case-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .case-body {
+      padding: 24px;
+    }
+
+    .case-kicker {
+      margin-bottom: 14px;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .case-result {
+      margin-bottom: 14px;
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+
+    .case p:last-child {
+      margin-bottom: 0;
+      color: var(--graphite);
+      font-size: 0.86rem;
+    }
+
+    .case-note {
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .portrait {
+      width: min(100%, 320px);
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      background: #e7e7e4;
+      border-radius: var(--radius-md);
+      filter: grayscale(1);
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-copy p {
+      max-width: 680px;
+      color: var(--graphite);
+    }
+
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .about-facts div {
+      padding: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+    }
+
+    .about-facts strong,
+    .about-facts span {
+      display: block;
+    }
+
+    .about-facts strong {
+      font-size: 0.92rem;
+    }
+
+    .about-facts span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .final-cta {
+      padding: 92px 0;
+      color: var(--white);
+      background: var(--signal);
+      border-color: var(--signal);
+    }
+
+    .cta-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 50px;
+      align-items: end;
+    }
+
+    .final-cta .eyebrow {
+      color: #d7dfff;
+    }
+
+    .final-cta h2 {
+      max-width: 760px;
+      margin-bottom: 0;
+    }
+
+    .cta-side p {
+      color: #e7ebff;
+      font-size: 0.92rem;
+    }
+
+    .site-footer {
+      padding: 36px 0;
+      color: #b7bac1;
+      background: var(--ink);
+    }
+
+    .footer-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-row p {
+      margin: 0;
+      font-size: 0.78rem;
+    }
+
+    .footer-row a {
+      color: var(--white);
+      font-size: 0.78rem;
+      text-decoration: none;
+    }
+
+    @media (max-width: 900px) {
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+
+      .section-intro,
+      .product-grid,
+      .about-grid,
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-intro {
+        gap: 16px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+        padding: 26px;
+      }
+
+      .flow::before {
+        top: 54px;
+        bottom: 54px;
+        left: 32px;
+        width: 2px;
+        height: auto;
+      }
+
+      .flow-step {
+        display: grid;
+        grid-template-columns: 28px 1fr;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .flow-dot {
+        margin: 0;
+      }
+
+      .flow-card {
+        min-height: 0;
+      }
+
+      .proof-strip,
+      .method-grid,
+      .case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-caption {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        font-size: 16px;
+      }
+
+      .shell {
+        width: min(calc(100% - 28px), var(--max));
+      }
+
+      .site-header {
+        position: static;
+      }
+
+      .nav {
+        min-height: 68px;
+      }
+
+      .brand span {
+        display: none;
+      }
+
+      .nav-links .nav-cta {
+        padding: 9px 11px;
+        font-size: 0.74rem;
+      }
+
+      .hero {
+        padding: 70px 0 54px;
+      }
+
+      .hero-actions {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .hero-note {
+        max-width: none;
+      }
+
+      .flow-panel {
+        margin-top: 48px;
+      }
+
+      .flow-head {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 6px;
+      }
+
+      section {
+        padding: 78px 0;
+      }
+
+      .continuity,
+      .fit-grid,
+      .about-facts {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-row {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
-<body class="bg-white text-zinc-700 font-sans antialiased">
-
-  <!-- Modal imagem -->
-  <div id="modal" onclick="closeModal()">
-    <span class="absolute top-5 right-8 md:right-10 text-white text-4xl cursor-pointer select-none">&times;</span>
-    <img id="modal-img" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl border border-zinc-700" onclick="event.stopPropagation()">
-  </div>
-
-  <!-- NAV -->
-  <nav class="fixed w-full z-50 glass-effect border-b border-zinc-200">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <a href="#top" class="flex items-baseline gap-3">
-        <span class="font-bold text-xl text-zinc-950 tracking-tight">Miquéias Mesquita</span>
-        <span class="hidden lg:inline signature text-[10px] uppercase tracking-widest text-zinc-500 border border-zinc-300 rounded-full px-2 py-1">Engenheiro de Operações Digitais</span>
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="#topo" aria-label="Miquéias Mesquita, início">
+        <strong>Miquéias Mesquita</strong>
+        <span>Engenheiro de Operações Digitais</span>
       </a>
-
-      <div class="hidden md:flex gap-8 text-sm font-medium">
-        <a href="#problema" class="hover:text-black transition">O gargalo</a>
-        <a href="#cases" class="hover:text-black transition">Provas</a>
-        <a href="#metodo" class="hover:text-black transition">Método</a>
-        <a href="#sobre" class="hover:text-black transition">Sobre</a>
-      </div>
-
-      <div class="flex items-center gap-3">
-        <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20entender%20como%20funciona%20o%20diagn%C3%B3stico."
-           aria-label="Quero meu diagnóstico"
-           class="bg-black hover:bg-zinc-800 text-white px-6 py-2.5 rounded-full text-sm font-bold transition">
-          <span class="md:hidden">Diagnóstico</span>
-          <span class="hidden md:inline">Quero meu diagnóstico gratuito</span>
-        </a>
-
-        <button id="menu-toggle" class="md:hidden p-2 text-zinc-600 hover:text-black transition" aria-label="Menu">
-          <svg id="icon-open" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-          </svg>
-          <svg id="icon-close" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="hidden md:hidden border-t border-zinc-200 px-6 py-4 flex flex-col gap-4 text-sm font-medium">
-      <a href="#problema" class="hover:text-black transition" onclick="closeMobileMenu()">O gargalo</a>
-      <a href="#cases" class="hover:text-black transition" onclick="closeMobileMenu()">Provas</a>
-      <a href="#metodo" class="hover:text-black transition" onclick="closeMobileMenu()">Método</a>
-      <a href="#sobre" class="hover:text-black transition" onclick="closeMobileMenu()">Sobre</a>
-    </div>
-  </nav>
-
-  <!-- HERO -->
-  <header id="top" class="blueprint-grid pt-44 md:pt-48 pb-24 md:pb-32 px-6">
-    <div class="max-w-5xl mx-auto text-center">
-
-      <span class="signature inline-block text-xs uppercase tracking-widest text-zinc-500 border border-zinc-300 rounded-full px-4 py-1.5 mb-8">
-        Engenheiro de Operações Digitais
-      </span>
-
-      <h1 class="text-5xl md:text-7xl font-extrabold text-zinc-950 leading-tight mb-6">
-        Toda empresa digital<br />
-        parece organizada<span class="text-zinc-300">...</span><br />
-        <span class="border-b-4 border-black/20 pb-1">até crescer.</span>
-      </h1>
-
-      <p class="text-xl md:text-2xl text-zinc-600 mb-4 max-w-3xl mx-auto leading-relaxed">
-        Empresas não deixam de crescer por falta de tecnologia.<br class="hidden md:block">
-        Deixam de crescer porque a operação não acompanha o crescimento.
-      </p>
-      <p class="text-lg text-zinc-500 mb-10 max-w-2xl mx-auto">
-        Acho o gargalo escondido atrás do seu crescimento e construo o sistema que faz marketing, CRM, financeiro e equipe conversarem entre si.
-      </p>
-
-      <div class="flex flex-col md:flex-row justify-center gap-4 mb-14">
-        <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20entender%20como%20funciona%20o%20diagn%C3%B3stico." class="px-10 py-4 bg-black text-white font-bold rounded-2xl hover:bg-zinc-800 transition text-lg">
-          Quero meu diagnóstico gratuito
-        </a>
-        <a href="#cases" class="px-10 py-4 border border-zinc-300 hover:border-black text-zinc-950 font-bold rounded-2xl transition text-lg">
-          Ver onde já achei o gargalo
-        </a>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-        <div class="p-5 bg-zinc-50/60 border border-zinc-200 rounded-2xl shadow-glow text-left">
-          <p class="signature text-2xl font-bold text-zinc-950 mb-1">+1.393</p>
-          <p class="text-xs text-zinc-500 uppercase tracking-wide">alunos ativos numa única plataforma</p>
-        </div>
-        <div class="p-5 bg-zinc-50/60 border border-zinc-200 rounded-2xl shadow-glow text-left">
-          <p class="signature text-2xl font-bold text-zinc-950 mb-1">20k → 60k/mês</p>
-          <p class="text-xs text-zinc-500 uppercase tracking-wide">faturamento triplicado numa clínica</p>
-        </div>
-        <div class="p-5 bg-zinc-50/60 border border-zinc-200 rounded-2xl shadow-glow text-left">
-          <p class="signature text-2xl font-bold text-zinc-950 mb-1">+R$ 30k/mês</p>
-          <p class="text-xs text-zinc-500 uppercase tracking-wide">recuperados de uma inadimplência que ninguém via</p>
-        </div>
-      </div>
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#produto">Produto</a>
+        <a href="#metodo">Método</a>
+        <a href="#provas">Provas</a>
+        <a href="#sobre">Sobre</a>
+        <a class="nav-cta" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20se%20o%20Mapa%20do%20Gargalo%20serve%20para%20minha%20opera%C3%A7%C3%A3o.">Conhecer o Mapa</a>
+      </nav>
     </div>
   </header>
 
-  <!-- O GARGALO -->
-  <section id="problema" class="py-24 bg-zinc-50/40 border-y border-zinc-200">
-    <div class="max-w-7xl mx-auto px-6">
+  <main id="conteudo">
+    <section class="hero" id="topo">
+      <div class="shell">
+        <p class="eyebrow">Operações para mentorias e negócios de educação digital</p>
+        <h1>O crescimento para quando a operação não acompanha.</h1>
+        <p class="lead">Encontro o fluxo que trava venda, onboarding, entrega, cobrança ou retenção. Você recebe processo, sistema, responsável e indicador definidos.</p>
 
-      <div class="text-center mb-14">
-        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">O inimigo</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4">
-          O que trava sua empresa tem nome: gambiarra.
-        </h2>
-        <p class="text-zinc-600 max-w-2xl mx-auto">
-          Planilha fazendo papel de sistema. Campo errado no CRM. Doze ferramentas que não conversam entre si. Isso é o que uma operação sem clareza parece por dentro.
-        </p>
-      </div>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#produto">Conhecer o Mapa do Gargalo</a>
+          <p class="hero-note">Diagnóstico pago por R$ 1.500, entregue em até sete dias.</p>
+        </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
-
-        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-            </svg>
+        <div class="flow-panel" aria-labelledby="flow-title">
+          <div class="flow-head">
+            <p id="flow-title">Fluxo operacional crítico</p>
+            <p class="status">Gargalo encontrado</p>
           </div>
-          <h3 class="text-zinc-950 font-bold mb-2">Você não sabe exatamente onde está seu dinheiro</h3>
-          <p class="text-sm text-zinc-600">Quem pagou, quem está em aberto, quanto entra esse mês. Tudo no achismo ou espalhado em planilhas que só uma pessoa entende.</p>
-        </div>
-
-        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-            </svg>
-          </div>
-          <h3 class="text-zinc-950 font-bold mb-2">Informações importantes se perdem no meio das conversas</h3>
-          <p class="text-sm text-zinc-600">Um cliente sumiu? Um retorno ficou esquecido? A conversa que importava está perdida no histórico de mensagens que ninguém mais lê.</p>
-        </div>
-
-        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-            </svg>
-          </div>
-          <h3 class="text-zinc-950 font-bold mb-2">Você é o sistema do próprio negócio</h3>
-          <p class="text-sm text-zinc-600">Tudo depende de você. Se você sair amanhã, sua empresa continua de pé? Na maioria dos casos, a resposta é não.</p>
-        </div>
-
-        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
-            </svg>
-          </div>
-          <h3 class="text-zinc-950 font-bold mb-2">Você já tentou ferramenta pronta. Nenhuma serviu</h3>
-          <p class="text-sm text-zinc-600">Cara demais, engessada demais ou genérica demais. A ferramenta não foi feita para sua operação, e você acabou dobrando sua operação para caber nela.</p>
-        </div>
-
-        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
-            </svg>
-          </div>
-          <h3 class="text-zinc-950 font-bold mb-2">Clientes caem no esquecimento</h3>
-          <p class="text-sm text-zinc-600">Quem veio há três meses e não voltou? Quem está prestes a renovar? Quem nunca foi cobrado? Sem rastreio, você perde receita que já tinha conquistado.</p>
-        </div>
-
-        <div class="dor-card p-6 bg-white border border-zinc-200 rounded-2xl transition-all duration-300">
-          <div class="w-10 h-10 bg-zinc-100 border border-zinc-200 rounded-xl flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-            </svg>
-          </div>
-          <h3 class="text-zinc-950 font-bold mb-2">Você trabalha muito, mas o negócio não escala</h3>
-          <p class="text-sm text-zinc-600">O problema raramente é esforço. Uma operação sem clareza não sustenta crescimento: cada cliente novo traz mais caos, não mais resultado.</p>
-        </div>
-
-      </div>
-
-      <!-- Frase de bandeira -->
-      <div class="max-w-4xl mx-auto p-8 bg-white border border-zinc-300 rounded-3xl shadow-glow text-center">
-        <p class="text-2xl md:text-3xl font-bold text-zinc-950 mb-3">
-          "Achei uma empresa perdendo R$ 80 mil por mês por causa de um campo errado no CRM."
-        </p>
-        <p class="text-zinc-600 text-lg">
-          Antes de construir qualquer sistema, é preciso achar o gargalo. Sistema em cima de processo confuso só faz a confusão andar mais rápido.
-        </p>
-        <div class="mt-6 flex flex-wrap justify-center gap-2">
-          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Mentores & Criadores de Curso</span>
-          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Gestores de Comunidade</span>
-          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Clínicas & Consultórios</span>
-          <span class="px-3 py-1 rounded-full text-xs border border-zinc-300 text-zinc-700 bg-zinc-50">Recorrência & Assinaturas</span>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- TESE / ACHEI O GARGALO -->
-  <section class="tese-section py-24 border-b border-zinc-800">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="grid md:grid-cols-2 gap-16 items-center">
-
-        <div>
-          <p class="signature text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-4">A tese</p>
-          <h2 class="text-4xl md:text-5xl font-black text-white mb-6 signature">
-            Achei o gargalo.
-          </h2>
-          <div class="space-y-4 text-zinc-400 leading-relaxed">
-            <p>
-              Toda empresa que cresce parece organizada, até o volume aumentar. Aí o processo que era suficiente para vinte clientes começa a rachar com duzentos.
-            </p>
-            <p>
-              O gargalo quase nunca está na falta de tecnologia. Está no campo que ninguém preenche direito, na cobrança que ninguém segue até o fim, no conhecimento que mora só na cabeça de uma pessoa.
-            </p>
-            <p class="text-white font-medium">
-              Meu trabalho começa ali: acho onde a operação está rachando e construo o sistema que segura o crescimento, em vez de travar nele.
-            </p>
-          </div>
-        </div>
-
-        <div class="space-y-5">
-          <div class="bandeira-card p-6 bg-card/60 border border-zinc-800 rounded-2xl">
-            <h4 class="text-white font-bold mb-2">A empresa continua de pé mesmo quando você não está olhando</h4>
-            <p class="text-sm text-zinc-400">Se uma pessoa some amanhã, o processo segue rodando. O negócio para de morar na sua memória.</p>
-          </div>
-          <div class="bandeira-card p-6 bg-card/60 border border-zinc-800 rounded-2xl">
-            <h4 class="text-white font-bold mb-2">Clareza vem antes do sistema</h4>
-            <p class="text-sm text-zinc-400">Organizar o fluxo real é o primeiro passo. Sem isso, todo sistema novo só acelera a bagunça antiga.</p>
-          </div>
-          <div class="bandeira-card p-6 bg-card/60 border border-zinc-800 rounded-2xl">
-            <h4 class="text-white font-bold mb-2">Menos ferramenta solta, mais operação conectada</h4>
-            <p class="text-sm text-zinc-400">Doze ferramentas que não conversam pesam mais do que zero. O que resolve é tudo funcionando junto, no mesmo lugar.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- DIFERENCIAL -->
-  <section class="blueprint-grid py-24 px-6 border-b border-zinc-200">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-14">
-        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">O diferencial</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4">O portal, o CRM e o financeiro são seus de verdade</h2>
-        <p class="text-zinc-600 max-w-2xl mx-auto">
-          A maioria dos implementadores configura a ferramenta de outra empresa e cobra mensalidade por isso. Aqui a estrutura nasce sob medida: portal, CRM e financeiro não são plataforma alugada de terceiro, são a base própria da sua operação, moldada ao seu processo.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 1</p>
-          <h4 class="text-zinc-950 font-bold text-lg mb-2">Portal</h4>
-          <p class="text-sm text-zinc-600">Onde o cliente acompanha, aprende e acessa. Sem mensalidade de plataforma de terceiro.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 2</p>
-          <h4 class="text-zinc-950 font-bold text-lg mb-2">CRM + rastreio</h4>
-          <p class="text-sm text-zinc-600">Histórico de cada cliente e de onde ele veio, num só lugar.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 3</p>
-          <h4 class="text-zinc-950 font-bold text-lg mb-2">Financeiro</h4>
-          <p class="text-sm text-zinc-600">Pagamento, renovação e margem real, sem depender de planilha.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl text-center">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pilar 4</p>
-          <h4 class="text-zinc-950 font-bold text-lg mb-2">Módulo de Inteligência</h4>
-          <p class="text-sm text-zinc-600">Churn, tempo de permanência e LTV calculados sozinhos, por canal de origem.</p>
-        </div>
-      </div>
-
-      <div class="flex justify-center mb-8">
-        <div class="h-10 w-px bg-zinc-300"></div>
-      </div>
-
-      <div class="max-w-xl mx-auto p-6 bg-white border border-zinc-300 rounded-2xl text-center shadow-glow mb-8">
-        <p class="text-zinc-950 font-bold mb-1">Sua operação, sob controle</p>
-        <p class="text-sm text-zinc-600">Visão completa do ciclo do seu cliente, do primeiro contato até a renovação, tudo dentro da mesma estrutura.</p>
-      </div>
-
-      <div class="max-w-2xl mx-auto p-6 bg-zinc-950 border border-zinc-800 rounded-2xl text-center">
-        <p class="text-white text-sm leading-relaxed">
-          Uma pesquisa recente do setor de assinaturas mostra: 45% dos donos de curso não sabem sua taxa de cancelamento, 47% não sabem quanto tempo em média um cliente fica, 60% não sabem quanto cada cliente vale no total. É estatística de mercado, não opinião minha, e é exatamente o que o Módulo de Inteligência calcula sozinho.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMO POSSO TE ATENDER -->
-  <section class="py-24 px-6 bg-zinc-50/40 border-b border-zinc-200">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-14">
-        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Como posso te atender</p>
-        <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4">Três jeitos de sair da bagunça, do mais rápido ao mais completo</h2>
-        <p class="text-zinc-600 max-w-2xl mx-auto">
-          Não começo do zero em nenhum deles. O motor de CRM, financeiro e agenda já existe e já roda em negócios reais. O que muda é o quanto ele se molda ao seu processo.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="p-6 bg-white border border-zinc-200 rounded-2xl">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Entrada</p>
-          <h3 class="text-zinc-950 font-bold text-lg mb-2">Organização rápida</h3>
-          <p class="text-sm text-zinc-600 mb-4">CRM e financeiro configurados sobre um sistema que já existe. Pra quem precisa sair do WhatsApp e da planilha rápido, sem uma operação complexa ainda.</p>
-          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200">Pronto em 1 a 2 semanas</p>
-        </div>
-        <div class="p-6 bg-zinc-950 border border-zinc-800 rounded-2xl">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Pronto pra usar</p>
-          <h3 class="text-white font-bold text-lg mb-2">Operação configurada</h3>
-          <p class="text-sm text-zinc-400 mb-4">O motor pronto (agenda, CRM, financeiro e painel executivo), adaptado à marca e ao processo do seu negócio. Onde a maioria dos meus clientes começa.</p>
-          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-800">Pronto em 3 a 6 semanas</p>
-        </div>
-        <div class="p-6 bg-white border border-zinc-200 rounded-2xl">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-3">Sob medida</p>
-          <h3 class="text-zinc-950 font-bold text-lg mb-2">Operação digital completa</h3>
-          <p class="text-sm text-zinc-600 mb-4">Migração do que você já tem, portal ou módulo específico do seu nicho, e o módulo de inteligência calculando churn, permanência e LTV sozinho.</p>
-          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200">De 2 a 6 meses, com treinamento por etapa</p>
-        </div>
-      </div>
-
-      <div class="mt-10 max-w-xl mx-auto text-center">
-        <p class="text-zinc-600 mb-4">O formato ideal para cada operação é definido na conversa de diagnóstico, depois de eu entender sua realidade.</p>
-        <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20quero%20entender%20qual%20op%C3%A7%C3%A3o%20faz%20mais%20sentido%20pra%20minha%20opera%C3%A7%C3%A3o." class="inline-block px-8 py-3 bg-black text-white font-bold rounded-xl hover:bg-zinc-800 transition">
-          Quero saber qual serve pra mim
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CASES -->
-  <section id="cases" class="py-24 px-6">
-    <div class="max-w-7xl mx-auto">
-      <div class="grid md:grid-cols-[1fr_auto] gap-8 md:gap-16 md:items-end mb-12">
-        <div>
-          <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Achei o gargalo em...</p>
-          <h2 class="text-3xl md:text-4xl font-bold text-zinc-950 mb-4 max-w-xl">Empresas onde já achei o gargalo</h2>
-          <p class="text-zinc-600 max-w-xl">
-            De clínica a autoescola, de curso online a portal editorial: o nicho muda, a lógica nunca. Hoje meu foco está nos especialistas digitais que já vendem, mas sentem a operação travar o crescimento.
-          </p>
-        </div>
-        <div class="md:text-right md:pl-10 md:border-l md:border-zinc-200 flex-shrink-0">
-          <p class="signature text-4xl font-bold text-zinc-950 mb-1">9</p>
-          <p class="text-xs text-zinc-500 uppercase tracking-widest leading-relaxed max-w-[180px] md:ml-auto">operações reais onde já achei o gargalo</p>
-        </div>
-      </div>
-
-      <!-- Filtros -->
-      <div class="flex flex-wrap gap-x-1 border-b border-zinc-200 mb-12 -ml-4">
-        <button class="filter-btn active" data-filter="todos" onclick="filterProjects('todos')">Todos</button>
-        <button class="filter-btn" data-filter="clinica" onclick="filterProjects('clinica')">Clínicas & Saúde</button>
-        <button class="filter-btn" data-filter="erp" onclick="filterProjects('erp')">Gestão & ERP</button>
-        <button class="filter-btn" data-filter="edtech" onclick="filterProjects('edtech')">Educação</button>
-        <button class="filter-btn" data-filter="bastidor" onclick="filterProjects('bastidor')">Bastidor & Dados</button>
-        <button class="filter-btn" data-filter="portal" onclick="filterProjects('portal')">Portal & Assinatura</button>
-      </div>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
-
-        <!-- Núcleo Trânsito -->
-        <div data-category="clinica" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('nucleo_transito_1.jpg')">
-            <img src="nucleo_transito_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Clínica NTC preview">
-            <div class="absolute top-3 left-3">
-              <span class="px-2 py-1 text-[10px] rounded-full bg-black/70 border border-white/20 text-white font-bold">Transformação real</span>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">Clínica de Trânsito NTC</h3>
-            <p class="text-sm text-zinc-950 font-bold mb-3">R$ 20k → R$ 60k/mês de faturamento</p>
-            <p class="text-sm text-zinc-600 mb-4">
-              Operação 100% no papel. Sem controle de agenda, cobrança ou financeiro. Construímos o sistema de gestão e o faturamento triplicou durante a pandemia.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Gestão · Cobrança · Financeiro</p>
-              <a href="https://desktopmedical.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver sistema →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Habilita -->
-        <div data-category="clinica" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('sistema_habilita_1.jpg')">
-            <img src="sistema_habilita_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Sistema Habilita preview">
-            <div class="absolute top-3 left-3">
-              <span class="px-2 py-1 text-[10px] rounded-full bg-black/70 border border-white/20 text-white font-bold">Transformação real</span>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">Sistema Habilita</h3>
-            <p class="text-sm text-zinc-950 font-bold mb-3">+R$ 30k/mês recuperados em inadimplência</p>
-            <p class="text-sm text-zinc-600 mb-4">
-              Dívida que ninguém cobrava porque ninguém sabia que existia. Construímos alertas de inadimplência, controle de caixa e uma régua de cobrança que roda sozinha.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Financeiro · Dashboard · Cobrança</p>
-              <a href="https://habilita-beberibe.cfc.net.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver sistema →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Agenda SaaS Clínicas -->
-        <div data-category="clinica" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center">
-            <div class="text-center transition-transform duration-500 group-hover:scale-105">
-              <p class="signature text-5xl font-black text-zinc-700 tracking-tighter">SaaS</p>
-              <p class="signature text-xs text-zinc-600 uppercase tracking-widest mt-1">Clínicas · Multiunidade</p>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">Agenda SaaS - Clínicas</h3>
-            <p class="signature text-zinc-500 mb-3 text-xs uppercase tracking-wide">Em produção</p>
-            <p class="text-sm text-zinc-600 mb-4">
-              Estrutura para várias clínicas ao mesmo tempo: agendamento, portal do paciente, WhatsApp conectado, CRM e financeiro num só lugar.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Multiunidade · WhatsApp conectado · CRM</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- SAE Autoescola -->
-        <div data-category="erp" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center">
-            <div class="text-center transition-transform duration-500 group-hover:scale-105">
-              <p class="signature text-5xl font-black text-zinc-700 tracking-tighter">SAE</p>
-              <p class="signature text-xs text-zinc-600 uppercase tracking-widest mt-1">7 anos de laboratório</p>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">SAE - Sistema Autoescola</h3>
-            <p class="signature text-zinc-500 mb-3 text-xs uppercase tracking-wide">7 anos de operação real</p>
-            <p class="text-sm text-zinc-600 mb-4">
-              Operação manual, sem métrica, CRM ou controle. Construí o sistema completo: comercial, exames, financeiro, CRM multiunidade e os fluxos que hoje rodam sozinhos. Foi ali que entendi que o processo vem antes do código.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">ERP · CRM · Multiunidade</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Ari Dedetização -->
-        <div data-category="erp" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('ari_dedetizacao_1.png')">
-            <img src="ari_dedetizacao_1.png" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Ari Dedetização preview">
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">Ari Dedetização</h3>
-            <p class="signature text-zinc-500 mb-3 text-xs uppercase tracking-wide">Gestão de serviços de campo</p>
-            <p class="text-sm text-zinc-600 mb-4">
-              Sistema sob medida para ordem de serviço, logística de campo e faturamento. Saída do papel e da mensagem avulsa para rastreio completo da operação.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">ERP · Ordens de serviço</p>
-              <a href="https://sistema.aridedetizacao.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver sistema →</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Danúzio - Operação Completa (featured) -->
-        <div data-category="bastidor" class="group bg-zinc-950 border border-zinc-800 rounded-2xl overflow-hidden flex flex-col lg:col-span-2 hover:border-zinc-600 transition">
-          <div class="p-8 flex-1 flex flex-col">
-            <p class="signature text-[11px] text-zinc-500 uppercase tracking-widest mb-3">Operação completa · acompanhamento mensal</p>
-            <h3 class="text-2xl font-bold text-white mb-2">Danúzio</h3>
-            <p class="text-sm text-zinc-400 mb-6 max-w-2xl">
-              Sou todo o time técnico de um criador de conteúdo, num modelo de acompanhamento mensal. Quatro sistemas rodando integrados sob a mesma operação, a prova viva da promessa central: a operação continua porque eu sou a estrutura técnica dela, não porque alguém está olhando o tempo todo.
-            </p>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-auto">
-              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
-                <p class="text-white font-bold text-sm mb-1">Danúzio News</p>
-                <p class="text-xs text-zinc-500">Portal com assinatura recorrente. A publicação roda sozinha.</p>
+          <div class="flow" role="img" aria-label="Fluxo entre venda, onboarding, entrega, cobrança e retenção. O gargalo está na passagem da venda para o onboarding.">
+            <div class="flow-step">
+              <span class="flow-dot" aria-hidden="true"></span>
+              <div class="flow-card">
+                <small>Entrada</small>
+                <strong>Venda confirmada</strong>
               </div>
-              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
-                <p class="text-white font-bold text-sm mb-1">Geopolítica para Investidores</p>
-                <p class="text-xs text-zinc-500">Mapa de calor e alerta antecipado para quem precisa decidir rápido.</p>
+            </div>
+            <div class="flow-step is-gargalo">
+              <span class="flow-dot" aria-hidden="true"></span>
+              <div class="flow-card">
+                <small>Gargalo</small>
+                <strong>Onboarding depende de conferência</strong>
               </div>
-              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
-                <p class="text-white font-bold text-sm mb-1">OSINT Monitor</p>
-                <p class="text-xs text-zinc-500">Coleta, classifica e publica sozinho, 24 horas.</p>
+            </div>
+            <div class="flow-step">
+              <span class="flow-dot" aria-hidden="true"></span>
+              <div class="flow-card">
+                <small>Entrega</small>
+                <strong>Aluno acessa e participa</strong>
               </div>
-              <div class="p-4 bg-white/5 border border-zinc-800 rounded-xl">
-                <p class="text-white font-bold text-sm mb-1">CRM de Atendimento</p>
-                <p class="text-xs text-zinc-500">Pipeline visual e financeiro no mesmo lugar.</p>
+            </div>
+            <div class="flow-step">
+              <span class="flow-dot" aria-hidden="true"></span>
+              <div class="flow-card">
+                <small>Financeiro</small>
+                <strong>Cobrança acompanhada</strong>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="flow-dot" aria-hidden="true"></span>
+              <div class="flow-card">
+                <small>Retenção</small>
+                <strong>Risco vira ação</strong>
               </div>
             </div>
           </div>
-        </div>
-
-        <!-- Daily Talks -->
-        <div data-category="edtech" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('daily_talks_1.jpg')">
-            <img src="daily_talks_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="Daily Talks preview">
-            <div class="absolute top-3 left-3">
-              <span class="px-2 py-1 text-[10px] rounded-full bg-black/70 border border-white/20 text-white font-bold">+1.393 alunos ativos</span>
-            </div>
-          </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">Daily Talks</h3>
-            <p class="text-sm text-zinc-600 mb-4">
-              Estrutura completa de ensino: pagamento, vídeo, agendamento e aplicativo, sustentando mais de 1.393 alunos ativos em produção, com alta disponibilidade.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Portal do Aluno · Pagamentos · Aplicativo</p>
-              <a href="https://aluno.dailytalks.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver plataforma →</a>
-            </div>
+          <div class="flow-caption">
+            <p><strong>Achei o gargalo.</strong> A venda entrou, mas a passagem para a entrega ainda depende de alguém lembrar.</p>
+            <a href="#metodo">Ver como o método funciona</a>
           </div>
         </div>
 
-        <!-- ProfOnline -->
-        <div data-category="edtech" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 cursor-zoom-in" onclick="openModal('profonline_1.jpg')">
-            <img src="profonline_1.jpg" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" alt="ProfOnline preview">
+        <div class="proof-strip" aria-label="Provas históricas de capacidade">
+          <div class="proof-stat">
+            <strong>R$ 20 mil -> R$ 60 mil/mês</strong>
+            <span>Case histórico de gestão e cobrança durante a pandemia.</span>
           </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">ProfOnline</h3>
-            <p class="text-sm text-zinc-600 mb-4">
-              Estrutura que tirou o professor do improviso. Aula, aluno, pagamento e conteúdo organizados num único ambiente, pronto para crescer sem virar bagunça.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200 flex items-center justify-between gap-3">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Estrutura de Ensino · Portal do Aluno</p>
-              <a href="https://app.profonline.com.br/" target="_blank" class="text-zinc-950 text-sm font-bold flex-shrink-0">Ver plataforma →</a>
-            </div>
+          <div class="proof-stat">
+            <strong>+R$ 30 mil/mês</strong>
+            <span>Inadimplência recuperada depois que a dívida ficou visível.</span>
           </div>
-        </div>
-
-        <!-- Portal Marsiglia -->
-        <div data-category="portal" class="group bg-zinc-50 border border-zinc-200 rounded-2xl overflow-hidden flex flex-col hover:border-zinc-400 transition">
-          <div class="relative overflow-hidden h-48 bg-gradient-to-br from-zinc-900 to-zinc-800 flex items-center justify-center">
-            <div class="text-center transition-transform duration-500 group-hover:scale-105">
-              <p class="signature text-5xl font-black text-zinc-700 tracking-tighter">PM</p>
-              <p class="signature text-xs text-zinc-600 uppercase tracking-widest mt-1">Portal Editorial</p>
-            </div>
+          <div class="proof-stat">
+            <strong>7 anos</strong>
+            <span>Organizando uma operação completa de autoescola.</span>
           </div>
-          <div class="p-6 flex-1 flex flex-col">
-            <h3 class="text-xl font-bold text-zinc-950 mb-1">Portal Marsiglia</h3>
-            <p class="text-sm text-zinc-600 mb-4">
-              Operação editorial saiu de ferramentas soltas para um único portal: curso, artigo, assinatura e newsletter no mesmo lugar. Quem criava conteúdo parou de administrar plataforma e voltou a criar.
-            </p>
-            <div class="mt-auto pt-4 border-t border-zinc-200">
-              <p class="signature text-[11px] text-zinc-500 uppercase tracking-wide">Cursos · Assinaturas · Newsletter</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- DEPOIMENTOS -->
-  <section id="depoimentos" class="py-24 bg-zinc-50/40 border-y border-zinc-200">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-14">
-        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Quem usa na prática</p>
-        <h2 class="text-3xl font-bold text-zinc-950">Resultados documentados</h2>
-        <p class="text-zinc-600 mt-3">Números registrados e o que os clientes disseram sobre o impacto no dia a dia.</p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-8">
-
-        <!-- Resultado documentado 1 - NTC -->
-        <div class="bg-white border border-zinc-200 rounded-2xl p-8 flex flex-col gap-5 hover:border-zinc-400 transition">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center">
-              <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-              </svg>
-            </div>
-            <span class="signature text-xs font-bold text-zinc-500 uppercase tracking-widest">Resultado documentado</span>
-          </div>
-          <div class="flex-1">
-            <p class="text-3xl font-black text-zinc-950 mb-1">1M+ no bolso.</p>
-            <p class="text-zinc-600 text-sm mb-4">faturamento mensal triplicado durante a pandemia</p>
-            <p class="text-zinc-600 text-sm leading-relaxed">
-              Clínica de trânsito operava 100% no papel, sem controle de agenda, cobrança ou financeiro. Com o sistema de gestão, conquistaram clareza total da operação e triplicaram o faturamento.
-            </p>
-          </div>
-          <div class="flex items-center gap-4 pt-4 border-t border-zinc-200">
-            <div class="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 text-sm font-bold">NTC</div>
-            <div>
-              <p class="text-zinc-950 font-semibold text-sm">Clínica de Trânsito NTC</p>
-              <p class="text-zinc-500 text-xs">Gestão & Cobrança · Ceará</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Resultado documentado 2 - Habilita -->
-        <div class="bg-white border border-zinc-200 rounded-2xl p-8 flex flex-col gap-5 hover:border-zinc-400 transition">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-zinc-100 border border-zinc-200 flex items-center justify-center">
-              <svg class="w-5 h-5 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-              </svg>
-            </div>
-            <span class="signature text-xs font-bold text-zinc-500 uppercase tracking-widest">Resultado documentado</span>
-          </div>
-          <div class="flex-1">
-            <p class="text-3xl font-black text-zinc-950 mb-1">+R$ 30k/mês</p>
-            <p class="text-zinc-600 text-sm mb-4">recuperados em inadimplência invisível</p>
-            <p class="text-zinc-600 text-sm leading-relaxed">
-              A autoescola tinha dívidas que ninguém cobrava porque ninguém sabia que existiam. O sistema de controle financeiro e a régua de cobrança tornaram o invisível visível e recuperável.
-            </p>
-          </div>
-          <div class="flex items-center gap-4 pt-4 border-t border-zinc-200">
-            <div class="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 text-sm font-bold">HA</div>
-            <div>
-              <p class="text-zinc-950 font-semibold text-sm">Sistema Habilita</p>
-              <p class="text-zinc-500 text-xs">Financeiro & Cobrança · Ceará</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-white border border-zinc-200 rounded-2xl p-8 flex flex-col gap-6 hover:border-zinc-400 transition">
-          <svg class="w-8 h-8 text-zinc-200" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-          </svg>
-          <p class="text-zinc-700 leading-relaxed flex-1 italic">
-            "A plataforma tem se mostrado muito eficiente no dia a dia operacional, trazendo organização, praticidade e mais controle sobre os serviços executados. A agilidade na resolução de demandas é um grande diferencial, as solicitações são tratadas com rapidez, minimizando impactos na operação."
-          </p>
-          <div class="flex items-center gap-4 pt-4 border-t border-zinc-200">
-            <div class="w-10 h-10 rounded-full bg-zinc-200 flex items-center justify-center text-zinc-600 text-sm font-bold">GR</div>
-            <div>
-              <p class="text-zinc-950 font-semibold text-sm">Gessé Rodrigues</p>
-              <p class="text-zinc-500 text-xs">Ari Dedetização</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- MÉTODO -->
-  <section id="metodo" class="py-24 px-6 border-b border-zinc-200">
-    <div class="max-w-6xl mx-auto">
-      <div class="text-center mb-14">
-        <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-3">Método OPS · Operação Previsível e Sustentável</p>
-        <h2 class="text-3xl font-bold text-zinc-950 mb-3">Como eu acho o gargalo e construo o sistema</h2>
-        <p class="text-zinc-600 max-w-xl mx-auto">
-          Três movimentos. Nenhum começa pela ferramenta, e cada um termina num documento ou numa tela, não numa ideia.
-        </p>
-      </div>
-
-      <div class="grid md:grid-cols-3 gap-6 mb-14">
-        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-200 relative">
-          <div class="w-8 h-8 bg-zinc-200 border border-zinc-300 rounded-lg flex items-center justify-center mb-4">
-            <span class="signature text-zinc-700 text-sm font-bold">01</span>
-          </div>
-          <h4 class="text-zinc-950 font-bold mb-2">Diagnóstico</h4>
-          <p class="text-sm text-zinc-600 mb-4">Mapeio o caos: processo, dado, dependência e ponto único de falha. Você sai sabendo onde a operação perde dinheiro, mesmo que não sigamos juntos.</p>
-          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200"><strong class="text-zinc-700">Você recebe:</strong> relatório de diagnóstico em PDF, visual e seu para sempre.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-200">
-          <div class="w-8 h-8 bg-zinc-200 border border-zinc-300 rounded-lg flex items-center justify-center mb-4">
-            <span class="signature text-zinc-700 text-sm font-bold">02</span>
-          </div>
-          <h4 class="text-zinc-950 font-bold mb-2">Organização</h4>
-          <p class="text-sm text-zinc-600 mb-4">Documento e estruturo o fluxo antes de qualquer sistema. O processo para de morar na cabeça de uma pessoa só.</p>
-          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200"><strong class="text-zinc-700">Você recebe:</strong> documento de escopo e cronograma visível.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-200">
-          <div class="w-8 h-8 bg-zinc-200 border border-zinc-300 rounded-lg flex items-center justify-center mb-4">
-            <span class="signature text-zinc-700 text-sm font-bold">03</span>
-          </div>
-          <h4 class="text-zinc-950 font-bold mb-2">Implementação</h4>
-          <p class="text-sm text-zinc-600 mb-4">Portal, CRM, financeiro e rastreio funcionando juntos, moldados ao seu processo. Você aprova, sua equipe opera.</p>
-          <p class="text-xs text-zinc-500 pt-3 border-t border-zinc-200"><strong class="text-zinc-700">Você recebe:</strong> updates semanais e uma demonstração ao vivo no fim.</p>
         </div>
       </div>
+    </section>
 
-      <!-- Ponto A / Ponto B -->
-      <div class="grid md:grid-cols-2 gap-6 mb-14">
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-500 mb-4">Ponto A · hoje</p>
-          <ul class="space-y-3 text-sm text-zinc-600">
-            <li>Grupo de WhatsApp fazendo papel de CRM, mensagem esquecida no meio do caminho</li>
-            <li>Planilha como financeiro, sem margem real</li>
-            <li>Não sabe quantos clientes ativos tem agora</li>
-            <li>Operação presa à memória de uma pessoa só</li>
-          </ul>
-        </div>
-        <div class="p-6 bg-white border border-zinc-300 rounded-2xl shadow-glow">
-          <p class="signature text-xs uppercase tracking-widest text-zinc-700 mb-4">Ponto B · depois</p>
-          <ul class="space-y-3 text-sm text-zinc-700">
-            <li>Painel mostra o estado da operação em 30 segundos</li>
-            <li>Histórico de cada cliente, pagamento e canal de origem num só lugar</li>
-            <li>Sabe quantos clientes estão saindo por mês antes de saírem</li>
-            <li>Sabe de onde vêm os clientes que mais ficam e mais pagam</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="grid md:grid-cols-2 gap-6 mb-14">
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
-          <p class="text-sm text-zinc-950 font-bold mb-1">"Já tentei e não funcionou."</p>
-          <p class="text-sm text-zinc-600">Diagnóstico antes de qualquer contrato, mostrando onde falhou antes e por que agora é diferente.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
-          <p class="text-sm text-zinc-950 font-bold mb-1">"Não tenho tempo para implementar."</p>
-          <p class="text-sm text-zinc-600">Eu implemento. Você só aprova cada etapa.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
-          <p class="text-sm text-zinc-950 font-bold mb-1">"E se minha equipe não usar?"</p>
-          <p class="text-sm text-zinc-600">Treinamento da equipe incluído na entrega.</p>
-        </div>
-        <div class="p-6 bg-zinc-50 border border-zinc-200 rounded-2xl">
-          <p class="text-sm text-zinc-950 font-bold mb-1">"E se eu precisar mudar depois?"</p>
-          <p class="text-sm text-zinc-600">Suporte pós-entrega incluído, com prazo definido conforme o escopo.</p>
-        </div>
-      </div>
-
-      <div class="p-8 bg-zinc-50 rounded-3xl border border-zinc-200 shadow-2xl">
-        <div class="grid md:grid-cols-2 gap-8 items-center">
+    <section id="produto">
+      <div class="shell">
+        <div class="section-intro">
           <div>
-            <h3 class="text-2xl font-bold text-zinc-950 mb-3">O diagnóstico é o ponto de partida</h3>
-            <p class="text-zinc-600 leading-relaxed mb-4">
-              Em 30 minutos de conversa, mapeio sua operação e aponto onde ela está travando. Sem compromisso. Se fizer sentido seguir, te mostro uma proposta. Se não, você já sai com algo de valor.
-            </p>
-            <p class="text-sm text-zinc-500">Trinta dias antes do fim do projeto, conversamos sobre acompanhamento mensal, para o sistema continuar evoluindo junto com sua operação.</p>
+            <p class="eyebrow">Produto</p>
+            <h2>Um fluxo por vez, com resultado medido.</h2>
           </div>
-          <div class="bg-white border border-zinc-200 rounded-2xl p-6 text-center">
-            <p class="text-sm text-zinc-700 mb-4">
-              Pronto para entender o que está travando sua operação?
-            </p>
-            <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20quero%20fazer%20um%20diagn%C3%B3stico%20da%20minha%20opera%C3%A7%C3%A3o."
-               class="inline-block px-8 py-3 bg-black text-white font-bold rounded-xl hover:bg-zinc-800 transition">
-              Quero meu diagnóstico gratuito
-            </a>
-            <p class="mt-3 text-xs text-zinc-500">30 minutos · sem compromisso · você sai sabendo onde está o gargalo</p>
-          </div>
+          <p class="lead">A porta de entrada é o Mapa do Gargalo. A implementação acontece em uma Sprint OPS quando o diagnóstico mostra prioridade, impacto e um responsável interno.</p>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card primary">
+            <p class="eyebrow">Entrada</p>
+            <h3>Mapa do Gargalo</h3>
+            <p class="price">R$ 1.500</p>
+            <p>Em até sete dias, você recebe o retrato do fluxo atual, o impacto do ponto crítico, a linha de base e um plano de correção para 30 dias.</p>
+            <ul class="clean-list">
+              <li>Fluxo atual desenhado</li>
+              <li>Gargalo e impacto documentados</li>
+              <li>Indicador de linha de base</li>
+              <li>Plano priorizado para 30 dias</li>
+            </ul>
+            <p class="case-note">O valor vira crédito integral numa Sprint contratada em até 15 dias.</p>
+          </article>
+
+          <article class="product-card">
+            <p class="eyebrow">Implementação</p>
+            <h3>Sprint OPS</h3>
+            <p class="price">R$ 8 mil a R$ 15 mil <small>por fluxo crítico</small></p>
+            <p>Durante quatro a seis semanas, o fluxo ganha processo, sistema, responsável, treinamento e indicador. A equipe acompanha cada etapa.</p>
+            <ul class="clean-list">
+              <li>Escopo ligado ao indicador</li>
+              <li>Implementação e treinamento</li>
+              <li>Demonstração ao vivo</li>
+              <li>Acompanhamento da entrada em operação</li>
+            </ul>
+            <div class="continuity">
+              <article>
+                <h3>Licença OPS</h3>
+                <p>R$ 800 a R$ 1.500/mês para hospedagem, núcleo, backup, monitoramento e suporte padrão.</p>
+              </article>
+              <article>
+                <h3>Assento na Operação</h3>
+                <p>R$ 2.500 a R$ 5.000/mês para revisão, indicadores e capacidade mensal de ajustes.</p>
+              </article>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SOBRE -->
-  <section id="sobre" class="py-24 px-6">
-    <div class="max-w-6xl mx-auto">
-      <div class="grid md:grid-cols-2 gap-16 items-start">
+    <section class="method" id="metodo">
+      <div class="shell">
+        <p class="eyebrow">Método OPS</p>
+        <h2>O trabalho começa pelo gargalo e termina com um indicador.</h2>
+        <p class="lead">Ferramentas existentes continuam quando resolvem bem. Cada decisão nasce do fluxo real e do resultado contratado.</p>
 
-        <div>
-          <div class="flex items-center gap-5 mb-4">
-            <div class="relative flex-shrink-0">
-              <img src="foto.jpg" alt="Miquéias Mesquita"
-                   class="w-20 h-20 rounded-full object-cover border-2 border-zinc-200 grayscale"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="w-20 h-20 rounded-full bg-zinc-200 border-2 border-zinc-300 hidden items-center justify-center text-zinc-600 text-2xl font-bold">M</div>
+        <div class="method-grid">
+          <article class="method-step">
+            <span class="method-number">01</span>
+            <h3>Diagnóstico</h3>
+            <p>Mapeio processo, dado, dependência e ponto único de falha.</p>
+            <small>Entrega: Mapa do Gargalo com linha de base.</small>
+          </article>
+          <article class="method-step">
+            <span class="method-number">02</span>
+            <h3>Organização</h3>
+            <p>Defino o fluxo, o responsável, o escopo e o critério de aceite.</p>
+            <small>Entrega: processo e cronograma visíveis.</small>
+          </article>
+          <article class="method-step">
+            <span class="method-number">03</span>
+            <h3>Implementação</h3>
+            <p>Coloco o fluxo em operação, treino a equipe e acompanho o indicador.</p>
+            <small>Entrega: operação funcionando e medida.</small>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="fit">
+      <div class="shell">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Critério de fit</p>
+            <h2>O estágio do negócio define a prioridade.</h2>
+          </div>
+          <p class="lead">O recorte comercial atual são mentorias com turmas e criadores com vários produtos. A empresa já vende, possui equipe e perdeu clareza entre as etapas da operação.</p>
+        </div>
+
+        <div class="fit-grid">
+          <article class="fit-card good">
+            <h3>Bom momento para conversar</h3>
+            <ul class="clean-list">
+              <li>Venda validada e operação em crescimento</li>
+              <li>WhatsApp, planilhas e plataformas exigem conferência</li>
+              <li>Equipe depende da memória de uma pessoa</li>
+              <li>Existe um fluxo com impacto em tempo ou dinheiro</li>
+              <li>O dono consegue abrir dados e envolver um responsável</li>
+            </ul>
+          </article>
+          <article class="fit-card later">
+            <h3>Fora do foco deste ciclo</h3>
+            <ul class="clean-list">
+              <li>Negócio buscando a primeira venda</li>
+              <li>Pedido isolado de site ou aplicativo</li>
+              <li>Projeto sem responsável interno</li>
+              <li>Lista ampla de funcionalidades sem indicador</li>
+              <li>Sistema novo antes de entender o processo atual</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="provas">
+      <div class="shell">
+        <div class="section-intro">
+          <div>
+            <p class="eyebrow">Provas de capacidade</p>
+            <h2>Problemas reais, números com contexto.</h2>
+          </div>
+          <p class="lead">Os cases abaixo pertencem ao histórico profissional. Eles demonstram capacidade operacional e não mudam o foco comercial atual em educação digital.</p>
+        </div>
+
+        <div class="case-grid">
+          <article class="case">
+            <div class="case-image">
+              <img src="nucleo_transito_1.jpg" alt="Tela do sistema de gestão da Clínica de Trânsito NTC">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Clínica de Trânsito NTC</p>
+              <p class="case-result">R$ 20 mil para R$ 60 mil por mês</p>
+              <p>A operação saiu do papel e ganhou controle de agenda, cobrança e financeiro. O faturamento triplicou durante a pandemia.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="sistema_habilita_1.jpg" alt="Tela do sistema de controle financeiro e cobrança da autoescola">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Sistema Habilita</p>
+              <p class="case-result">Mais de R$ 30 mil por mês recuperados</p>
+              <p>Alertas, controle de caixa e uma régua de cobrança tornaram visível uma dívida que a operação não acompanhava.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="danuzio_news_1.jpg" alt="Tela de uma operação editorial acompanhada por Miquéias">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Operação de creator</p>
+              <p class="case-result">Acompanhamento mensal em produção</p>
+              <p>Conteúdo, relacionamento e operação funcionam dentro de uma estrutura acompanhada continuamente. Relação profissional em curso.</p>
+            </div>
+          </article>
+        </div>
+
+        <p class="case-note">Essential está em implantação e permanece fora da lista de resultados até existir adoção e indicador confirmados. Projetos com conflito comercial ficam fora do portfólio público.</p>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="shell about-grid">
+        <div class="portrait">
+          <img src="foto.jpg" alt="Miquéias Mesquita">
+        </div>
+        <div class="about-copy">
+          <p class="eyebrow">Miquéias Mesquita</p>
+          <h2>Engenheiro de Operações Digitais.</h2>
+          <p>Minha especialidade é pegar um processo confuso, encontrar onde a informação para e transformar o fluxo em algo que a equipe consegue operar e medir.</p>
+          <p>Trabalhei por sete anos dentro da operação de uma autoescola. Organizei cobrança e gestão numa clínica durante a pandemia. Hoje concentro meu trabalho em mentorias e negócios de educação digital que já vendem e precisam sustentar o próximo nível de crescimento.</p>
+          <div class="about-facts">
+            <div>
+              <strong>Voz</strong>
+              <span>Calma, observadora e direta.</span>
             </div>
             <div>
-              <p class="text-zinc-950 font-bold text-lg leading-tight">Miquéias Mesquita</p>
-              <span class="inline-flex items-center gap-1.5 mt-1 text-xs text-zinc-500">
-                <span class="w-1.5 h-1.5 bg-black rounded-full pulse-slow"></span>
-                Disponível para novos projetos
-              </span>
+              <strong>Princípio</strong>
+              <span>O processo define a ferramenta.</span>
             </div>
-          </div>
-
-          <p class="signature text-[10px] uppercase tracking-widest text-zinc-500 border border-zinc-300 rounded-full px-3 py-1 inline-block mb-8">Engenheiro de Operações Digitais</p>
-
-          <p class="signature text-sm font-semibold text-zinc-500 uppercase tracking-widest mb-4">Minha história</p>
-
-          <div class="space-y-6">
-            <div class="historia-line">
-              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">A virada</p>
-              <p class="text-zinc-700">Depois de anos empregado, percebi que minha habilidade real não era programar. Era pegar processo confuso, papel, planilha, ruído, e transformar em algo que qualquer pessoa da equipe conseguisse operar.</p>
+            <div>
+              <strong>Entrega</strong>
+              <span>Um fluxo crítico funcionando.</span>
             </div>
-            <div class="historia-line">
-              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">A autoescola · 7 anos de laboratório real</p>
-              <p class="text-zinc-700">Operação 100% manual. Sem CRM, sem métrica, sem controle. Construí sistema, setor, meta, equipe comercial e os fluxos que hoje rodam sozinhos, do zero. Foi ali que entendi que o processo vem primeiro e o código só sustenta o que já faz sentido.</p>
-            </div>
-            <div class="historia-line">
-              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">A clínica na pandemia</p>
-              <p class="text-zinc-700">Empresa 100% no papel. Construímos o sistema de cobrança e gestão. Enquanto o mercado parava, o faturamento chegou perto de R$ 1 milhão. Foi minha maior prova de que essa tese se sustenta.</p>
-            </div>
-            <div class="historia-line">
-              <p class="signature text-xs text-zinc-500 uppercase tracking-widest mb-1">Propósito</p>
-              <p class="text-zinc-700">Resolvo problema real: processo confuso virando solução clara e útil. Uso técnica, estratégia e valores cristãos para servir gente e negócio, com dignidade.</p>
-            </div>
-          </div>
-
-          <div class="mt-8 flex flex-wrap gap-3">
-            <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20quero%20conversar." class="px-5 py-3 rounded-xl bg-black text-white font-bold hover:bg-zinc-800 transition">
-              Falar comigo no WhatsApp
-            </a>
-            <a href="mailto:miqueiasdesenvolvedor@gmail.com" class="px-5 py-3 rounded-xl border border-zinc-300 hover:border-black text-zinc-950 font-bold transition">
-              Enviar e-mail
-            </a>
-          </div>
-        </div>
-
-        <!-- FAQ -->
-        <div class="bg-zinc-50 border border-zinc-200 rounded-3xl p-8">
-          <h3 class="text-xl font-bold text-zinc-950 mb-6">Perguntas que sempre aparecem</h3>
-          <div class="space-y-6">
-            <div class="pb-6 border-b border-zinc-200">
-              <p class="text-zinc-950 font-semibold mb-2">Você atende qualquer tipo de negócio?</p>
-              <p class="text-sm text-zinc-600">O nicho importa menos que o estágio. Trabalho com empresas que já vendem, mas cuja operação virou o gargalo do próprio crescimento: hoje, principalmente mentores, criadores de curso, gestores de comunidade e negócios de atendimento com agenda, cobrança e recorrência.</p>
-            </div>
-            <div class="pb-6 border-b border-zinc-200">
-              <p class="text-zinc-950 font-semibold mb-2">Como funciona o diagnóstico gratuito?</p>
-              <p class="text-sm text-zinc-600">Uma conversa de 30 minutos, por WhatsApp ou vídeo. Mapeamos sua operação, aponto onde ela trava e você sai com clareza, mesmo que não sigamos juntos depois.</p>
-            </div>
-            <div class="pb-6 border-b border-zinc-200">
-              <p class="text-zinc-950 font-semibold mb-2">Você entra e muda tudo de uma vez?</p>
-              <p class="text-sm text-zinc-600">Não. Primeiro olho o processo real, documento o que precisa mudar e só depois construo. Sistema sem processo organizado por trás só multiplica a bagunça mais rápido.</p>
-            </div>
-            <div class="pb-6 border-b border-zinc-200">
-              <p class="text-zinc-950 font-semibold mb-2">Quanto tempo leva para a operação funcionar?</p>
-              <p class="text-sm text-zinc-600">Depende do escopo. Se o modelo de negócio já está definido, a primeira entrega sai em uma semana. Se vamos construir juntos, o prazo chega a 60 dias, sempre em etapas que você acompanha.</p>
+            <div>
+              <strong>Medida</strong>
+              <span>Indicador antes e depois.</span>
             </div>
           </div>
         </div>
-
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA FINAL -->
-  <footer class="py-24 px-6 border-t border-zinc-200">
-    <div class="max-w-4xl mx-auto bg-gradient-to-br from-card to-accent p-12 rounded-3xl border border-zinc-700 text-center shadow-2xl">
-      <p class="signature text-sm font-semibold text-zinc-400 uppercase tracking-widest mb-4">O próximo passo é simples</p>
-      <h2 class="text-4xl font-bold text-white mb-5">Pronto para achar o seu gargalo?</h2>
-      <p class="text-xl text-zinc-400 mb-3 leading-relaxed">
-        Em 30 minutos, mapeamos sua operação, aponto onde ela trava e você sai com clareza do caminho, sem compromisso.
-      </p>
-      <p class="text-zinc-500 mb-9">
-        Chegue com a dor real. O resto eu ajudo a nomear.
-      </p>
-      <div class="flex flex-col md:flex-row justify-center gap-4">
-        <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20quero%20fazer%20um%20diagn%C3%B3stico%20gratuito%20da%20minha%20opera%C3%A7%C3%A3o."
-           class="px-12 py-5 bg-white text-black font-bold rounded-2xl hover:bg-zinc-200 transition text-xl">
-          Quero meu diagnóstico gratuito
-        </a>
-        <a href="mailto:miqueiasdesenvolvedor@gmail.com"
-           class="px-12 py-5 border border-zinc-700 hover:border-white text-white font-bold rounded-2xl transition text-xl">
-          Enviar e-mail
-        </a>
+    <section class="final-cta" id="contato">
+      <div class="shell cta-grid">
+        <div>
+          <p class="eyebrow">Próximo passo</p>
+          <h2>Se a operação já vende e um fluxo ainda depende de conferência, comece pelo Mapa.</h2>
+        </div>
+        <div class="cta-side">
+          <p>Envie uma mensagem com a etapa que mais gera retrabalho. Eu confirmo se o Mapa do Gargalo é a entrada adequada.</p>
+          <a class="button button-dark" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20se%20o%20Mapa%20do%20Gargalo%20serve%20para%20minha%20opera%C3%A7%C3%A3o.">Quero avaliar meu fluxo</a>
+        </div>
       </div>
-      <p class="mt-8 text-zinc-500 text-sm">Miquéias Mesquita · Engenheiro de Operações Digitais</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="shell footer-row">
+      <p>Miquéias Mesquita · Engenheiro de Operações Digitais</p>
+      <a href="mailto:miqueiasdesenvolvedor@gmail.com">miqueiasdesenvolvedor@gmail.com</a>
     </div>
   </footer>
-
-  <!-- Botão flutuante WhatsApp -->
-  <a href="https://wa.me/5585994181234?text=Ol%C3%A1%2C%20vim%20pelo%20portf%C3%B3lio%20e%20quero%20conversar%20sobre%20minha%20opera%C3%A7%C3%A3o."
-     id="whatsapp-float"
-     target="_blank"
-     aria-label="Falar no WhatsApp"
-     class="fixed bottom-6 right-6 z-50 flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-full shadow-2xl shadow-green-500/40 transition-all duration-300 translate-y-20 opacity-0">
-    <svg class="w-6 h-6 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-    </svg>
-    <span class="text-sm font-bold whitespace-nowrap">Diagnóstico gratuito</span>
-  </a>
-
-  <script>
-    // ── Modal ──────────────────────────────────────────────────────────────────
-    const modal = document.getElementById('modal');
-    const modalImg = document.getElementById('modal-img');
-
-    function openModal(src) {
-      modal.classList.add('active');
-      modalImg.src = src;
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal() {
-      modal.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-
-    // ── Filtro ─────────────────────────────────────────────────────────────────
-    function filterProjects(category) {
-      document.querySelectorAll('#projects-grid [data-category]').forEach(card => {
-        card.style.display = (category === 'todos' || card.dataset.category === category) ? '' : 'none';
-      });
-      document.querySelectorAll('.filter-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === category);
-      });
-    }
-
-    // ── Botão flutuante ────────────────────────────────────────────────────────
-    const floatBtn = document.getElementById('whatsapp-float');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 400) {
-        floatBtn.classList.remove('translate-y-20', 'opacity-0');
-        floatBtn.classList.add('translate-y-0', 'opacity-100');
-      } else {
-        floatBtn.classList.add('translate-y-20', 'opacity-0');
-        floatBtn.classList.remove('translate-y-0', 'opacity-100');
-      }
-    });
-
-    // ── Menu mobile ────────────────────────────────────────────────────────────
-    const menuToggle = document.getElementById('menu-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const iconOpen   = document.getElementById('icon-open');
-    const iconClose  = document.getElementById('icon-close');
-
-    menuToggle.addEventListener('click', () => {
-      const isOpen = !mobileMenu.classList.contains('hidden');
-      mobileMenu.classList.toggle('hidden', isOpen);
-      iconOpen.classList.toggle('hidden', !isOpen);
-      iconClose.classList.toggle('hidden', isOpen);
-    });
-    function closeMobileMenu() {
-      mobileMenu.classList.add('hidden');
-      iconOpen.classList.remove('hidden');
-      iconClose.classList.add('hidden');
-    }
-  </script>
 </body>
 </html>
