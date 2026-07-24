@@ -1,0 +1,1267 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Calculadora de Precificação OPS | Miquéias Mesquita</title>
+  <meta name="description" content="Calculadora interna para definir preço, margem, crédito e condições comerciais das ofertas OPS.">
+  <meta name="theme-color" content="#F7F7F5">
+  <style>
+    :root {
+      --ink: #17181b;
+      --paper: #f7f7f5;
+      --white: #ffffff;
+      --graphite: #3a3d42;
+      --muted: #6c7078;
+      --line: #e3e4e6;
+      --signal: #5267c8;
+      --signal-soft: #eef0fa;
+      --input: #fff8dc;
+      --input-line: #dbc969;
+      --success: #2f7658;
+      --success-soft: #e9f4ee;
+      --warning: #92570a;
+      --warning-soft: #fff1d8;
+      --danger: #9a3737;
+      --danger-soft: #fbe9e9;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --shadow: 0 18px 55px rgba(23, 24, 27, 0.08);
+      --max: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--signal);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(calc(100% - 40px), var(--max));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      border-bottom: 1px solid rgba(227, 228, 230, 0.92);
+      background: rgba(247, 247, 245, 0.96);
+    }
+
+    .nav {
+      display: flex;
+      min-height: 74px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      text-decoration: none;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+    }
+
+    .brand strong {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .brand span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 0.66rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .back-link {
+      color: var(--graphite);
+      font-size: 0.86rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .page-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: end;
+      padding: 58px 0 34px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 14px;
+      font-size: clamp(2.5rem, 6vw, 5.2rem);
+      font-weight: 600;
+      letter-spacing: -0.058em;
+      line-height: 0.98;
+    }
+
+    h2 {
+      margin-bottom: 18px;
+      font-size: 1.28rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--graphite);
+      font-size: 1.08rem;
+    }
+
+    .reset {
+      min-height: 42px;
+      padding: 10px 14px;
+      color: var(--graphite);
+      background: transparent;
+      border: 1px solid #c8c9cc;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+      gap: 22px;
+      align-items: start;
+      padding-bottom: 70px;
+    }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+    }
+
+    .form-panel {
+      padding: 24px;
+    }
+
+    .section + .section {
+      margin-top: 28px;
+      padding-top: 26px;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 16px;
+    }
+
+    .section-head h2,
+    .section-head p {
+      margin-bottom: 0;
+    }
+
+    .section-head p {
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .offer-option {
+      position: relative;
+    }
+
+    .offer-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .offer-option label {
+      display: grid;
+      min-height: 110px;
+      align-content: space-between;
+      gap: 12px;
+      padding: 16px;
+      color: var(--graphite);
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+
+    .offer-option label strong {
+      color: var(--ink);
+    }
+
+    .offer-option label small {
+      color: var(--muted);
+    }
+
+    .offer-option input:checked + label {
+      background: var(--signal-soft);
+      border-color: var(--signal);
+      box-shadow: inset 0 0 0 1px var(--signal);
+    }
+
+    .offer-option input:focus-visible + label {
+      outline: 3px solid var(--signal);
+      outline-offset: 3px;
+    }
+
+    .fields {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label,
+    .check-label {
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    input,
+    select {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      color: var(--ink);
+      background: var(--input);
+      border: 1px solid var(--input-line);
+      border-radius: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    input:disabled,
+    select:disabled {
+      color: var(--muted);
+      background: #f0f0ee;
+      border-color: var(--line);
+    }
+
+    .check {
+      display: flex;
+      min-height: 46px;
+      align-items: center;
+      gap: 10px;
+      padding-top: 20px;
+    }
+
+    .check input {
+      width: 18px;
+      min-height: 18px;
+      padding: 0;
+      accent-color: var(--signal);
+    }
+
+    .check label {
+      color: var(--ink);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    .context-note {
+      margin-top: 14px;
+      padding: 13px 14px;
+      color: var(--graphite);
+      background: var(--signal-soft);
+      border-radius: 10px;
+      font-size: 0.86rem;
+    }
+
+    .result-panel {
+      position: sticky;
+      top: 20px;
+      overflow: hidden;
+    }
+
+    .result-top {
+      padding: 24px;
+      background: var(--ink);
+      color: var(--white);
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+    }
+
+    .status.ok {
+      color: #dff8e9;
+      background: rgba(47, 118, 88, 0.55);
+    }
+
+    .status.warn {
+      color: #fff0ce;
+      background: rgba(146, 87, 10, 0.62);
+    }
+
+    .status.danger {
+      color: #ffe3e3;
+      background: rgba(154, 55, 55, 0.62);
+    }
+
+    .result-period {
+      color: #b7bac1;
+      font-size: 0.75rem;
+    }
+
+    .product-name {
+      margin: 22px 0 2px;
+      color: #d8dae0;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .price {
+      margin: 0;
+      font-size: clamp(2.8rem, 5vw, 4.5rem);
+      font-weight: 600;
+      letter-spacing: -0.055em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .result-body {
+      padding: 22px 24px 24px;
+    }
+
+    .metrics {
+      display: grid;
+    }
+
+    .metric {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .metric strong {
+      text-align: right;
+      font-size: 0.9rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .decision {
+      margin: 18px 0;
+      padding: 13px 14px;
+      border-radius: 10px;
+      font-size: 0.84rem;
+    }
+
+    .decision.ok {
+      color: var(--success);
+      background: var(--success-soft);
+    }
+
+    .decision.warn {
+      color: var(--warning);
+      background: var(--warning-soft);
+    }
+
+    .decision.danger {
+      color: var(--danger);
+      background: var(--danger-soft);
+    }
+
+    .deliverables {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .deliverables li {
+      position: relative;
+      padding: 8px 0 8px 20px;
+      border-bottom: 1px solid var(--line);
+      color: var(--graphite);
+      font-size: 0.84rem;
+    }
+
+    .deliverables li::before {
+      position: absolute;
+      top: 15px;
+      left: 2px;
+      width: 7px;
+      height: 7px;
+      background: var(--signal);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .payment {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .copy {
+      width: 100%;
+      min-height: 46px;
+      margin-top: 18px;
+      color: var(--white);
+      background: var(--signal);
+      border: 1px solid var(--signal);
+      border-radius: 10px;
+      font-weight: 700;
+    }
+
+    .copy-feedback {
+      min-height: 20px;
+      margin: 8px 0 0;
+      color: var(--success);
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    .internal-note {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 0.72rem;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    @media (max-width: 930px) {
+      .workspace {
+        grid-template-columns: 1fr;
+      }
+
+      .result-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .shell {
+        width: min(calc(100% - 24px), var(--max));
+      }
+
+      .page-head {
+        grid-template-columns: 1fr;
+        padding-top: 40px;
+      }
+
+      .reset {
+        justify-self: start;
+      }
+
+      .form-panel {
+        padding: 18px;
+      }
+
+      .offer-grid,
+      .fields {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .offer-option label {
+        min-height: 86px;
+      }
+
+      .check {
+        padding-top: 0;
+      }
+
+      .brand span {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell nav">
+      <a class="brand" href="../" aria-label="Miquéias Mesquita, início">
+        <strong>Miquéias Mesquita</strong>
+        <span>Engenheiro de Operações Digitais</span>
+      </a>
+      <a class="back-link" href="../">Voltar ao portfólio</a>
+    </div>
+  </header>
+
+  <main class="shell">
+    <div class="page-head">
+      <div>
+        <p class="eyebrow">Ferramenta interna</p>
+        <h1>Preço definido antes da conversa.</h1>
+        <p class="lead">A calculadora escolhe o pacote, protege a margem e gera um resumo pronto para a proposta.</p>
+      </div>
+      <button class="reset" id="reset" type="button">Limpar simulação</button>
+    </div>
+
+    <div class="workspace">
+      <form class="panel form-panel" id="calculator">
+        <section class="section">
+          <div class="section-head">
+            <h2>1. Escolha a oferta</h2>
+            <p>O restante muda sozinho.</p>
+          </div>
+          <div class="offer-grid">
+            <div class="offer-option">
+              <input type="radio" name="offer" id="offerMap" value="map" checked>
+              <label for="offerMap">
+                <strong>Mapa + Ativo</strong>
+                <small>Decisão e primeiro material aplicável.</small>
+              </label>
+            </div>
+            <div class="offer-option">
+              <input type="radio" name="offer" id="offerSprint" value="sprint">
+              <label for="offerSprint">
+                <strong>Sprint OPS</strong>
+                <small>Um fluxo colocado em operação.</small>
+              </label>
+            </div>
+            <div class="offer-option">
+              <input type="radio" name="offer" id="offerContinuity" value="continuity">
+              <label for="offerContinuity">
+                <strong>Continuidade</strong>
+                <small>Licença ou Assento mensal.</small>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>2. Defina o escopo</h2>
+            <p>Campos amarelos são editáveis.</p>
+          </div>
+
+          <div id="mapFields" class="fields">
+            <div class="field">
+              <label for="mapCondition">Condição comercial</label>
+              <select id="mapCondition">
+                <option value="standard">Preço público</option>
+                <option value="pilot">Piloto, somente dois clientes</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="starterAsset">Ativo de Arranque</label>
+              <select id="starterAsset">
+                <option value="assistant">Assistente operacional configurado</option>
+                <option value="checklist">Checklist de execução</option>
+                <option value="dashboard">Painel de decisão</option>
+                <option value="communication">Kit de comunicação operacional</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="mapFlow">Fluxo analisado</label>
+              <select id="mapFlow">
+                <option>Onboarding</option>
+                <option>Venda</option>
+                <option>Entrega</option>
+                <option>Cobrança</option>
+                <option>Retenção</option>
+                <option>Atendimento</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="sprintFields" class="fields" hidden>
+            <div class="field">
+              <label for="solutionPath">Caminho da solução</label>
+              <select id="solutionPath">
+                <option value="existing">Ferramentas atuais</option>
+                <option value="connected">Conectar ferramentas</option>
+                <option value="ops">Sistema OPS</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sprintFlow">Fluxo implementado</label>
+              <select id="sprintFlow">
+                <option>Onboarding</option>
+                <option>Venda</option>
+                <option>Entrega</option>
+                <option>Cobrança</option>
+                <option>Retenção</option>
+                <option>Atendimento</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="standardConnections">Conexões padrão adicionais</label>
+              <input id="standardConnections" type="number" min="0" max="5" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="complexConnections">Conexões complexas</label>
+              <input id="complexConnections" type="number" min="0" max="3" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="dataBlocks">Blocos de limpeza de dados</label>
+              <input id="dataBlocks" type="number" min="0" max="10" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="trainingSessions">Treinamentos adicionais</label>
+              <input id="trainingSessions" type="number" min="0" max="5" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="stabilizationBlocks">Blocos extras de estabilização</label>
+              <input id="stabilizationBlocks" type="number" min="0" max="4" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="onsiteDays">Dias presenciais</label>
+              <input id="onsiteDays" type="number" min="0" max="10" step="1" value="0">
+            </div>
+            <div class="field">
+              <label for="travelCosts">Viagem e hospedagem</label>
+              <input id="travelCosts" type="number" min="0" step="100" value="0">
+            </div>
+            <div class="field">
+              <label for="mapCredit">Crédito do Mapa</label>
+              <select id="mapCredit">
+                <option value="0">Sem crédito</option>
+                <option value="1500">R$ 1.500, piloto</option>
+                <option value="2500">R$ 2.500, preço público</option>
+              </select>
+            </div>
+            <div class="check">
+              <input id="urgent" type="checkbox">
+              <label for="urgent">Prazo acelerado, acréscimo de 20%</label>
+            </div>
+          </div>
+
+          <div id="continuityFields" class="fields" hidden>
+            <div class="field full">
+              <label for="continuityPlan">Plano mensal</label>
+              <select id="continuityPlan">
+                <optgroup label="Licença OPS">
+                  <option value="licenseBase">Licença Base, R$ 900</option>
+                  <option value="licenseGrowth">Licença Crescimento, R$ 1.200</option>
+                  <option value="licenseCritical">Licença Operação Crítica, R$ 1.500</option>
+                </optgroup>
+                <optgroup label="Assento na Operação">
+                  <option value="seatDirection">Assento Direção, R$ 2.500</option>
+                  <option value="seatEvolution">Assento Evolução, R$ 3.500</option>
+                  <option value="seatPriority">Assento Prioridade, R$ 5.000</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <p class="context-note" id="scopeNote"></p>
+        </section>
+
+        <section class="section">
+          <div class="section-head">
+            <h2>3. Proteja a margem</h2>
+            <p>Premissas internas.</p>
+          </div>
+          <div class="fields">
+            <div class="field">
+              <label for="estimatedHours">Horas estimadas</label>
+              <input id="estimatedHours" type="number" min="0" step="1">
+            </div>
+            <div class="field">
+              <label for="hourCost">Custo interno por hora</label>
+              <input id="hourCost" type="number" min="0" step="10" value="120">
+            </div>
+            <div class="field">
+              <label for="directCosts">Custos diretos</label>
+              <input id="directCosts" type="number" min="0" step="100">
+            </div>
+            <div class="field">
+              <label for="taxRate">Tributos e taxas</label>
+              <input id="taxRate" type="number" min="0" max="60" step="0.5" value="12">
+            </div>
+            <div class="field">
+              <label for="contingency">Contingência</label>
+              <input id="contingency" type="number" min="0" max="100" step="1" value="10">
+            </div>
+            <div class="field">
+              <label for="targetMargin">Margem mínima</label>
+              <input id="targetMargin" type="number" min="0" max="80" step="1" value="35">
+            </div>
+            <div class="field">
+              <label for="annualGain">Ganho documentado em 12 meses</label>
+              <input id="annualGain" type="number" min="0" step="500" value="60000">
+            </div>
+            <div class="field">
+              <label for="valueShare">Parcela do ganho capturada</label>
+              <input id="valueShare" type="number" min="0" max="100" step="1" value="20">
+            </div>
+          </div>
+        </section>
+      </form>
+
+      <aside class="panel result-panel" aria-live="polite">
+        <div class="result-top">
+          <div class="status-row">
+            <span class="status ok" id="status">APROVAR</span>
+            <span class="result-period" id="resultPeriod">projeto</span>
+          </div>
+          <p class="product-name" id="productName">Mapa do Gargalo + Ativo de Arranque</p>
+          <p class="price" id="recommendedPrice">R$ 2.500</p>
+        </div>
+
+        <div class="result-body">
+          <div class="metrics">
+            <div class="metric">
+              <span>Preço por escopo</span>
+              <strong id="scopePrice">R$ 2.500</strong>
+            </div>
+            <div class="metric">
+              <span>Piso financeiro</span>
+              <strong id="financialFloor">R$ 0</strong>
+            </div>
+            <div class="metric">
+              <span>Margem estimada</span>
+              <strong id="estimatedMargin">0%</strong>
+            </div>
+            <div class="metric">
+              <span>Referência de valor</span>
+              <strong id="valueReference">R$ 0</strong>
+            </div>
+            <div class="metric">
+              <span id="creditLabel">Crédito aplicado</span>
+              <strong id="creditValue">R$ 0</strong>
+            </div>
+            <div class="metric">
+              <span id="balanceLabel">Saldo a cobrar</span>
+              <strong id="balanceDue">R$ 2.500</strong>
+            </div>
+          </div>
+
+          <p class="decision ok" id="decision"></p>
+
+          <h3>O cliente recebe</h3>
+          <ul class="deliverables" id="deliverables"></ul>
+
+          <p class="payment" id="payment"></p>
+          <button class="copy" id="copySummary" type="button">Copiar resumo para proposta</button>
+          <p class="copy-feedback" id="copyFeedback" role="status"></p>
+          <p class="internal-note">Página marcada para não aparecer em buscadores. O navegador salva a última simulação neste dispositivo.</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const offers = {
+      mapStandard: {
+        name: "Mapa do Gargalo + Ativo de Arranque",
+        price: 2500,
+        hours: 12,
+        directCosts: 0,
+        monthly: false,
+        note: "Preço público. Inclui decisão, fluxo futuro e um ativo aplicável. Não inclui conexão entre sistemas.",
+        deliverables: [
+          "Fluxo atual e fluxo futuro desenhados",
+          "Gargalo, impacto, linha de base e indicador",
+          "Um Ativo de Arranque pronto para uso",
+          "Plano priorizado para os próximos 30 dias"
+        ]
+      },
+      mapPilot: {
+        name: "Mapa do Gargalo + Ativo de Arranque, piloto",
+        price: 1500,
+        hours: 10,
+        directCosts: 0,
+        monthly: false,
+        note: "Condição limitada aos dois primeiros clientes. O escopo do ativo precisa caber em até duas horas de produção.",
+        deliverables: [
+          "Fluxo atual e fluxo futuro desenhados",
+          "Gargalo, impacto, linha de base e indicador",
+          "Um Ativo de Arranque de escopo reduzido",
+          "Plano priorizado para os próximos 30 dias"
+        ]
+      },
+      sprintEssential: {
+        name: "Sprint Essencial",
+        price: 8000,
+        hours: 32,
+        directCosts: 0,
+        monthly: false,
+        note: "Um fluxo corrigido nas ferramentas atuais, sem nova conexão.",
+        deliverables: [
+          "Fluxo atual e fluxo futuro",
+          "Regras e responsáveis definidos",
+          "Configuração nas ferramentas atuais",
+          "Testes, treinamento e 14 dias de estabilização",
+          "Indicador antes e depois"
+        ]
+      },
+      sprintConnected: {
+        name: "Sprint Conectada",
+        price: 11500,
+        hours: 44,
+        directCosts: 0,
+        monthly: false,
+        note: "Um fluxo, até três ferramentas, uma conexão padrão e até 2.000 registros limpos.",
+        deliverables: [
+          "Fluxo atual e fluxo futuro",
+          "Regras e responsáveis definidos",
+          "Uma conexão padrão incluída",
+          "Migração de até 2.000 registros limpos",
+          "Testes, treinamento e 14 dias de estabilização",
+          "Indicador antes e depois"
+        ]
+      },
+      sprintOps: {
+        name: "Sprint Sistema OPS",
+        price: 15000,
+        hours: 56,
+        directCosts: 300,
+        monthly: false,
+        note: "Um fluxo, tenant OPS, até duas conexões padrão e até 5.000 registros limpos.",
+        deliverables: [
+          "Fluxo atual e fluxo futuro",
+          "Tenant OPS configurado",
+          "Até duas conexões padrão incluídas",
+          "Migração de até 5.000 registros limpos",
+          "Testes, treinamento e 14 dias de estabilização",
+          "Indicador antes e depois"
+        ]
+      },
+      licenseBase: {
+        name: "Licença OPS Base",
+        price: 900,
+        hours: 1,
+        directCosts: 200,
+        monthly: true,
+        note: "Até 500 alunos ativos, cinco usuários e nenhuma conexão monitorada.",
+        deliverables: [
+          "Tenant OPS",
+          "Hospedagem, backup e monitoramento",
+          "Atualizações do núcleo",
+          "Correção de defeitos e suporte padrão"
+        ]
+      },
+      licenseGrowth: {
+        name: "Licença OPS Crescimento",
+        price: 1200,
+        hours: 1.5,
+        directCosts: 300,
+        monthly: true,
+        note: "Até 2.000 alunos ativos, dez usuários e uma conexão monitorada.",
+        deliverables: [
+          "Tudo da Licença Base",
+          "Capacidade ampliada de alunos e usuários",
+          "Monitoramento de uma conexão padrão"
+        ]
+      },
+      licenseCritical: {
+        name: "Licença OPS Operação Crítica",
+        price: 1500,
+        hours: 2,
+        directCosts: 400,
+        monthly: true,
+        note: "Até 5.000 alunos ativos, vinte usuários e duas conexões monitoradas.",
+        deliverables: [
+          "Tudo da Licença Crescimento",
+          "Monitoramento de duas conexões padrão",
+          "Prioridade em incidente crítico"
+        ]
+      },
+      seatDirection: {
+        name: "Assento na Operação, Direção",
+        price: 2500,
+        hours: 5,
+        directCosts: 200,
+        monthly: true,
+        note: "Uma reunião mensal e três horas de ajustes. Horas não acumulam.",
+        deliverables: [
+          "Uma reunião mensal",
+          "Leitura de indicadores e backlog priorizado",
+          "Três horas de ajustes",
+          "Licença Base quando aplicável"
+        ]
+      },
+      seatEvolution: {
+        name: "Assento na Operação, Evolução",
+        price: 3500,
+        hours: 8,
+        directCosts: 300,
+        monthly: true,
+        note: "Uma reunião mensal e seis horas de ajustes. Horas não acumulam.",
+        deliverables: [
+          "Uma reunião mensal",
+          "Leitura de indicadores e backlog priorizado",
+          "Seis horas de ajustes",
+          "Licença Crescimento quando aplicável"
+        ]
+      },
+      seatPriority: {
+        name: "Assento na Operação, Prioridade",
+        price: 5000,
+        hours: 13,
+        directCosts: 400,
+        monthly: true,
+        note: "Duas reuniões mensais e dez horas de ajustes. Horas não acumulam.",
+        deliverables: [
+          "Duas reuniões mensais",
+          "Leitura de indicadores e backlog priorizado",
+          "Dez horas de ajustes",
+          "Licença Operação Crítica quando aplicável"
+        ]
+      }
+    };
+
+    const assetLabels = {
+      assistant: "Assistente operacional configurado",
+      checklist: "Checklist de execução",
+      dashboard: "Painel de decisão",
+      communication: "Kit de comunicação operacional"
+    };
+
+    const money = new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+      maximumFractionDigits: 0
+    });
+
+    const form = document.getElementById("calculator");
+    const numberValue = id => Math.max(0, Number(document.getElementById(id).value) || 0);
+    const selectedOffer = () => document.querySelector('input[name="offer"]:checked').value;
+
+    let currentOfferKey = "mapStandard";
+    let syncingDefaults = false;
+
+    function getOfferKey() {
+      const type = selectedOffer();
+      if (type === "map") {
+        return document.getElementById("mapCondition").value === "pilot" ? "mapPilot" : "mapStandard";
+      }
+      if (type === "sprint") {
+        const path = document.getElementById("solutionPath").value;
+        if (path === "connected") return "sprintConnected";
+        if (path === "ops") return "sprintOps";
+        return "sprintEssential";
+      }
+      return document.getElementById("continuityPlan").value;
+    }
+
+    function setVisibility() {
+      const type = selectedOffer();
+      document.getElementById("mapFields").hidden = type !== "map";
+      document.getElementById("sprintFields").hidden = type !== "sprint";
+      document.getElementById("continuityFields").hidden = type !== "continuity";
+    }
+
+    function syncDefaults(force = false) {
+      const key = getOfferKey();
+      if (!force && key === currentOfferKey) return;
+      currentOfferKey = key;
+      const offer = offers[key];
+      syncingDefaults = true;
+      document.getElementById("estimatedHours").value = offer.hours;
+      document.getElementById("directCosts").value = offer.directCosts;
+      syncingDefaults = false;
+    }
+
+    function extrasPrice() {
+      if (selectedOffer() !== "sprint") return 0;
+      return (
+        numberValue("standardConnections") * 1500 +
+        numberValue("complexConnections") * 3000 +
+        numberValue("dataBlocks") * 1600 +
+        numberValue("trainingSessions") * 750 +
+        numberValue("stabilizationBlocks") * 1500 +
+        numberValue("onsiteDays") * 1500 +
+        numberValue("travelCosts")
+      );
+    }
+
+    function paymentText(offer, recommended, credit) {
+      if (offer.monthly) {
+        return `Cobrança mensal antecipada de ${money.format(recommended)}. Prazo inicial de três meses para Assento.`;
+      }
+      if (selectedOffer() === "map") {
+        return `Pagamento integral de ${money.format(recommended)} antes da reunião. O valor pago pode virar crédito numa Sprint contratada em até 15 dias.`;
+      }
+      const balance = Math.max(0, recommended - credit);
+      const start = balance * 0.5;
+      const approval = balance * 0.3;
+      const production = balance * 0.2;
+      return `Preço total: ${money.format(recommended)}. Crédito: ${money.format(credit)}. Saldo: ${money.format(balance)}, com ${money.format(start)} na assinatura, ${money.format(approval)} na homologação e ${money.format(production)} antes da entrada em produção.`;
+    }
+
+    function buildDeliverables(offer) {
+      const list = [...offer.deliverables];
+      if (selectedOffer() === "map") {
+        list[2] = assetLabels[document.getElementById("starterAsset").value];
+      }
+      return list;
+    }
+
+    function calculate() {
+      setVisibility();
+      syncDefaults();
+
+      const key = getOfferKey();
+      const offer = offers[key];
+      const extra = extrasPrice();
+      const preUrgency = offer.price + extra;
+      const urgent = selectedOffer() === "sprint" && document.getElementById("urgent").checked;
+      const scopePrice = preUrgency * (urgent ? 1.2 : 1);
+      const taxRate = numberValue("taxRate") / 100;
+      const contingencyRate = numberValue("contingency") / 100;
+      const targetMargin = numberValue("targetMargin") / 100;
+      const protectedCost = (
+        numberValue("estimatedHours") * numberValue("hourCost") +
+        numberValue("directCosts")
+      ) * (1 + contingencyRate);
+      const denominator = 1 - taxRate - targetMargin;
+      const financialFloor = denominator > 0 ? protectedCost / denominator : Infinity;
+      const rawRecommended = Math.max(scopePrice, financialFloor);
+      const recommended = Number.isFinite(rawRecommended)
+        ? Math.ceil(rawRecommended / 500) * 500
+        : 0;
+      const margin = recommended > 0
+        ? (recommended * (1 - taxRate) - protectedCost) / recommended
+        : 0;
+      const valueReference = numberValue("annualGain") * (numberValue("valueShare") / 100);
+      const contractValue = offer.monthly ? recommended * 12 : recommended;
+      const credit = selectedOffer() === "sprint" ? numberValue("mapCredit") : 0;
+      const balance = Math.max(0, recommended - credit);
+
+      let status = "APROVAR";
+      let statusClass = "ok";
+      let decision = "O preço cobre o escopo, preserva a margem e cabe na referência de valor informada.";
+
+      if (denominator <= 0) {
+        status = "CORRIGIR PREMISSAS";
+        statusClass = "danger";
+        decision = "A soma de tributos e margem mínima precisa ficar abaixo de 100%.";
+      } else if (margin + 0.0001 < targetMargin) {
+        status = "REESCOPEAR";
+        statusClass = "danger";
+        decision = "As horas e os custos previstos ultrapassam a margem mínima. Reduza o escopo ou aumente o preço.";
+      } else if (valueReference > 0 && contractValue > valueReference) {
+        status = "PROVAR VALOR";
+        statusClass = "warn";
+        decision = offer.monthly
+          ? "O valor anual do contrato supera a parcela do ganho definida. Confirme um impacto maior ou escolha um plano menor."
+          : "O preço supera a parcela do ganho definida. Confirme um impacto maior ou reduza o escopo.";
+      } else if (recommended > scopePrice) {
+        status = "AJUSTAR PREÇO";
+        statusClass = "warn";
+        decision = "O pacote tabelado ficou abaixo do piso financeiro. Use o preço recomendado ou reduza o esforço previsto.";
+      }
+
+      const suffix = offer.monthly ? "/mês" : "";
+      document.getElementById("scopeNote").textContent = offer.note;
+      document.getElementById("productName").textContent = offer.name;
+      document.getElementById("recommendedPrice").textContent = money.format(recommended) + suffix;
+      document.getElementById("scopePrice").textContent = money.format(scopePrice) + suffix;
+      document.getElementById("financialFloor").textContent = Number.isFinite(financialFloor)
+        ? money.format(financialFloor) + suffix
+        : "Inválido";
+      document.getElementById("estimatedMargin").textContent = `${(margin * 100).toFixed(1).replace(".", ",")}%`;
+      document.getElementById("valueReference").textContent = money.format(valueReference);
+      document.getElementById("creditValue").textContent = money.format(credit);
+      document.getElementById("balanceDue").textContent = money.format(balance) + suffix;
+      document.getElementById("resultPeriod").textContent = offer.monthly ? "mensal" : "projeto";
+
+      const statusElement = document.getElementById("status");
+      statusElement.textContent = status;
+      statusElement.className = `status ${statusClass}`;
+
+      const decisionElement = document.getElementById("decision");
+      decisionElement.textContent = decision;
+      decisionElement.className = `decision ${statusClass}`;
+
+      const deliverables = buildDeliverables(offer);
+      document.getElementById("deliverables").innerHTML = deliverables
+        .map(item => `<li>${item}</li>`)
+        .join("");
+      document.getElementById("payment").textContent = paymentText(offer, recommended, credit);
+
+      const state = {
+        values: Object.fromEntries(
+          [...form.elements]
+            .filter(element => element.id && element.type !== "radio")
+            .map(element => [element.id, element.type === "checkbox" ? element.checked : element.value])
+        ),
+        offer: selectedOffer()
+      };
+      localStorage.setItem("opsPricingCalculator", JSON.stringify(state));
+
+      window.currentSummary = [
+        `Oferta: ${offer.name}`,
+        `Investimento: ${money.format(recommended)}${suffix}`,
+        selectedOffer() === "sprint" ? `Crédito do Mapa: ${money.format(credit)}` : "",
+        selectedOffer() === "sprint" ? `Saldo: ${money.format(balance)}` : "",
+        `Escopo: ${offer.note}`,
+        "Entregas:",
+        ...deliverables.map(item => `- ${item}`),
+        `Condição: ${paymentText(offer, recommended, credit)}`
+      ].filter(Boolean).join("\n");
+    }
+
+    function restore() {
+      const raw = localStorage.getItem("opsPricingCalculator");
+      if (!raw) {
+        syncDefaults(true);
+        calculate();
+        return;
+      }
+      try {
+        const state = JSON.parse(raw);
+        const offerRadio = document.querySelector(`input[name="offer"][value="${state.offer}"]`);
+        if (offerRadio) offerRadio.checked = true;
+        Object.entries(state.values || {}).forEach(([id, value]) => {
+          const element = document.getElementById(id);
+          if (!element) return;
+          if (element.type === "checkbox") element.checked = Boolean(value);
+          else element.value = value;
+        });
+      } catch {
+        localStorage.removeItem("opsPricingCalculator");
+      }
+      currentOfferKey = "";
+      setVisibility();
+      syncDefaults();
+      calculate();
+    }
+
+    form.addEventListener("input", event => {
+      const changesPackage = [
+        "mapCondition",
+        "solutionPath",
+        "continuityPlan"
+      ].includes(event.target.id) || event.target.name === "offer";
+      if (changesPackage) {
+        currentOfferKey = "";
+        setVisibility();
+        syncDefaults();
+      }
+      if (!syncingDefaults) calculate();
+    });
+
+    form.addEventListener("change", event => {
+      const changesPackage = [
+        "mapCondition",
+        "solutionPath",
+        "continuityPlan"
+      ].includes(event.target.id) || event.target.name === "offer";
+      if (changesPackage) {
+        currentOfferKey = "";
+        setVisibility();
+        syncDefaults();
+      }
+      if (!syncingDefaults) calculate();
+    });
+
+    document.getElementById("reset").addEventListener("click", () => {
+      localStorage.removeItem("opsPricingCalculator");
+      form.reset();
+      document.getElementById("hourCost").value = 120;
+      document.getElementById("taxRate").value = 12;
+      document.getElementById("contingency").value = 10;
+      document.getElementById("targetMargin").value = 35;
+      document.getElementById("annualGain").value = 60000;
+      document.getElementById("valueShare").value = 20;
+      currentOfferKey = "";
+      setVisibility();
+      syncDefaults();
+      calculate();
+    });
+
+    document.getElementById("copySummary").addEventListener("click", async () => {
+      const feedback = document.getElementById("copyFeedback");
+      try {
+        await navigator.clipboard.writeText(window.currentSummary || "");
+        feedback.textContent = "Resumo copiado.";
+      } catch {
+        feedback.textContent = "Selecione e copie o resumo manualmente.";
+      }
+      window.setTimeout(() => {
+        feedback.textContent = "";
+      }, 2400);
+    });
+
+    restore();
+  </script>
+</body>
+</html>
