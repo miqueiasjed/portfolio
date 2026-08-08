@@ -6,7 +6,7 @@ Site profissional de Miquéias Mesquita, Engenheiro de Operações Digitais. A o
 
 - Posicionamento profissional e proposta de trabalho.
 - Problemas operacionais que o serviço ajuda a resolver.
-- Três frentes de trabalho, sem preço exibido na tela: sessão individual, treinamento para equipes e sistema customizado (Mapa do Gargalo, Sprint OPS, Licença OPS e Assento na Operação).
+- Três frentes de trabalho, sem preço exibido na tela: sessão individual, treinamento para equipes e sistema customizado (Mapa do Gargalo e Sprint, sem depender de uma plataforma pronta).
 - Projetos em produção usados como prova de capacidade, em setores diferentes.
 - Forma de condução do Mapa até a implantação e a medição.
 - Informações sobre experiência e áreas de atuação.
