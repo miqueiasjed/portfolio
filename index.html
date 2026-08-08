@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Miquéias Mesquita | Engenheiro de Operações Digitais</title>
-  <meta name="description" content="Encontro o fluxo que trava mentorias e negócios de educação digital. O Mapa do Gargalo entrega o fluxo redesenhado, uma decisão priorizada e um ativo pronto para uso.">
+  <meta name="description" content="Encontro o fluxo que trava a operação de negócios que já vendem. O Mapa do Gargalo entrega o fluxo redesenhado, uma decisão priorizada e um ativo pronto para uso.">
   <meta property="og:title" content="Miquéias Mesquita | Engenheiro de Operações Digitais">
   <meta property="og:description" content="O crescimento para quando a operação não acompanha. Conheça o Mapa do Gargalo com Ativo de Arranque.">
   <meta property="og:type" content="website">
@@ -420,9 +420,9 @@
       margin-bottom: 0;
     }
 
-    .product-grid {
+    .training-grid {
       display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 22px;
     }
 
@@ -433,27 +433,12 @@
       border-radius: var(--radius-md);
     }
 
-    .product-card.primary {
-      border-color: #c8cee9;
-      box-shadow: var(--shadow);
-    }
-
-    .product-card .price {
-      margin: 16px 0 18px;
-      font-size: 2.1rem;
-      font-weight: 600;
-      letter-spacing: -0.045em;
-    }
-
-    .product-card .price small {
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 500;
-      letter-spacing: 0;
-    }
-
     .product-card p {
       color: var(--graphite);
+    }
+
+    .product-card .button {
+      margin-top: 20px;
     }
 
     .clean-list {
@@ -479,30 +464,6 @@
       background: var(--signal);
       border-radius: 50%;
       content: "";
-    }
-
-    .continuity {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .continuity article {
-      padding: 18px;
-      background: #fbfbfa;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-    }
-
-    .continuity h3 {
-      font-size: 1rem;
-    }
-
-    .continuity p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.82rem;
     }
 
     .method {
@@ -756,7 +717,7 @@
       }
 
       .section-intro,
-      .product-grid,
+      .training-grid,
       .about-grid,
       .cta-grid {
         grid-template-columns: 1fr;
@@ -862,7 +823,6 @@
         padding: 78px 0;
       }
 
-      .continuity,
       .fit-grid,
       .about-facts {
         grid-template-columns: 1fr;
@@ -898,11 +858,11 @@
         <span>Engenheiro de Operações Digitais</span>
       </a>
       <nav class="nav-links" aria-label="Navegação principal">
-        <a href="#produto">Produto</a>
+        <a href="#produto">Como trabalho</a>
         <a href="#metodo">Método</a>
         <a href="#provas">Provas</a>
         <a href="#sobre">Sobre</a>
-        <a class="nav-cta" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20se%20o%20Mapa%20do%20Gargalo%20serve%20para%20minha%20opera%C3%A7%C3%A3o.">Conhecer o Mapa</a>
+        <a class="nav-cta" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20qual%20frente%20serve%20para%20o%20meu%20momento.">Falar agora</a>
       </nav>
     </div>
   </header>
@@ -910,13 +870,13 @@
   <main id="conteudo">
     <section class="hero" id="topo">
       <div class="shell">
-        <p class="eyebrow">Operações para mentorias e negócios de educação digital</p>
+        <p class="eyebrow">Operações para negócios que já vendem e travaram no processo</p>
         <h1>O crescimento para quando a operação não acompanha.</h1>
         <p class="lead">Encontro o fluxo que trava venda, onboarding, entrega, cobrança ou retenção. Você recebe o fluxo redesenhado, uma decisão priorizada e um ativo que a equipe consegue usar.</p>
 
         <div class="hero-actions">
-          <a class="button button-primary" href="#produto">Conhecer o Mapa do Gargalo</a>
-          <p class="hero-note">Mapa com entregável aplicável por R$ 2.500, em até sete dias.</p>
+          <a class="button button-primary" href="#produto">Ver as frentes de trabalho</a>
+          <p class="hero-note">Preço e prazo definidos depois de entender o seu fluxo.</p>
         </div>
 
         <div class="flow-panel" aria-labelledby="flow-title">
@@ -988,48 +948,37 @@
       <div class="shell">
         <div class="section-intro">
           <div>
-            <p class="eyebrow">Produto</p>
-            <h2>Um fluxo por vez, com resultado medido.</h2>
+            <p class="eyebrow">Como trabalho</p>
+            <h2>Três frentes, conforme o que o seu momento pede.</h2>
           </div>
-          <p class="lead">A porta de entrada é o Mapa do Gargalo. A implementação acontece em uma Sprint OPS quando o diagnóstico mostra prioridade, impacto e um responsável interno.</p>
+          <p class="lead">Preço e prazo saem da conversa, não da tela. Cada frente resolve uma necessidade diferente: autonomia, time treinado ou sistema pronto.</p>
         </div>
 
-        <div class="product-grid">
-          <article class="product-card primary">
-            <p class="eyebrow">Entrada</p>
-            <h3>Mapa do Gargalo</h3>
-            <p class="price">R$ 2.500</p>
-            <p>Em até sete dias, você recebe o fluxo atual, o desenho da mudança, o indicador e um Ativo de Arranque pronto para a equipe começar.</p>
-            <ul class="clean-list">
-              <li>Fluxo atual e fluxo futuro desenhados</li>
-              <li>Gargalo, impacto e decisão documentados</li>
-              <li>Um assistente, checklist, painel ou template pronto</li>
-              <li>Plano priorizado para 30 dias</li>
-            </ul>
-            <p class="case-note">O valor vira crédito integral numa Sprint contratada em até 15 dias.</p>
+        <div class="training-grid">
+          <article class="product-card">
+            <p class="eyebrow">Faça sozinho</p>
+            <h3>Sessão individual</h3>
+            <p>Pra quem quer sair de uma sessão com produtividade real, sem depender de ninguém. Aplico IA direto no seu processo, num formato individual e prático.</p>
+            <a class="button button-secondary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20uma%20sess%C3%A3o%20individual.">Quero uma sessão individual</a>
           </article>
 
           <article class="product-card">
-            <p class="eyebrow">Implementação</p>
-            <h3>Sprint OPS</h3>
-            <p class="price">Proposta após o Mapa <small>para um fluxo crítico</small></p>
-            <p>Durante quatro a seis semanas, o fluxo ganha processo, sistema, responsável, treinamento e indicador. A equipe acompanha cada etapa.</p>
+            <p class="eyebrow">Faça com o time</p>
+            <h3>Treinamento para equipes</h3>
+            <p>Presencial em Fortaleza ou na cidade da sua empresa. O time inteiro aprende a aplicar IA na operação do dia a dia, junto, no mesmo processo real.</p>
+            <a class="button button-secondary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20treinar%20minha%20equipe.">Quero treinar meu time</a>
+          </article>
+
+          <article class="product-card">
+            <p class="eyebrow">Faça por mim</p>
+            <h3>Sistema customizado</h3>
+            <p>Mapeio o fluxo, encontro o gargalo e construo o sistema sob medida pra resolver. Começa pelo Mapa do Gargalo, segue pra uma Sprint OPS quando o fluxo pede implementação completa, com Licença OPS e Assento na Operação disponíveis depois.</p>
             <ul class="clean-list">
-              <li>Escopo ligado ao indicador</li>
-              <li>Implementação e treinamento</li>
-              <li>Demonstração ao vivo</li>
-              <li>Acompanhamento da entrada em operação</li>
+              <li>Fluxo mapeado e gargalo identificado</li>
+              <li>Sistema implementado e equipe treinada</li>
+              <li>Indicador medido antes e depois</li>
             </ul>
-            <div class="continuity">
-              <article>
-                <h3>Licença OPS</h3>
-                <p>Disponível quando a Sprint usa o Sistema OPS, cobrindo hospedagem, núcleo, backup, monitoramento e suporte padrão.</p>
-              </article>
-              <article>
-                <h3>Assento na Operação</h3>
-                <p>Disponível depois da implantação para revisão, indicadores e capacidade mensal de ajustes.</p>
-              </article>
-            </div>
+            <a class="button button-secondary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20um%20sistema%20sob%20medida%20para%20a%20minha%20opera%C3%A7%C3%A3o.">Quero um sistema sob medida</a>
           </article>
         </div>
       </div>
@@ -1071,7 +1020,7 @@
             <p class="eyebrow">Critério de fit</p>
             <h2>O estágio do negócio define a prioridade.</h2>
           </div>
-          <p class="lead">O recorte comercial atual são mentorias com turmas e criadores com vários produtos. A empresa já vende, possui equipe e perdeu clareza entre as etapas da operação.</p>
+          <p class="lead">O critério é o estágio do negócio, não o setor. A empresa já vende, possui equipe e perdeu clareza entre as etapas da operação. O mesmo método já foi aplicado em escola, indústria, clínica, ótica e educação digital.</p>
         </div>
 
         <div class="fit-grid">
@@ -1106,7 +1055,7 @@
             <p class="eyebrow">Provas de capacidade</p>
             <h2>Problemas reais, números com contexto.</h2>
           </div>
-          <p class="lead">Os cases abaixo pertencem ao histórico profissional. Eles demonstram capacidade operacional e não mudam o foco comercial atual em educação digital.</p>
+          <p class="lead">Os cases abaixo pertencem ao histórico profissional e cobrem setores diferentes. O que se repete em todos é o mesmo método: mapear o fluxo, achar o gargalo e medir o resultado.</p>
         </div>
 
         <div class="case-grid">
@@ -1134,17 +1083,81 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="danuzio_news_1.jpg" alt="Tela de uma operação editorial acompanhada por Miquéias">
+              <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks, escola de inglês">
             </div>
             <div class="case-body">
-              <p class="case-kicker">Operação de creator</p>
-              <p class="case-result">Acompanhamento mensal em produção</p>
-              <p>Conteúdo, relacionamento e operação funcionam dentro de uma estrutura acompanhada continuamente. Relação profissional em curso.</p>
+              <p class="case-kicker">Daily Talks</p>
+              <p class="case-result">Ecossistema operacional completo</p>
+              <p>Construí a plataforma acadêmica, os aplicativos do aluno, o CRM comercial e a gestão financeira da escola de inglês. Método testado por centenas de alunos, com matrícula aberta todo ano.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="ari_dedetizacao_1.png" alt="Tela do sistema de gestão para empresas de dedetização">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">DedetPro / Certificado</p>
+              <p class="case-result">Sistema multiempresa em produção</p>
+              <p>Um produto meu, não um projeto avulso. Hoje roda para várias empresas de dedetização, do atendimento em campo até a emissão de certificado e o financeiro.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="emporio_box_1.jpg" alt="Página da Empório Box, indústria de embalagens de papel">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Empório Box</p>
+              <p class="case-result">ERP industrial completo</p>
+              <p>Comercial, produção, estoque, compras e financeiro numa fábrica de embalagens com mais de 10 anos de mercado, atendendo lojistas e distribuidores em todo o Brasil.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="ouse_otica_1.jpg" alt="Página da Ouse Ótica">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Ouse Ótica</p>
+              <p class="case-result">4,9/5 em mais de 1.240 avaliações</p>
+              <p>Pipeline de vendas, agenda, atendimento e financeiro reunidos, do primeiro contato do lead até o pós-venda.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="endoquali_1.jpg" alt="Página da EndoQuali, clínica da Dra. Viviane Oliveira">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Clínica Viviane (EndoQuali)</p>
+              <p class="case-result">Operação clínica completa</p>
+              <p>Prontuário, agenda, CRM comercial e financeiro numa base só, com apoio de IA no atendimento ao paciente. A EndoQuali foi pioneira em atendimento concierge de Endocrinologia em São Paulo.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="danuzio_news_1.jpg" alt="Tela do portal Danuzio News">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Danuzio News</p>
+              <p class="case-result">Maior perfil de OSINT do Brasil</p>
+              <p>Portal e operação editorial por trás do maior perfil brasileiro de OSINT, com mais de 500 mil seguidores no Instagram e alcance mensal de milhões de pessoas (Estado de Minas). Acompanhamento mensal em produção.</p>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-image">
+              <img src="portal_marsiglia_1.jpg" alt="Tela do Portal Marsiglia, de André Marsiglia">
+            </div>
+            <div class="case-body">
+              <p class="case-kicker">Portal Marsiglia</p>
+              <p class="case-result">Mais de 350 mil seguidores</p>
+              <p>Portal de conteúdo e comunidade de assinantes de André Marsiglia, advogado constitucionalista, comentarista da Jovem Pan e colunista da Poder360. Acompanhamento mensal em produção.</p>
             </div>
           </article>
         </div>
-
-        <p class="case-note">Essential está em implantação e permanece fora da lista de resultados até existir adoção e indicador confirmados. Projetos com conflito comercial ficam fora do portfólio público.</p>
       </div>
     </section>
 
@@ -1157,7 +1170,7 @@
           <p class="eyebrow">Miquéias Mesquita</p>
           <h2>Engenheiro de Operações Digitais.</h2>
           <p>Minha especialidade é pegar um processo confuso, encontrar onde a informação para e transformar o fluxo em algo que a equipe consegue operar e medir.</p>
-          <p>Trabalhei por sete anos dentro da operação de uma autoescola. Organizei cobrança e gestão numa clínica durante a pandemia. Hoje concentro meu trabalho em mentorias e negócios de educação digital que já vendem e precisam sustentar o próximo nível de crescimento.</p>
+          <p>Trabalhei por sete anos dentro da operação de uma autoescola. Organizei cobrança e gestão numa clínica durante a pandemia. Hoje construo e sustento a operação de escolas, clínicas, indústria, ótica, plataformas de mídia e negócios de educação digital que já vendem e precisam do próximo nível de crescimento.</p>
           <div class="about-facts">
             <div>
               <strong>Voz</strong>
