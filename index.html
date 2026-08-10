@@ -8,22 +8,22 @@
   <meta property="og:title" content="Miquéias Mesquita | Engenheiro de Operações Digitais">
   <meta property="og:description" content="O crescimento para quando a operação não acompanha. Conheça o Mapa do Gargalo com Ativo de Arranque.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#F7F7F5">
+  <meta name="theme-color" content="#F5F2EC">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #17181b;
-      --paper: #f7f7f5;
-      --white: #ffffff;
-      --graphite: #3a3d42;
-      --muted: #6c7078;
-      --line: #e3e4e6;
-      --signal: #5267c8;
-      --signal-soft: #eef0fa;
-      --success: #2f7658;
-      --radius-sm: 12px;
-      --radius-md: 20px;
-      --radius-lg: 30px;
-      --shadow: 0 18px 55px rgba(23, 24, 27, 0.08);
+      --bg: #F5F2EC;
+      --ink: #1C1E24;
+      --muted: #60636A;
+      --faint: #92959D;
+      --line: #CECAC1;
+      --accent: #B8433A;
+      --accent-hover: #CE4C3C;
+      --dark-bg: #1A1B1E;
+      --dark-line: #3E4046;
+      --dark-text: #F2EFE9;
       --max: 1180px;
     }
 
@@ -38,15 +38,21 @@
     body {
       margin: 0;
       color: var(--ink);
-      background: var(--paper);
-      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: 18px;
-      line-height: 1.55;
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
     }
 
     a {
       color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent);
     }
 
     img {
@@ -54,13 +60,8 @@
       max-width: 100%;
     }
 
-    button,
-    a {
-      -webkit-tap-highlight-color: transparent;
-    }
-
     :focus-visible {
-      outline: 3px solid var(--signal);
+      outline: 3px solid var(--accent);
       outline-offset: 4px;
     }
 
@@ -70,9 +71,9 @@
       left: 12px;
       z-index: 100;
       padding: 10px 14px;
-      color: var(--white);
+      color: var(--bg);
       background: var(--ink);
-      border-radius: 8px;
+      font-size: 14px;
       transform: translateY(-150%);
     }
 
@@ -81,101 +82,120 @@
     }
 
     .shell {
-      width: min(calc(100% - 40px), var(--max));
+      max-width: var(--max);
       margin: 0 auto;
+      padding: 0 32px;
     }
 
     .eyebrow {
-      margin: 0 0 14px;
+      margin: 0;
       color: var(--muted);
-      font-size: 0.76rem;
-      font-weight: 600;
-      letter-spacing: 0.14em;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
-    h1,
-    h2,
-    h3,
-    p {
-      margin-top: 0;
+    .divider {
+      width: 90px;
+      height: 1px;
+      margin-top: 22px;
+      background: var(--line);
+    }
+
+    h1, h2, h3, p {
+      margin: 0;
     }
 
     h1 {
-      max-width: 950px;
-      margin-bottom: 26px;
-      font-size: clamp(3.1rem, 7.4vw, 6.7rem);
-      font-weight: 600;
-      letter-spacing: -0.065em;
-      line-height: 0.96;
+      max-width: 1000px;
+      margin-top: 44px;
+      font-size: clamp(48px, 7.2vw, 104px);
+      font-weight: 300;
+      letter-spacing: -0.035em;
+      line-height: 1.0;
+      text-wrap: pretty;
     }
 
     h2 {
-      margin-bottom: 18px;
-      font-size: clamp(2.2rem, 4vw, 4rem);
-      font-weight: 600;
-      letter-spacing: -0.045em;
-      line-height: 1.02;
+      font-size: clamp(34px, 4.2vw, 58px);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      text-wrap: pretty;
     }
 
     h3 {
-      margin-bottom: 10px;
-      font-size: 1.28rem;
-      font-weight: 600;
+      font-size: 26px;
+      font-weight: 500;
       letter-spacing: -0.02em;
-      line-height: 1.2;
+      line-height: 1.15;
     }
 
     .lead {
-      max-width: 780px;
-      color: var(--graphite);
-      font-size: clamp(1.15rem, 2vw, 1.48rem);
-      line-height: 1.45;
+      font-size: clamp(17px, 1.6vw, 21px);
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--muted);
+      text-wrap: pretty;
     }
 
-    .button {
+    .btn {
       display: inline-flex;
-      min-height: 54px;
       align-items: center;
       justify-content: center;
-      padding: 14px 22px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
+    }
+
+    .btn-dark {
+      padding: 19px 30px;
+      color: var(--bg);
+      background: var(--ink);
+      font-size: 12px;
+    }
+
+    .btn-dark:hover {
+      color: var(--dark-text);
+      background: var(--dark-bg);
+    }
+
+    .btn-outline {
+      align-self: flex-start;
+      padding: 15px 22px;
+      color: var(--ink);
       border: 1px solid var(--ink);
-      border-radius: var(--radius-sm);
-      font-size: 0.96rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+      font-size: 11px;
     }
 
-    .button:hover {
-      transform: translateY(-2px);
+    .btn-outline:hover {
+      color: var(--bg);
+      background: var(--ink);
     }
 
-    .button-primary {
-      color: var(--white);
-      background: var(--signal);
-      border-color: var(--signal);
+    .btn-light {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 19px 30px;
+      color: var(--dark-bg);
+      background: var(--dark-text);
+      font-size: 12px;
     }
 
-    .button-secondary {
-      color: var(--ink);
-      background: transparent;
-      border-color: #c8c9cc;
-    }
-
-    .button-dark {
-      color: var(--ink);
-      background: var(--white);
-      border-color: var(--white);
+    .btn-light:hover {
+      color: var(--dark-bg);
+      background: #ffffff;
     }
 
     .site-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      border-bottom: 1px solid rgba(227, 228, 230, 0.86);
-      background: rgba(247, 247, 245, 0.92);
-      backdrop-filter: blur(18px);
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
     }
 
     .nav {
@@ -183,81 +203,105 @@
       min-height: 76px;
       align-items: center;
       justify-content: space-between;
-      gap: 24px;
+      flex-wrap: wrap;
+      column-gap: 32px;
+      row-gap: 16px;
+      padding: 14px 0;
     }
 
     .brand {
-      text-decoration: none;
-    }
-
-    .brand strong,
-    .brand span {
       display: block;
+      white-space: nowrap;
     }
 
     .brand strong {
-      font-size: 0.98rem;
-      font-weight: 600;
-      line-height: 1.2;
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--ink);
     }
 
     .brand span {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.62rem;
-      font-weight: 500;
-      letter-spacing: 0.13em;
+      display: block;
+      margin-top: 6px;
+      color: var(--faint);
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 26px;
+      flex-wrap: wrap;
+      column-gap: 30px;
+      row-gap: 14px;
     }
 
-    .nav-links a {
-      color: var(--graphite);
-      font-size: 0.82rem;
+    .nav-links a:not(.nav-cta) {
+      color: var(--muted);
+      font-size: 11px;
       font-weight: 500;
-      text-decoration: none;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
     }
 
-    .nav-links .nav-cta {
-      padding: 10px 14px;
-      color: var(--white);
+    .nav-links a:not(.nav-cta):hover {
+      color: var(--ink);
+    }
+
+    .nav-cta {
+      padding: 13px 20px;
+      color: var(--bg);
       background: var(--ink);
-      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .nav-cta:hover {
+      color: var(--dark-text);
+      background: var(--dark-bg);
     }
 
     .hero {
-      padding: 104px 0 74px;
-      overflow: hidden;
+      padding: 104px 0 96px;
+    }
+
+    .hero .lead {
+      margin-top: 40px;
+      max-width: 760px;
+      font-size: clamp(19px, 2vw, 26px);
+      line-height: 1.45;
     }
 
     .hero-actions {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 28px;
       flex-wrap: wrap;
-      margin-top: 36px;
+      margin-top: 44px;
     }
 
     .hero-note {
-      max-width: 260px;
+      max-width: 280px;
       margin: 0;
-      color: var(--muted);
-      font-size: 0.82rem;
+      color: var(--faint);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.5;
     }
 
     .flow-panel {
-      margin-top: 76px;
-      padding: 0;
-      overflow: hidden;
-      background: var(--white);
-      border: 1px solid #d5d6d8;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow);
+      margin-top: 88px;
+      border: 1px solid var(--line);
     }
 
     .flow-head {
@@ -265,301 +309,337 @@
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      padding: 18px 22px;
+      padding: 20px 26px;
       border-bottom: 1px solid var(--line);
     }
 
     .flow-head p {
       margin: 0;
       color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
-    .flow-head .status {
-      color: var(--signal);
-    }
-
     .flow {
-      position: relative;
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
-      padding: 48px 26px 34px;
-    }
-
-    .flow::before {
-      position: absolute;
-      top: 81px;
-      right: 9%;
-      left: 9%;
-      height: 2px;
-      background: var(--line);
-      content: "";
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0;
+      padding: 46px 26px 40px;
     }
 
     .flow-step {
       position: relative;
-      z-index: 1;
+      padding: 0 12px;
     }
 
-    .flow-dot {
+    .flow-step small {
       display: block;
-      width: 14px;
-      height: 14px;
-      margin: 26px auto 18px;
-      background: var(--white);
-      border: 2px solid var(--graphite);
-      border-radius: 50%;
-    }
-
-    .flow-card {
-      min-height: 120px;
-      padding: 18px;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-    }
-
-    .flow-card small {
-      display: block;
-      margin-bottom: 8px;
       color: var(--muted);
-      font-size: 0.66rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
-    .flow-card strong {
+    .flow-step strong {
       display: block;
-      font-size: 0.94rem;
+      margin-top: 16px;
+      font-size: 19px;
+      font-weight: 300;
       line-height: 1.25;
     }
 
-    .flow-step.is-gargalo .flow-dot {
-      background: var(--signal);
-      border-color: var(--signal);
-      box-shadow: 0 0 0 8px var(--signal-soft);
+    .flow-step.is-gargalo small {
+      color: var(--accent);
     }
 
-    .flow-step.is-gargalo .flow-card {
-      background: var(--signal-soft);
-      border-color: var(--signal);
-    }
-
-    .flow-step.is-gargalo small,
-    .flow-step.is-gargalo strong {
-      color: #394a8f;
+    .gargalo-ring {
+      position: absolute;
+      top: -22px;
+      right: -8px;
+      bottom: -20px;
+      left: -8px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      transform: rotate(-2deg);
+      pointer-events: none;
     }
 
     .flow-caption {
-      display: grid;
-      grid-template-columns: 1fr auto;
+      display: flex;
       align-items: center;
-      gap: 18px;
-      padding: 20px 22px;
-      background: #fbfbfa;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      padding: 22px 26px;
       border-top: 1px solid var(--line);
     }
 
     .flow-caption p {
       margin: 0;
-      color: var(--graphite);
-      font-size: 0.86rem;
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.5;
     }
 
     .flow-caption strong {
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .flow-caption a {
+      padding-bottom: 4px;
+      color: var(--muted);
+      border-bottom: 1px solid var(--line);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+    }
+
+    .flow-caption a:hover {
       color: var(--ink);
     }
 
     .proof-strip {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      margin-top: 26px;
-      overflow: hidden;
-      background: var(--line);
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 0;
+      margin-top: 28px;
       border: 1px solid var(--line);
-      border-radius: var(--radius-md);
+    }
+
+    .proof-strip > div:not(:last-child) {
+      border-right: 1px solid var(--line);
     }
 
     .proof-stat {
-      padding: 24px;
-      background: var(--paper);
+      padding: 28px;
     }
 
     .proof-stat strong {
       display: block;
-      margin-bottom: 5px;
-      font-size: 1.2rem;
-      font-weight: 600;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
     }
 
     .proof-stat span {
-      color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.35;
+      display: block;
+      margin-top: 10px;
+      color: var(--faint);
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.45;
     }
 
     section {
       padding: 110px 0;
+    }
+
+    .divider-top {
       border-top: 1px solid var(--line);
     }
 
     .section-intro {
       display: grid;
-      grid-template-columns: 0.78fr 1.22fr;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 60px;
-      margin-bottom: 54px;
+      margin-bottom: 64px;
     }
 
-    .section-intro p:last-child {
-      margin-bottom: 0;
+    .section-intro .lead {
+      align-self: end;
     }
 
-    .training-grid {
+    .products-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+
+    .products-grid > div:not(:last-child) {
+      border-right: 1px solid var(--line);
     }
 
     .product-card {
-      padding: 32px;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      padding: 40px;
+    }
+
+    .product-card .eyebrow {
+      color: var(--muted);
+    }
+
+    .product-card h3 {
+      margin-top: 26px;
     }
 
     .product-card p {
-      color: var(--graphite);
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.6;
     }
 
-    .product-card .button {
-      margin-top: 20px;
+    .product-card p.grow {
+      flex: 1;
     }
 
-    .clean-list {
-      margin: 22px 0 0;
+    .product-card .btn-outline {
+      margin-top: 32px;
+    }
+
+    .deliverables {
+      flex: 1;
+      margin: 26px 0 0;
       padding: 0;
       list-style: none;
     }
 
-    .clean-list li {
-      position: relative;
-      padding: 11px 0 11px 24px;
+    .deliverables li {
+      padding: 13px 0;
       border-top: 1px solid var(--line);
-      color: var(--graphite);
-      font-size: 0.9rem;
-    }
-
-    .clean-list li::before {
-      position: absolute;
-      top: 19px;
-      left: 2px;
-      width: 7px;
-      height: 7px;
-      background: var(--signal);
-      border-radius: 50%;
-      content: "";
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 300;
     }
 
     .method {
-      color: var(--white);
-      background: var(--ink);
-      border-color: var(--ink);
+      color: var(--dark-text);
+      background: var(--dark-bg);
     }
 
     .method .eyebrow,
     .method .lead {
-      color: #b7bac1;
+      color: var(--faint);
+    }
+
+    .method .divider {
+      background: var(--dark-line);
+    }
+
+    .method h2 {
+      max-width: 900px;
+      margin-top: 36px;
+    }
+
+    .method .lead {
+      margin-top: 32px;
+      max-width: 800px;
+      font-size: clamp(16px, 1.6vw, 20px);
+      line-height: 1.55;
     }
 
     .method-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-top: 50px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 0;
+      margin-top: 64px;
+      border: 1px solid var(--dark-line);
+    }
+
+    .method-grid > div:not(:last-child) {
+      border-right: 1px solid var(--dark-line);
     }
 
     .method-step {
-      padding: 28px;
-      background: #202227;
-      border: 1px solid #35383f;
-      border-radius: var(--radius-md);
+      padding: 36px;
     }
 
     .method-number {
-      display: inline-flex;
-      width: 36px;
-      height: 36px;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 40px;
-      color: var(--ink);
-      background: var(--white);
-      border-radius: 50%;
-      font-size: 0.74rem;
-      font-weight: 600;
+      display: block;
+      color: var(--faint);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+    }
+
+    .method-step h3 {
+      margin-top: 48px;
+      font-size: 24px;
     }
 
     .method-step p {
-      margin-bottom: 20px;
-      color: #b7bac1;
-      font-size: 0.9rem;
+      margin-top: 14px;
+      color: var(--faint);
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.6;
     }
 
     .method-step small {
       display: block;
+      margin-top: 28px;
       padding-top: 18px;
-      color: var(--white);
-      border-top: 1px solid #35383f;
-      font-size: 0.76rem;
+      border-top: 1px solid var(--dark-line);
+      color: var(--dark-text);
+      font-size: 13px;
+      font-weight: 300;
     }
 
     .fit-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 0;
+      border: 1px solid var(--line);
+    }
+
+    .fit-grid > div:not(:last-child) {
+      border-right: 1px solid var(--line);
     }
 
     .fit-card {
-      padding: 30px;
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-    }
-
-    .fit-card.good {
-      background: var(--white);
-    }
-
-    .fit-card.later {
-      background: transparent;
+      padding: 40px;
     }
 
     .fit-card h3 {
-      margin-bottom: 22px;
+      font-size: 24px;
+    }
+
+    .fit-card.later h3 {
+      color: var(--faint);
+    }
+
+    .fit-list {
+      margin: 26px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .fit-list li {
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 300;
+    }
+
+    .fit-card.later .fit-list li {
+      color: var(--faint);
     }
 
     .case-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
     }
 
     .case {
-      overflow: hidden;
-      background: var(--white);
       border: 1px solid var(--line);
-      border-radius: var(--radius-md);
     }
 
     .case-image {
       aspect-ratio: 16 / 9;
       overflow: hidden;
-      background: #e8e8e5;
+      background: #E9E5DD;
       border-bottom: 1px solid var(--line);
     }
 
@@ -571,126 +651,148 @@
     }
 
     .case-body {
-      padding: 24px;
+      padding: 28px;
     }
 
     .case-kicker {
-      margin-bottom: 14px;
+      margin: 0;
       color: var(--muted);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
       text-transform: uppercase;
     }
 
     .case-result {
-      margin-bottom: 14px;
-      font-size: 1.28rem;
-      font-weight: 600;
+      margin-top: 16px;
+      font-size: 24px;
+      font-weight: 500;
       letter-spacing: -0.025em;
       line-height: 1.15;
     }
 
-    .case p:last-child {
-      margin-bottom: 0;
-      color: var(--graphite);
-      font-size: 0.86rem;
-    }
-
-    .case-note {
-      margin-top: 22px;
+    .case-body p {
+      margin-top: 14px;
       color: var(--muted);
-      font-size: 0.8rem;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
     }
 
     .about-grid {
       display: grid;
-      grid-template-columns: 0.72fr 1.28fr;
-      gap: 60px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 64px;
       align-items: start;
     }
 
     .portrait {
-      width: min(100%, 320px);
+      max-width: 360px;
       aspect-ratio: 4 / 5;
       overflow: hidden;
-      background: #e7e7e4;
-      border-radius: var(--radius-md);
-      filter: grayscale(1);
+      background: var(--dark-bg);
     }
 
     .portrait img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      filter: grayscale(1) brightness(0.82) contrast(1.08);
+    }
+
+    .about-copy h2 {
+      margin-top: 36px;
     }
 
     .about-copy p {
       max-width: 680px;
-      color: var(--graphite);
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.65;
+      text-wrap: pretty;
+    }
+
+    .about-copy p + p {
+      margin-top: 20px;
     }
 
     .about-facts {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      margin-top: 28px;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0;
+      margin-top: 40px;
+      border: 1px solid var(--line);
+    }
+
+    .about-facts > div:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+
+    .about-facts > div:nth-child(-n+2) {
+      border-bottom: 1px solid var(--line);
     }
 
     .about-facts div {
-      padding: 18px;
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-sm);
-    }
-
-    .about-facts strong,
-    .about-facts span {
-      display: block;
+      padding: 22px;
     }
 
     .about-facts strong {
-      font-size: 0.92rem;
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
     .about-facts span {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.76rem;
+      display: block;
+      margin-top: 10px;
+      font-size: 15px;
+      font-weight: 300;
     }
 
     .final-cta {
-      padding: 92px 0;
-      color: var(--white);
-      background: var(--ink);
-      border-color: var(--ink);
+      color: var(--dark-text);
+      background: var(--dark-bg);
+    }
+
+    .final-cta .eyebrow {
+      color: var(--faint);
+    }
+
+    .final-cta .divider {
+      background: var(--dark-line);
     }
 
     .cta-grid {
       display: grid;
-      grid-template-columns: 1.25fr 0.75fr;
-      gap: 50px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 56px;
       align-items: end;
     }
 
-    .final-cta .eyebrow {
-      color: #cfd1d7;
-    }
-
-    .final-cta h2 {
+    .cta-grid h2 {
       max-width: 760px;
-      margin-bottom: 0;
+      margin-top: 36px;
+      font-size: clamp(32px, 4vw, 54px);
+      line-height: 1.08;
     }
 
     .cta-side p {
-      color: #d8dae0;
-      font-size: 0.92rem;
+      color: var(--faint);
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.6;
     }
 
     .site-footer {
-      padding: 36px 0;
-      color: #b7bac1;
-      background: var(--ink);
+      padding: 34px 0;
+      color: var(--faint);
+      background: var(--dark-bg);
+      border-top: 1px solid var(--dark-line);
     }
 
     .footer-row {
@@ -698,140 +800,26 @@
       align-items: center;
       justify-content: space-between;
       gap: 24px;
+      flex-wrap: wrap;
     }
 
     .footer-row p {
       margin: 0;
-      font-size: 0.78rem;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
     }
 
     .footer-row a {
-      color: var(--white);
-      font-size: 0.78rem;
-      text-decoration: none;
+      color: var(--dark-text);
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 2px;
     }
 
-    @media (max-width: 900px) {
-      .nav-links a:not(.nav-cta) {
-        display: none;
-      }
-
-      .section-intro,
-      .training-grid,
-      .about-grid,
-      .cta-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section-intro {
-        gap: 16px;
-      }
-
-      .flow {
-        grid-template-columns: 1fr;
-        padding: 26px;
-      }
-
-      .flow::before {
-        top: 54px;
-        bottom: 54px;
-        left: 32px;
-        width: 2px;
-        height: auto;
-      }
-
-      .flow-step {
-        display: grid;
-        grid-template-columns: 28px 1fr;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .flow-dot {
-        margin: 0;
-      }
-
-      .flow-card {
-        min-height: 0;
-      }
-
-      .proof-strip,
-      .method-grid,
-      .case-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .flow-caption {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 640px) {
-      body {
-        font-size: 16px;
-      }
-
-      .shell {
-        width: min(calc(100% - 28px), var(--max));
-      }
-
-      .site-header {
-        position: static;
-      }
-
-      .nav {
-        min-height: 68px;
-      }
-
-      .brand span {
-        display: none;
-      }
-
-      .nav-links .nav-cta {
-        padding: 9px 11px;
-        font-size: 0.74rem;
-      }
-
-      .hero {
-        padding: 70px 0 54px;
-      }
-
-      .hero-actions {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .button {
-        width: 100%;
-      }
-
-      .hero-note {
-        max-width: none;
-      }
-
-      .flow-panel {
-        margin-top: 48px;
-      }
-
-      .flow-head {
-        align-items: flex-start;
-        flex-direction: column;
-        gap: 6px;
-      }
-
-      section {
-        padding: 78px 0;
-      }
-
-      .fit-grid,
-      .about-facts {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-row {
-        align-items: flex-start;
-        flex-direction: column;
-      }
+    .footer-row a:hover {
+      color: var(--accent-hover);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -839,9 +827,7 @@
         scroll-behavior: auto;
       }
 
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
       }
@@ -870,66 +856,53 @@
   <main id="conteudo">
     <section class="hero" id="topo">
       <div class="shell">
-        <p class="eyebrow">Operações para negócios que já vendem e travaram no processo</p>
+        <p class="eyebrow">Sessão individual · Treinamento · Sistema sob medida</p>
+        <div class="divider"></div>
         <h1>O crescimento para quando a operação não acompanha.</h1>
-        <p class="lead">Encontro o fluxo que trava venda, onboarding, entrega, cobrança ou retenção. Você recebe o fluxo redesenhado, uma decisão priorizada e um ativo que a equipe consegue usar.</p>
+        <p class="lead">Encontro onde a operação trava, sozinho, com o time ou com uma empresa inteira. Você sai com uma mudança aplicada, um time treinado ou um sistema sob medida, conforme o que travou.</p>
 
         <div class="hero-actions">
-          <a class="button button-primary" href="#produto">Ver as frentes de trabalho</a>
+          <a class="btn btn-dark" href="#produto">Ver as frentes de trabalho</a>
           <p class="hero-note">Preço e prazo definidos depois de entender o seu fluxo.</p>
         </div>
 
         <div class="flow-panel" aria-labelledby="flow-title">
           <div class="flow-head">
             <p id="flow-title">Fluxo operacional crítico</p>
-            <p class="status">Gargalo encontrado</p>
+            <p>Gargalo encontrado</p>
           </div>
           <div class="flow" role="img" aria-label="Fluxo entre venda, onboarding, entrega, cobrança e retenção. O gargalo está na passagem da venda para o onboarding.">
             <div class="flow-step">
-              <span class="flow-dot" aria-hidden="true"></span>
-              <div class="flow-card">
-                <small>Entrada</small>
-                <strong>Venda confirmada</strong>
-              </div>
+              <small>Entrada</small>
+              <strong>Venda confirmada</strong>
             </div>
             <div class="flow-step is-gargalo">
-              <span class="flow-dot" aria-hidden="true"></span>
-              <div class="flow-card">
-                <small>Gargalo</small>
-                <strong>Onboarding depende de conferência</strong>
-              </div>
+              <small>Gargalo</small>
+              <strong>Onboarding depende de conferência</strong>
+              <span class="gargalo-ring" aria-hidden="true"></span>
             </div>
             <div class="flow-step">
-              <span class="flow-dot" aria-hidden="true"></span>
-              <div class="flow-card">
-                <small>Entrega</small>
-                <strong>Aluno acessa e participa</strong>
-              </div>
+              <small>Entrega</small>
+              <strong>Cliente acessa e usa</strong>
             </div>
             <div class="flow-step">
-              <span class="flow-dot" aria-hidden="true"></span>
-              <div class="flow-card">
-                <small>Financeiro</small>
-                <strong>Cobrança acompanhada</strong>
-              </div>
+              <small>Financeiro</small>
+              <strong>Cobrança acompanhada</strong>
             </div>
             <div class="flow-step">
-              <span class="flow-dot" aria-hidden="true"></span>
-              <div class="flow-card">
-                <small>Retenção</small>
-                <strong>Risco vira ação</strong>
-              </div>
+              <small>Retenção</small>
+              <strong>Risco vira ação</strong>
             </div>
           </div>
           <div class="flow-caption">
             <p><strong>Achei o gargalo.</strong> A venda entrou, mas a passagem para a entrega ainda depende de alguém lembrar.</p>
-            <a href="#metodo">Ver como o método funciona</a>
+            <a href="#metodo">Ver o método</a>
           </div>
         </div>
 
         <div class="proof-strip" aria-label="Provas históricas de capacidade">
           <div class="proof-stat">
-            <strong>R$ 20 mil -> R$ 60 mil/mês</strong>
+            <strong>R$ 20 mil → R$ 60 mil/mês</strong>
             <span>Case histórico de gestão e cobrança durante a pandemia.</span>
           </div>
           <div class="proof-stat">
@@ -944,7 +917,7 @@
       </div>
     </section>
 
-    <section id="produto">
+    <section class="divider-top" id="produto">
       <div class="shell">
         <div class="section-intro">
           <div>
@@ -954,31 +927,31 @@
           <p class="lead">Preço e prazo saem da conversa, não da tela. Cada frente resolve uma necessidade diferente: autonomia, time treinado ou sistema pronto.</p>
         </div>
 
-        <div class="training-grid">
+        <div class="products-grid">
           <article class="product-card">
             <p class="eyebrow">Faça sozinho</p>
             <h3>Sessão individual</h3>
-            <p>Pra quem quer sair de uma sessão com produtividade real, sem depender de ninguém. Aplico IA direto no seu processo, num formato individual e prático.</p>
-            <a class="button button-secondary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20uma%20sess%C3%A3o%20individual.">Quero uma sessão individual</a>
+            <p class="grow">Pra quem quer sair de uma sessão com produtividade real, sem depender de ninguém. Entro no seu processo de verdade e você sai com uma tarefa que não volta mais pra sua mão.</p>
+            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20uma%20sess%C3%A3o%20individual.">Quero uma sessão</a>
           </article>
 
           <article class="product-card">
             <p class="eyebrow">Faça com o time</p>
             <h3>Treinamento para equipes</h3>
-            <p>Presencial em Fortaleza ou na cidade da sua empresa. O time inteiro aprende a aplicar IA na operação do dia a dia, junto, no mesmo processo real.</p>
-            <a class="button button-secondary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20treinar%20minha%20equipe.">Quero treinar meu time</a>
+            <p class="grow">Presencial em Fortaleza ou na cidade da sua empresa. O time inteiro aprende a tirar da mão o que hoje é manual, junto, no mesmo processo real.</p>
+            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20treinar%20minha%20equipe.">Quero treinar meu time</a>
           </article>
 
           <article class="product-card">
             <p class="eyebrow">Faça por mim</p>
             <h3>Sistema customizado</h3>
-            <p>Mapeio o fluxo, encontro o gargalo e construo a solução sob medida pra resolver, com as ferramentas certas ou um sistema dedicado quando for preciso. Começa pelo Mapa do Gargalo e segue pra uma Sprint quando o fluxo pede implementação completa.</p>
-            <ul class="clean-list">
+            <p>Mapeio o fluxo, encontro o gargalo e construo a solução sob medida pra resolver. Começa pelo Mapa do Gargalo e segue pra uma Sprint quando o fluxo pede implementação completa.</p>
+            <ul class="deliverables">
               <li>Fluxo mapeado e gargalo identificado</li>
               <li>Sistema implementado e equipe treinada</li>
               <li>Indicador medido antes e depois</li>
             </ul>
-            <a class="button button-secondary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20um%20sistema%20sob%20medida%20para%20a%20minha%20opera%C3%A7%C3%A3o.">Quero um sistema sob medida</a>
+            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20um%20sistema%20sob%20medida%20para%20a%20minha%20opera%C3%A7%C3%A3o.">Quero um sistema sob medida</a>
           </article>
         </div>
       </div>
@@ -987,8 +960,9 @@
     <section class="method" id="metodo">
       <div class="shell">
         <p class="eyebrow">Método OPS · Sistema customizado</p>
+        <div class="divider"></div>
         <h2>O trabalho começa pelo gargalo e termina com um indicador.</h2>
-        <p class="lead">Esse passo a passo vale pra frente Sistema customizado. Sessão individual e Treinamento para equipes têm entrega mais direta, sem as 3 etapas. Ferramentas existentes continuam quando resolvem bem. Cada decisão nasce do fluxo real e do resultado contratado.</p>
+        <p class="lead">Esse passo a passo vale pra frente Sistema customizado. Sessão individual e Treinamento para equipes têm entrega mais direta, sem as três etapas. Ferramentas existentes continuam quando resolvem bem. Cada decisão nasce do fluxo real e do resultado contratado.</p>
 
         <div class="method-grid">
           <article class="method-step">
@@ -1020,13 +994,13 @@
             <p class="eyebrow">Critério de fit · Sistema customizado</p>
             <h2>O estágio do negócio define a prioridade.</h2>
           </div>
-          <p class="lead">Esse critério vale pra frente Sistema customizado. A empresa já vende, possui equipe e perdeu clareza entre as etapas da operação. Sessão individual e Treinamento para equipes não têm essa exigência, servem qualquer profissional ou time. O mesmo método já foi aplicado em escola, indústria, clínica, ótica e educação digital.</p>
+          <p class="lead">A empresa já vende, possui equipe e perdeu clareza entre as etapas da operação. Sessão individual e Treinamento não têm essa exigência. O mesmo método já foi aplicado em escola, indústria, clínica, ótica e educação digital.</p>
         </div>
 
         <div class="fit-grid">
           <article class="fit-card good">
             <h3>Bom momento para conversar</h3>
-            <ul class="clean-list">
+            <ul class="fit-list">
               <li>Venda validada e operação em crescimento</li>
               <li>WhatsApp, planilhas e plataformas exigem conferência</li>
               <li>Equipe depende da memória de uma pessoa</li>
@@ -1036,7 +1010,7 @@
           </article>
           <article class="fit-card later">
             <h3>Fora do foco deste ciclo</h3>
-            <ul class="clean-list">
+            <ul class="fit-list">
               <li>Negócio buscando a primeira venda</li>
               <li>Pedido isolado de site ou aplicativo</li>
               <li>Projeto sem responsável interno</li>
@@ -1048,20 +1022,20 @@
       </div>
     </section>
 
-    <section id="provas">
+    <section class="divider-top" id="provas">
       <div class="shell">
         <div class="section-intro">
           <div>
             <p class="eyebrow">Provas de capacidade</p>
             <h2>Problemas reais, números com contexto.</h2>
           </div>
-          <p class="lead">Os cases abaixo pertencem ao histórico profissional e cobrem setores diferentes. Alguns nasceram de um projeto fechado, outros são produtos próprios ou acompanhamento contínuo. O que se repete em todos é o mesmo princípio: entender o fluxo real antes de construir a solução.</p>
+          <p class="lead">Os cases abaixo cobrem setores diferentes. Alguns nasceram de um projeto fechado, outros são produtos próprios ou acompanhamento contínuo. O que se repete em todos é o mesmo princípio: entender o fluxo real antes de construir a solução.</p>
         </div>
 
         <div class="case-grid">
           <article class="case">
             <div class="case-image">
-              <img src="nucleo_transito_1.jpg" alt="Tela do sistema de gestão da Clínica de Trânsito NTC">
+              <img src="nucleo_transito_1.jpg" alt="Sistema de gestão da Clínica de Trânsito NTC">
             </div>
             <div class="case-body">
               <p class="case-kicker">Clínica de Trânsito NTC</p>
@@ -1072,7 +1046,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="sistema_habilita_1.jpg" alt="Tela do sistema de controle financeiro e cobrança da autoescola">
+              <img src="sistema_habilita_1.jpg" alt="Sistema de controle financeiro e cobrança da autoescola">
             </div>
             <div class="case-body">
               <p class="case-kicker">Sistema Habilita</p>
@@ -1083,18 +1057,18 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks, escola de inglês">
+              <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks">
             </div>
             <div class="case-body">
               <p class="case-kicker">Daily Talks</p>
               <p class="case-result">Ecossistema operacional completo</p>
-              <p>Construí a plataforma acadêmica, os aplicativos do aluno, o CRM comercial e a gestão financeira da escola de inglês. Método testado por centenas de alunos, com matrícula aberta todo ano.</p>
+              <p>Plataforma acadêmica, aplicativos do aluno, CRM comercial e gestão financeira da escola de inglês. Método testado por centenas de alunos, com matrícula aberta todo ano.</p>
             </div>
           </article>
 
           <article class="case">
             <div class="case-image">
-              <img src="ari_dedetizacao_1.png" alt="Tela do sistema de gestão para empresas de dedetização">
+              <img src="ari_dedetizacao_1.png" alt="Sistema de gestão para empresas de dedetização">
             </div>
             <div class="case-body">
               <p class="case-kicker">DedetPro / Certificado</p>
@@ -1105,7 +1079,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="emporio_box_1.jpg" alt="Página da Empório Box, indústria de embalagens de papel">
+              <img src="emporio_box_1.jpg" alt="Página da Empório Box">
             </div>
             <div class="case-body">
               <p class="case-kicker">Empório Box</p>
@@ -1127,29 +1101,29 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="endoquali_1.jpg" alt="Página da EndoQuali, clínica da Dra. Viviane Oliveira">
+              <img src="endoquali_1.jpg" alt="Página da EndoQuali">
             </div>
             <div class="case-body">
               <p class="case-kicker">Clínica Viviane (EndoQuali)</p>
               <p class="case-result">Operação clínica completa</p>
-              <p>Prontuário, agenda, CRM comercial e financeiro numa base só, com apoio de IA no atendimento ao paciente. A EndoQuali foi pioneira em atendimento concierge de Endocrinologia em São Paulo.</p>
+              <p>Prontuário, agenda, CRM comercial e financeiro numa base só, com o paciente respondido sem depender de alguém lembrar. A EndoQuali foi pioneira em atendimento concierge de Endocrinologia em São Paulo.</p>
             </div>
           </article>
 
           <article class="case">
             <div class="case-image">
-              <img src="danuzio_news_1.jpg" alt="Tela do portal Danuzio News">
+              <img src="danuzio_news_1.jpg" alt="Portal Danuzio News">
             </div>
             <div class="case-body">
               <p class="case-kicker">Danuzio News</p>
               <p class="case-result">Maior perfil de OSINT do Brasil</p>
-              <p>Portal e operação editorial por trás do maior perfil brasileiro de OSINT, com mais de 500 mil seguidores no Instagram e alcance mensal de milhões de pessoas (Estado de Minas). Acompanhamento mensal em produção.</p>
+              <p>Portal e operação editorial por trás do maior perfil brasileiro de OSINT, com mais de 500 mil seguidores e alcance mensal de milhões de pessoas. Acompanhamento mensal em produção.</p>
             </div>
           </article>
 
           <article class="case">
             <div class="case-image">
-              <img src="portal_marsiglia_1.jpg" alt="Tela do Portal Marsiglia, de André Marsiglia">
+              <img src="portal_marsiglia_1.jpg" alt="Portal Marsiglia">
             </div>
             <div class="case-body">
               <p class="case-kicker">Portal Marsiglia</p>
@@ -1161,13 +1135,14 @@
       </div>
     </section>
 
-    <section id="sobre">
+    <section class="divider-top" id="sobre">
       <div class="shell about-grid">
         <div class="portrait">
           <img src="foto.jpg" alt="Miquéias Mesquita">
         </div>
         <div class="about-copy">
           <p class="eyebrow">Miquéias Mesquita</p>
+          <div class="divider"></div>
           <h2>Engenheiro de Operações Digitais.</h2>
           <p>Minha especialidade é pegar um processo confuso, encontrar onde a informação para e transformar o fluxo em algo que a equipe consegue operar e medir.</p>
           <p>Trabalhei por sete anos dentro da operação de uma autoescola. Organizei cobrança e gestão numa clínica durante a pandemia. Hoje construo e sustento a operação de escolas, clínicas, indústria, ótica, plataformas de mídia e negócios de educação digital que já vendem e precisam do próximo nível de crescimento.</p>
@@ -1197,11 +1172,12 @@
       <div class="shell cta-grid">
         <div>
           <p class="eyebrow">Próximo passo</p>
+          <div class="divider"></div>
           <h2>Se a operação já vende e um fluxo ainda depende de conferência, comece pelo Mapa.</h2>
         </div>
         <div class="cta-side">
           <p>Envie uma mensagem com a etapa que mais gera retrabalho. Eu confirmo se o Mapa do Gargalo é a entrada adequada.</p>
-          <a class="button button-primary" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20se%20o%20Mapa%20do%20Gargalo%20serve%20para%20minha%20opera%C3%A7%C3%A3o.">Quero avaliar meu fluxo</a>
+          <a class="btn btn-light" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20se%20o%20Mapa%20do%20Gargalo%20serve%20para%20minha%20opera%C3%A7%C3%A3o.">Quero avaliar meu fluxo</a>
         </div>
       </div>
     </section>
