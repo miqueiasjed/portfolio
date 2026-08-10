@@ -271,6 +271,43 @@
       background: var(--dark-bg);
     }
 
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      background: transparent;
+      border: 1px solid var(--line);
+    }
+
+    .nav-toggle-bar {
+      display: block;
+      width: 18px;
+      height: 1px;
+      background: var(--ink);
+      transition: transform 160ms ease, opacity 160ms ease;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(1) {
+      transform: translateY(6px) rotate(45deg);
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle[aria-expanded="true"] .nav-toggle-bar:nth-child(3) {
+      transform: translateY(-6px) rotate(-45deg);
+    }
+
+    #topo, #produto, #metodo, #fit, #provas, #sobre, #contato {
+      scroll-margin-top: 96px;
+    }
+
     .hero {
       padding: 104px 0 96px;
     }
@@ -832,8 +869,28 @@
         column-gap: 20px;
       }
 
+      .nav-toggle {
+        display: inline-flex;
+      }
+
       .nav-links {
-        column-gap: 20px;
+        display: none;
+        flex-basis: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 18px;
+        margin-top: 18px;
+        padding-top: 20px;
+        border-top: 1px solid var(--line);
+      }
+
+      .nav-links.is-open {
+        display: flex;
+      }
+
+      .nav-links .nav-cta {
+        align-self: stretch;
+        text-align: center;
       }
 
       .hero {
@@ -972,7 +1029,12 @@
         <strong>Miquéias Mesquita</strong>
         <span>Engenheiro de Operações Digitais</span>
       </a>
-      <nav class="nav-links" aria-label="Navegação principal">
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Abrir menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+      <nav class="nav-links" id="navLinks" aria-label="Navegação principal">
         <a href="#produto">Como trabalho</a>
         <a href="#metodo">Método</a>
         <a href="#provas">Provas</a>
@@ -1318,5 +1380,24 @@
       <a href="mailto:miqueiasdesenvolvedor@gmail.com">miqueiasdesenvolvedor@gmail.com</a>
     </div>
   </footer>
+
+  <script>
+    const navToggle = document.getElementById('navToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? 'Fechar menu' : 'Abrir menu');
+    });
+
+    navLinks.addEventListener('click', event => {
+      if (event.target.tagName === 'A') {
+        navLinks.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Abrir menu');
+      }
+    });
+  </script>
 </body>
 </html>
