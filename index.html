@@ -822,6 +822,135 @@
       color: var(--accent-hover);
     }
 
+    @media (max-width: 640px) {
+      .shell {
+        padding: 0 20px;
+      }
+
+      .nav {
+        min-height: 68px;
+        column-gap: 20px;
+      }
+
+      .nav-links {
+        column-gap: 20px;
+      }
+
+      .hero {
+        padding: 64px 0 56px;
+      }
+
+      section {
+        padding: 64px 0;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .btn {
+        white-space: normal;
+        text-align: center;
+      }
+
+      .flow-panel {
+        margin-top: 56px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-step {
+        padding: 0;
+      }
+
+      .flow-step:not(:last-child) {
+        padding-bottom: 24px;
+        margin-bottom: 24px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .flow-step.is-gargalo {
+        padding-left: 16px;
+        border-left: 2px solid var(--accent);
+      }
+
+      .gargalo-ring {
+        display: none;
+      }
+
+      .proof-strip,
+      .products-grid,
+      .fit-grid,
+      .method-grid,
+      .section-intro,
+      .case-grid,
+      .about-grid,
+      .about-facts,
+      .cta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-intro {
+        gap: 24px;
+        margin-bottom: 40px;
+      }
+
+      .section-intro .lead {
+        align-self: start;
+      }
+
+      .proof-strip > div:not(:last-child),
+      .products-grid > div:not(:last-child),
+      .fit-grid > div:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .method-grid > div:not(:last-child) {
+        border-right: none;
+        border-bottom: 1px solid var(--dark-line);
+      }
+
+      .method-grid {
+        margin-top: 40px;
+      }
+
+      .product-card,
+      .fit-card,
+      .method-step {
+        padding: 28px 24px;
+      }
+
+      .about-facts > div:nth-child(odd) {
+        border-right: none;
+      }
+
+      .about-facts > div:not(:last-child) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .case-grid {
+        gap: 20px;
+      }
+
+      .case-body {
+        padding: 22px;
+      }
+
+      .about-grid {
+        gap: 40px;
+      }
+
+      .cta-grid {
+        gap: 32px;
+        align-items: start;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html {
         scroll-behavior: auto;
@@ -1035,7 +1164,7 @@
         <div class="case-grid">
           <article class="case">
             <div class="case-image">
-              <img src="nucleo_transito_1.jpg" alt="Sistema de gestão da Clínica de Trânsito NTC">
+              <img src="nucleo_transito_1.jpg" alt="Sistema de gestão da Clínica de Trânsito NTC" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Clínica de Trânsito NTC</p>
@@ -1046,7 +1175,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="sistema_habilita_1.jpg" alt="Sistema de controle financeiro e cobrança da autoescola">
+              <img src="sistema_habilita_1.jpg" alt="Sistema de controle financeiro e cobrança da autoescola" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Sistema Habilita</p>
@@ -1057,7 +1186,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks">
+              <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Daily Talks</p>
@@ -1068,7 +1197,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="ari_dedetizacao_1.png" alt="Sistema de gestão para empresas de dedetização">
+              <img src="ari_dedetizacao_1.png" alt="Sistema de gestão para empresas de dedetização" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">DedetPro / Certificado</p>
@@ -1079,7 +1208,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="emporio_box_1.jpg" alt="Página da Empório Box">
+              <img src="emporio_box_1.jpg" alt="Página da Empório Box" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Empório Box</p>
@@ -1090,7 +1219,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="ouse_otica_1.jpg" alt="Página da Ouse Ótica">
+              <img src="ouse_otica_1.jpg" alt="Página da Ouse Ótica" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Ouse Ótica</p>
@@ -1101,7 +1230,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="endoquali_1.jpg" alt="Página da EndoQuali">
+              <img src="endoquali_1.jpg" alt="Página da EndoQuali" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Clínica Viviane (EndoQuali)</p>
@@ -1112,7 +1241,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="danuzio_news_1.jpg" alt="Portal Danuzio News">
+              <img src="danuzio_news_1.jpg" alt="Portal Danuzio News" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Danuzio News</p>
@@ -1123,7 +1252,7 @@
 
           <article class="case">
             <div class="case-image">
-              <img src="portal_marsiglia_1.jpg" alt="Portal Marsiglia">
+              <img src="portal_marsiglia_1.jpg" alt="Portal Marsiglia" loading="lazy" decoding="async">
             </div>
             <div class="case-body">
               <p class="case-kicker">Portal Marsiglia</p>
@@ -1138,7 +1267,7 @@
     <section class="divider-top" id="sobre">
       <div class="shell about-grid">
         <div class="portrait">
-          <img src="foto.jpg" alt="Miquéias Mesquita">
+          <img src="foto.jpg" alt="Miquéias Mesquita" loading="lazy" decoding="async">
         </div>
         <div class="about-copy">
           <p class="eyebrow">Miquéias Mesquita</p>
