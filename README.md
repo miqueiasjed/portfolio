@@ -16,4 +16,4 @@ Site profissional de Miquéias Mesquita, Engenheiro de Operações Digitais. A o
 
 O critério é o estágio do negócio, não o setor. A sessão individual e o treinamento para equipes são abertos a qualquer negócio local. O sistema customizado pede um negócio que já vende, tem equipe e perdeu clareza entre as etapas da operação, em qualquer setor.
 
-O método já foi aplicado em escola de idiomas, clínica, indústria, ótica, plataforma de mídia e educação digital. Os cases desses setores estão na seção de provas do site.
+O método já foi aplicado em faculdade, escola de idiomas, clínica, indústria, ótica, plataforma de mídia e educação digital. Os cases desses setores estão na seção de provas do site.
