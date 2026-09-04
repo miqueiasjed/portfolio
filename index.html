@@ -673,18 +673,112 @@
       border: 1px solid var(--line);
     }
 
-    .case-image {
-      aspect-ratio: 16 / 9;
-      overflow: hidden;
+    .case-media {
+      position: relative;
       background: #E9E5DD;
       border-bottom: 1px solid var(--line);
     }
 
-    .case-image img {
+    .case-track {
+      display: flex;
+      aspect-ratio: 16 / 9;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .case-track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .case-track img {
+      flex: 0 0 100%;
       width: 100%;
       height: 100%;
       object-fit: cover;
       object-position: top;
+      scroll-snap-align: start;
+    }
+
+    .case-nav {
+      position: absolute;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      padding: 0;
+      color: var(--ink);
+      background: rgba(245, 242, 236, 0.92);
+      border: 1px solid var(--line);
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(-50%);
+      transition: opacity 160ms ease, background 160ms ease;
+    }
+
+    .case-nav.prev {
+      left: 12px;
+    }
+
+    .case-nav.next {
+      right: 12px;
+    }
+
+    .case-media:hover .case-nav,
+    .case-nav:focus-visible {
+      opacity: 1;
+    }
+
+    .case-nav:hover {
+      background: var(--bg);
+    }
+
+    .case-counter {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      padding: 5px 9px;
+      color: var(--bg);
+      background: rgba(28, 30, 36, 0.78);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+    }
+
+    .case-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0;
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+
+    .case-dot {
+      width: 22px;
+      height: 3px;
+      padding: 0;
+      background: var(--line);
+      border: 0;
+      cursor: pointer;
+      transition: background 160ms ease;
+    }
+
+    .case-dot[aria-current="true"] {
+      background: var(--ink);
+    }
+
+    @media (hover: none) {
+      .case-nav {
+        opacity: 1;
+      }
     }
 
     .case-body {
@@ -1242,8 +1336,10 @@
 
         <div class="case-grid">
           <article class="case">
-            <div class="case-image">
-              <img src="ith_certificados_1.jpg" alt="Plataforma de webinars e certificados da Faculdade ITH" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="ith_certificados_1.jpg" alt="Plataforma de webinars e certificados da Faculdade ITH" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Faculdade ITH</p>
@@ -1254,8 +1350,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="odon_simulados_1.jpg" alt="Painel administrativo da plataforma de simulados da OdonConcursos" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="odon_simulados_1.jpg" alt="Painel administrativo da plataforma de simulados da OdonConcursos" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">OdonConcursos</p>
@@ -1266,8 +1364,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="sanglass_crm_1.jpg" alt="CRM com inbox de WhatsApp da Sanglass" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="sanglass_crm_1.jpg" alt="CRM com inbox de WhatsApp da Sanglass" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Sanglass</p>
@@ -1278,8 +1378,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="nucleo_transito_1.jpg" alt="Sistema de gestão da Clínica de Trânsito NTC" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="nucleo_transito_1.jpg" alt="Sistema de gestão da Clínica de Trânsito NTC" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Clínica de Trânsito NTC</p>
@@ -1289,8 +1391,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="sistema_habilita_1.jpg" alt="Sistema de controle financeiro e cobrança da autoescola" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="sistema_habilita_1.jpg" alt="Sistema de controle financeiro e cobrança da autoescola" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Sistema Habilita</p>
@@ -1300,8 +1404,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="daily_talks_2.jpg" alt="Página comercial da Daily Talks" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Daily Talks</p>
@@ -1311,8 +1417,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="ari_dedetizacao_1.png" alt="Sistema de gestão para empresas de dedetização" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="ari_dedetizacao_1.png" alt="Sistema de gestão para empresas de dedetização" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">DedetPro / Certificado</p>
@@ -1322,8 +1430,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="emporio_box_2.jpg" alt="Filas de produção em kanban no ERP da Empório Box" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="emporio_box_2.jpg" alt="Filas de produção em kanban no ERP da Empório Box" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Empório Box</p>
@@ -1333,8 +1443,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="ouse_otica_1.jpg" alt="Página da Ouse Ótica" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="ouse_otica_1.jpg" alt="Página da Ouse Ótica" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Ouse Ótica</p>
@@ -1344,8 +1456,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="endoquali_2.jpg" alt="CRM de oportunidades e pendências da EndoQuali" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="endoquali_2.jpg" alt="CRM de oportunidades e pendências da EndoQuali" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Clínica Viviane (EndoQuali)</p>
@@ -1355,8 +1469,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="danuzio_news_1.jpg" alt="Portal Danuzio News" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="danuzio_news_1.jpg" alt="Portal Danuzio News" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Danuzio News</p>
@@ -1366,8 +1482,10 @@
           </article>
 
           <article class="case">
-            <div class="case-image">
-              <img src="portal_marsiglia_1.jpg" alt="Portal Marsiglia" loading="lazy" decoding="async">
+            <div class="case-media">
+              <div class="case-track">
+                <img src="portal_marsiglia_1.jpg" alt="Portal Marsiglia" loading="lazy" decoding="async">
+              </div>
             </div>
             <div class="case-body">
               <p class="case-kicker">Portal Marsiglia</p>
@@ -1450,6 +1568,81 @@
         navToggle.setAttribute('aria-expanded', 'false');
         navToggle.setAttribute('aria-label', 'Abrir menu');
       }
+    });
+
+    document.querySelectorAll('.case-media').forEach(media => {
+      const track = media.querySelector('.case-track');
+      const slides = Array.from(track.querySelectorAll('img'));
+      if (slides.length < 2) return;
+
+      media.setAttribute('role', 'group');
+      media.setAttribute('aria-roledescription', 'carrossel');
+      media.setAttribute('aria-label', 'Telas do projeto');
+
+      const anterior = document.createElement('button');
+      anterior.type = 'button';
+      anterior.className = 'case-nav prev';
+      anterior.setAttribute('aria-label', 'Tela anterior');
+      anterior.textContent = '\u2039';
+
+      const proximo = document.createElement('button');
+      proximo.type = 'button';
+      proximo.className = 'case-nav next';
+      proximo.setAttribute('aria-label', 'Próxima tela');
+      proximo.textContent = '\u203A';
+
+      const contador = document.createElement('p');
+      contador.className = 'case-counter';
+      contador.setAttribute('aria-hidden', 'true');
+
+      const dots = document.createElement('div');
+      dots.className = 'case-dots';
+      slides.forEach((slide, indice) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'case-dot';
+        dot.setAttribute('aria-label', 'Ir para a tela ' + (indice + 1));
+        dot.addEventListener('click', () => irPara(indice));
+        dots.appendChild(dot);
+      });
+
+      media.append(anterior, proximo, contador);
+      media.after(dots);
+
+      let atual = 0;
+
+      function irPara(indice) {
+        atual = Math.max(0, Math.min(slides.length - 1, indice));
+        track.scrollTo({ left: track.clientWidth * atual, behavior: 'smooth' });
+        sincronizar();
+      }
+
+      function sincronizar() {
+        contador.textContent = (atual + 1) + '/' + slides.length;
+        Array.from(dots.children).forEach((dot, indice) => {
+          dot.setAttribute('aria-current', String(indice === atual));
+        });
+        slides.forEach((slide, indice) => {
+          slide.setAttribute('aria-hidden', String(indice !== atual));
+        });
+      }
+
+      anterior.addEventListener('click', () => irPara(atual - 1));
+      proximo.addEventListener('click', () => irPara(atual + 1));
+
+      let aguardando;
+      track.addEventListener('scroll', () => {
+        window.clearTimeout(aguardando);
+        aguardando = window.setTimeout(() => {
+          const indice = Math.round(track.scrollLeft / track.clientWidth);
+          if (indice !== atual) {
+            atual = indice;
+            sincronizar();
+          }
+        }, 90);
+      });
+
+      sincronizar();
     });
   </script>
 </body>
