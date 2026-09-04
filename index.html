@@ -781,6 +781,140 @@
       }
     }
 
+    .case-track img {
+      cursor: zoom-in;
+    }
+
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      flex-direction: column;
+      background: #141518;
+    }
+
+    .lightbox.is-open {
+      display: flex;
+    }
+
+    .lightbox-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 28px;
+      color: var(--dark-text);
+      border-bottom: 1px solid rgba(242, 239, 233, 0.16);
+    }
+
+    .lightbox-title {
+      margin: 0;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .lightbox-close {
+      padding: 10px 16px;
+      color: var(--dark-text);
+      background: transparent;
+      border: 1px solid rgba(242, 239, 233, 0.3);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+
+    .lightbox-close:hover {
+      color: var(--dark-bg);
+      background: var(--dark-text);
+    }
+
+    .lightbox-body {
+      position: relative;
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      padding: 28px;
+    }
+
+    .lightbox-body img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .lightbox-nav {
+      position: absolute;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px;
+      height: 46px;
+      padding: 0;
+      color: var(--dark-text);
+      background: rgba(20, 21, 24, 0.6);
+      border: 1px solid rgba(242, 239, 233, 0.3);
+      font-family: inherit;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+
+    .lightbox-nav:hover {
+      color: var(--dark-bg);
+      background: var(--dark-text);
+    }
+
+    .lightbox-nav.prev {
+      left: 20px;
+    }
+
+    .lightbox-nav.next {
+      right: 20px;
+    }
+
+    .lightbox-foot {
+      padding: 18px 28px 26px;
+      color: rgba(242, 239, 233, 0.65);
+      font-size: 13px;
+      font-weight: 300;
+      text-align: center;
+    }
+
+    .lightbox-foot span {
+      display: block;
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(242, 239, 233, 0.4);
+    }
+
+    @media (max-width: 640px) {
+      .lightbox-nav {
+        width: 38px;
+        height: 38px;
+      }
+
+      .lightbox-nav.prev {
+        left: 8px;
+      }
+
+      .lightbox-nav.next {
+        right: 8px;
+      }
+    }
+
     .case-body {
       padding: 28px;
     }
@@ -1556,6 +1690,19 @@
     </div>
   </footer>
 
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Tela do projeto em tamanho grande" hidden>
+    <div class="lightbox-head">
+      <p class="lightbox-title" id="lightboxTitulo"></p>
+      <button class="lightbox-close" id="lightboxFechar" type="button">Fechar</button>
+    </div>
+    <div class="lightbox-body">
+      <button class="lightbox-nav prev" id="lightboxAnterior" type="button" aria-label="Tela anterior">‹</button>
+      <img id="lightboxImagem" alt="">
+      <button class="lightbox-nav next" id="lightboxProximo" type="button" aria-label="Próxima tela">›</button>
+    </div>
+    <p class="lightbox-foot" id="lightboxLegenda"></p>
+  </div>
+
   <script>
     const navToggle = document.getElementById('navToggle');
     const navLinks = document.getElementById('navLinks');
@@ -1647,6 +1794,84 @@
       });
 
       sincronizar();
+
+      slides.forEach((slide, indice) => {
+        slide.addEventListener('click', () => abrirTelaCheia(media, indice));
+      });
+    });
+
+    document.querySelectorAll('.case-media').forEach(media => {
+      if (media.querySelectorAll('.case-track img').length > 1) return;
+      const unica = media.querySelector('.case-track img');
+      if (unica) unica.addEventListener('click', () => abrirTelaCheia(media, 0));
+    });
+
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImagem = document.getElementById('lightboxImagem');
+    const lightboxTitulo = document.getElementById('lightboxTitulo');
+    const lightboxLegenda = document.getElementById('lightboxLegenda');
+    const lightboxFechar = document.getElementById('lightboxFechar');
+    const lightboxAnterior = document.getElementById('lightboxAnterior');
+    const lightboxProximo = document.getElementById('lightboxProximo');
+
+    let telas = [];
+    let telaAtual = 0;
+    let origem = null;
+
+    function abrirTelaCheia(media, indice) {
+      const artigo = media.closest('.case');
+      telas = Array.from(media.querySelectorAll('.case-track img'));
+      telaAtual = indice;
+      origem = media.querySelector('.case-track');
+      lightboxTitulo.textContent = artigo?.querySelector('.case-kicker')?.textContent || 'Tela do projeto';
+      const varias = telas.length > 1;
+      lightboxAnterior.hidden = !varias;
+      lightboxProximo.hidden = !varias;
+      lightbox.hidden = false;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      mostrarTela();
+      lightboxFechar.focus();
+    }
+
+    function mostrarTela() {
+      const tela = telas[telaAtual];
+      if (!tela) return;
+      lightboxImagem.src = tela.currentSrc || tela.src;
+      lightboxImagem.alt = tela.alt;
+      lightboxLegenda.innerHTML = tela.alt + (telas.length > 1 ? '<span>' + (telaAtual + 1) + ' de ' + telas.length + '</span>' : '');
+    }
+
+    function moverTela(passo) {
+      if (telas.length < 2) return;
+      telaAtual = (telaAtual + passo + telas.length) % telas.length;
+      mostrarTela();
+    }
+
+    function fecharTelaCheia() {
+      lightbox.classList.remove('is-open');
+      lightbox.hidden = true;
+      lightboxImagem.removeAttribute('src');
+      document.body.style.overflow = '';
+      if (origem) {
+        origem.scrollTo({ left: origem.clientWidth * telaAtual, behavior: 'auto' });
+        origem.dispatchEvent(new Event('scroll'));
+      }
+    }
+
+    lightboxFechar.addEventListener('click', fecharTelaCheia);
+    lightboxAnterior.addEventListener('click', () => moverTela(-1));
+    lightboxProximo.addEventListener('click', () => moverTela(1));
+
+    lightbox.addEventListener('click', event => {
+      if (event.target === lightbox || event.target.classList.contains('lightbox-body')) fecharTelaCheia();
+    });
+
+    document.addEventListener('keydown', event => {
+      if (!lightbox.classList.contains('is-open')) return;
+      if (event.key === 'Escape') fecharTelaCheia();
+      if (event.key === 'ArrowLeft') moverTela(-1);
+      if (event.key === 'ArrowRight') moverTela(1);
     });
   </script>
 </body>
