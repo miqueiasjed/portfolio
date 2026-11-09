@@ -1,10 +1,11 @@
 // Raiz da ferramenta: decide o acesso ao abrir e mostra a tela de acesso ou a moldura.
 
 import { useCallback, useEffect, useState } from 'react';
-import { lerXsrf, resolverAcesso } from './dados/acesso.js';
+import { lerXsrf, resolverAcesso, voltarDaOutraConta } from './dados/acesso.js';
 import { useRota } from './rotas.js';
 import Moldura from './ui/Moldura.jsx';
 import Acesso from './telas/Acesso.jsx';
+import OutraConta from './telas/OutraConta.jsx';
 import AvisoVersao from './ui/AvisoVersao.jsx';
 
 const CARREGANDO = { estado: 'carregando', usuario: null };
@@ -79,13 +80,35 @@ export default function App({ csrf }) {
         setAcesso({ estado: 'liberado', usuario: usuario ?? null });
     }, []);
 
+    // Código por e-mail de outra conta: o resultado traz o pendente, só em memória.
+    const outraConta = useCallback((resultado) => {
+        setAcesso(resultado);
+    }, []);
+
+    // Voltar da tela de outra conta: encerra a sessão quando ela veio do link
+    // mágico e descarta o pendente. Nada é apagado nem gravado no aparelho.
+    const origem = acesso.origem;
+    const voltar = useCallback(async () => {
+        const seguinte = await voltarDaOutraConta({ origem, csrf, xsrf: lerXsrf(document.cookie) });
+        setAcesso(seguinte);
+    }, [origem, csrf]);
+
     let tela;
     if (acesso.estado === 'carregando') {
         tela = <Carregando />;
     } else if (acesso.estado === 'liberado') {
         tela = <Ferramenta />;
+    } else if (acesso.estado === 'outra_conta') {
+        tela = <OutraConta dono={acesso.dono} email={acesso.pendente?.email ?? ''} aoVoltar={voltar} />;
     } else {
-        tela = <Acesso estado={acesso.estado} aoTentarDeNovo={tentarDeNovo} aoLiberar={liberar} />;
+        tela = (
+            <Acesso
+                estado={acesso.estado}
+                aoTentarDeNovo={tentarDeNovo}
+                aoLiberar={liberar}
+                aoOutraConta={outraConta}
+            />
+        );
     }
 
     // O aviso de versão nova vale para qualquer estado e fica na mesma posição

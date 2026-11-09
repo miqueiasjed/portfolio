@@ -1,7 +1,8 @@
 // Decide, ao abrir a ferramenta, se o dono entra ou qual tela de acesso vê.
 // As chamadas de rede são GET /rotina/acesso, POST /rotina/aparelho e, na
-// entrada por código, POST /rotina/codigo e /rotina/codigo/confirmar. Sai do
-// aparelho só o próprio token, ou o e-mail e o código digitados pelo dono.
+// entrada por código, POST /rotina/codigo e /rotina/codigo/confirmar; no Voltar
+// da tela de outra conta, POST /sair. Sai do aparelho só o próprio token, ou o
+// e-mail e o código digitados pelo dono.
 
 import { apagar, lerMeta, transacao } from './banco.js';
 
@@ -36,32 +37,162 @@ function usuarioDe(corpo) {
     return { nome: corpo.nome ?? '', email: corpo.email ?? '' };
 }
 
-// Grava a entrada depois de um 201 com { token, nome, email }. Usada aqui pelo
-// POST /rotina/aparelho e exportada para a confirmação do código por e-mail
-// (task 2.13). Tudo numa transação: nunca fica token sem usuario ou sem
-// acesso_ok_em. Devolve o usuario gravado.
-export async function gravarEntrada(corpo, agora) {
+// E-mail na forma guardada em `meta.dono`: sem espaços nas pontas e em minúsculas.
+function normalizarEmail(email) {
+    return typeof email === 'string' ? email.trim().toLowerCase() : '';
+}
+
+// E-mail da outra conta para a tela: primeira letra, ***, @ e domínio. O
+// domínio pode vir sem ponto (ana@localhost). Sem e-mail reconhecível, devolve
+// '' e a tela usa a frase sem o e-mail.
+export function mascararEmail(email) {
+    const partes = /^([^\s@])[^\s@]*@([^\s@]+)$/.exec(normalizarEmail(email));
+    return partes ? `${partes[1]}***@${partes[2]}` : '';
+}
+
+// Stores com dados do negócio. `clientes`, `itens` e `toques` são os dados de
+// clientes; `ajustes` guarda nome do negócio e chave Pix do dono.
+const STORES_DE_CLIENTES = ['clientes', 'itens', 'toques'];
+const STORES_DE_DADOS = [...STORES_DE_CLIENTES, 'ajustes'];
+
+// Roda `fn` com os resultados das leituras, dentro da mesma transação. Pedidos
+// de uma transação terminam na ordem em que foram feitos: quando o último
+// termina, todos os resultados estão prontos e a transação segue ativa para
+// as gravações. Erro em `fn` desfaz a transação inteira; `falha.erro` guarda o
+// erro original para quem chamou.
+function aposLeituras(tx, pedidos, falha, fn) {
+    pedidos[pedidos.length - 1].onsuccess = () => {
+        try {
+            fn(...pedidos.map((pedido) => pedido.result));
+        } catch (erro) {
+            falha.erro = erro;
+            try {
+                tx.abort();
+            } catch {
+                // A transação já tinha terminado.
+            }
+        }
+    };
+}
+
+async function emTransacao(stores, fn) {
+    const falha = { erro: null };
+    try {
+        await transacao(stores, 'readwrite', (l, tx) => fn(l, tx, falha));
+    } catch (erro) {
+        throw falha.erro ?? erro;
+    }
+}
+
+// Enfileira a gravação da conta que entrou. `dono` vai por último.
+function gravarConta(meta, corpo, agora) {
     const usuario = usuarioDe(corpo);
-    await transacao('meta', 'readwrite', (l) => {
-        l.meta.put({ chave: 'token', valor: corpo.token });
-        l.meta.put({ chave: 'usuario', valor: usuario });
-        l.meta.put({ chave: 'acesso_ok_em', valor: new Date(agora).toISOString() });
+    meta.put({ chave: 'token', valor: corpo.token });
+    meta.put({ chave: 'usuario', valor: usuario });
+    meta.put({ chave: 'acesso_ok_em', valor: new Date(agora).toISOString() });
+    const email = normalizarEmail(usuario.email);
+    if (email) {
+        meta.put({ chave: 'dono', valor: email });
+    }
+    return usuario;
+}
+
+// Grava a entrada depois de um 201 com { token, nome, email }, do POST
+// /rotina/aparelho ou da confirmação do código por e-mail.
+//
+// Conferir de quem são os dados e gravar acontecem na mesma transação, então
+// nada entra entre a leitura e a gravação:
+// - aparelho sem dono, ou dono igual ao e-mail que chegou: grava token,
+//   usuario, acesso_ok_em e dono;
+// - dono diferente, sem clientes, itens nem toques: grava a conta nova e
+//   apaga ajustes e fila_uso da conta anterior;
+// - dono diferente com algum dado: não grava nada. O token novo fica só no
+//   `pendente` devolvido, em memória.
+//
+// Devolve { estado: 'liberado', usuario } ou
+// { estado: 'outra_conta', usuario: null, pendente, dono } com o dono mascarado
+// ('' quando o e-mail guardado não é reconhecível).
+// Sem `meta.dono`, vale o e-mail de `meta.usuario`, quando houver.
+export async function gravarEntrada(corpo, agora) {
+    const email = normalizarEmail(corpo.email);
+    let usuario = null;
+    let donoGuardado = '';
+
+    await emTransacao([...STORES_DE_DADOS, 'meta'], (l, tx, falha) => {
+        const pedidos = [
+            l.meta.get('dono'),
+            l.meta.get('usuario'),
+            ...STORES_DE_CLIENTES.map((nome) => l[nome].count()),
+        ];
+        aposLeituras(tx, pedidos, falha, (registroDono, registroUsuario, ...contagens) => {
+            const dono = normalizarEmail(registroDono?.valor) || normalizarEmail(registroUsuario?.valor?.email);
+            if (dono && dono !== email) {
+                if (contagens.some((n) => n > 0)) {
+                    donoGuardado = dono;
+                    return;
+                }
+                l.ajustes.clear();
+                l.meta.delete('fila_uso');
+            }
+            usuario = gravarConta(l.meta, corpo, agora);
+        });
+    });
+
+    if (donoGuardado) {
+        return { estado: 'outra_conta', usuario: null, pendente: corpo, dono: mascararEmail(donoGuardado) };
+    }
+    if (!usuario) {
+        // A transação terminou sem chegar à decisão: não conta como entrada.
+        throw new Error('A entrada não foi gravada neste aparelho.');
+    }
+    return { estado: 'liberado', usuario };
+}
+
+// Outra conta no aparelho e o dono escolheu apagar: limpa as quatro stores de
+// dados, apaga fila_uso e grava a conta de `pendente` numa transação só. Se
+// qualquer operação falhar, nada muda. Devolve o usuario gravado ou lança.
+export async function apagarDadosEEntrar(pendente, agora = Date.now()) {
+    if (typeof pendente?.token !== 'string' || pendente.token === '') {
+        throw new Error('Entrada sem a chave do aparelho.');
+    }
+    let usuario = null;
+    await emTransacao([...STORES_DE_DADOS, 'meta'], (l) => {
+        for (const nome of STORES_DE_DADOS) {
+            l[nome].clear();
+        }
+        l.meta.delete('fila_uso');
+        usuario = gravarConta(l.meta, pendente, agora);
     });
     return usuario;
 }
 
+// Token aceito pelo servidor prova que é a mesma conta: `dono` acompanha o
+// e-mail da checagem, inclusive quando ele muda no servidor.
 async function gravarChecagem(usuario, agora) {
+    const email = normalizarEmail(usuario.email);
     await transacao('meta', 'readwrite', (l) => {
         l.meta.put({ chave: 'usuario', valor: usuario });
         l.meta.put({ chave: 'acesso_ok_em', valor: new Date(agora).toISOString() });
+        if (email) {
+            l.meta.put({ chave: 'dono', valor: email });
+        }
     });
 }
 
+// Token recusado: apaga a entrada e mantém `dono`. Aparelho de antes do
+// marcador ganha `dono` com o e-mail de `usuario` antes de ele sair.
 async function esquecerAparelho() {
-    await transacao('meta', 'readwrite', (l) => {
-        l.meta.delete('token');
-        l.meta.delete('usuario');
-        l.meta.delete('acesso_ok_em');
+    await emTransacao('meta', (l, tx, falha) => {
+        const pedidos = [l.meta.get('dono'), l.meta.get('usuario')];
+        aposLeituras(tx, pedidos, falha, (registroDono, registroUsuario) => {
+            const email = normalizarEmail(registroUsuario?.valor?.email);
+            if (!normalizarEmail(registroDono?.valor) && email) {
+                l.meta.put({ chave: 'dono', valor: email });
+            }
+            l.meta.delete('token');
+            l.meta.delete('usuario');
+            l.meta.delete('acesso_ok_em');
+        });
     });
 }
 
@@ -142,19 +273,22 @@ export function lerXsrf(cookies) {
 // pode estar velha quando a casca vem do cache. Como o Laravel lê primeiro o
 // X-CSRF-TOKEN e só olha o X-XSRF-TOKEN quando o outro falta, mandar os dois
 // com a meta velha daria 419 de novo: com o cookie, vai só ele.
-async function liberarPelaSessao(buscar, csrf, xsrf, agora) {
+function headersDaSessao(csrf, xsrf) {
     const headers = { Accept: 'application/json' };
     if (xsrf) {
         headers['X-XSRF-TOKEN'] = xsrf;
     } else if (csrf) {
         headers['X-CSRF-TOKEN'] = csrf;
     }
+    return headers;
+}
 
+async function liberarPelaSessao(buscar, csrf, xsrf, agora) {
     let resposta;
     try {
         resposta = await buscar('/rotina/aparelho', {
             method: 'POST',
-            headers,
+            headers: headersDaSessao(csrf, xsrf),
             credentials: 'same-origin',
         });
     } catch {
@@ -164,8 +298,8 @@ async function liberarPelaSessao(buscar, csrf, xsrf, agora) {
     const corpo = await lerJson(resposta);
 
     if (resposta.status === 201 && typeof corpo?.token === 'string' && corpo.token !== '') {
-        const usuario = await gravarEntrada(corpo, agora);
-        return { estado: 'liberado', usuario };
+        const resultado = await gravarEntrada(corpo, agora);
+        return resultado.estado === 'outra_conta' ? { ...resultado, origem: 'sessao' } : resultado;
     }
 
     if (corpo && (resposta.status === 401 || resposta.status === 419)) {
@@ -180,8 +314,36 @@ async function liberarPelaSessao(buscar, csrf, xsrf, agora) {
     return semRede(agora);
 }
 
-// Devolve { estado, usuario }, com estado em 'liberado' | 'entrar' | 'inativo' | 'sem_rede'.
-// `usuario` ({ nome, email }) só vem preenchido em 'liberado'.
+// Encerra a sessão do navegador (POST /sair). Usada no Voltar da tela de outra
+// conta que veio do link mágico: com a sessão viva, cada recarga faria outro
+// POST /rotina/aparelho e reabriria a tela. Ignora resposta e falha de rede.
+export async function sairDaSessao({ fetch = globalThis.fetch, xsrf, csrf } = {}) {
+    const buscar = fetch;
+    try {
+        await buscar('/sair', {
+            method: 'POST',
+            headers: headersDaSessao(csrf, xsrf),
+            credentials: 'same-origin',
+        });
+    } catch {
+        // Sem rede: nada a fazer aqui.
+    }
+}
+
+// Voltar da tela de outra conta. Nada é apagado nem gravado no aparelho: o
+// pendente só é descartado por quem chamou. Origem `sessao` encerra a sessão
+// antes; origem `codigo` não tem sessão. Devolve o estado seguinte.
+export async function voltarDaOutraConta({ origem, fetch = globalThis.fetch, xsrf, csrf } = {}) {
+    if (origem === 'sessao') {
+        await sairDaSessao({ fetch, xsrf, csrf });
+    }
+    return { estado: 'entrar', usuario: null };
+}
+
+// Devolve { estado, usuario }, com estado em 'liberado' | 'entrar' | 'inativo' |
+// 'sem_rede' | 'outra_conta'. `usuario` ({ nome, email }) só vem preenchido em
+// 'liberado'. Em 'outra_conta' vêm também `pendente` (a resposta do servidor,
+// com o token novo, só em memória), `dono` (e-mail mascarado) e `origem`.
 // `csrf` é a meta csrf-token; `xsrf`, o cookie XSRF-TOKEN decodificado (lerXsrf).
 export async function resolverAcesso({ fetch = globalThis.fetch, agora = Date.now(), csrf, xsrf } = {}) {
     // Passado adiante e sempre chamado como função solta: chamado como método
@@ -276,7 +438,9 @@ export async function pedirCodigo({ email, csrf, fetch = globalThis.fetch } = {}
 }
 
 // Troca o código pelo aparelho liberado. Devolve { estado: 'liberado', usuario }
-// depois de gravar token, usuario e acesso_ok_em, ou { erro } com o texto para a tela.
+// depois de gravar token, usuario e acesso_ok_em; { estado: 'outra_conta', ... }
+// com `origem: 'codigo'` quando o aparelho guarda dados de outra conta (nada
+// gravado); ou { erro } com o texto para a tela.
 // `gravar` existe para os testes simularem falha na gravação.
 export async function confirmarCodigo({
     email,
@@ -313,8 +477,8 @@ export async function confirmarCodigo({
 
     if (resposta.status === 201 && typeof corpo.token === 'string' && corpo.token !== '') {
         try {
-            const usuario = await gravar(corpo, agora);
-            return { estado: 'liberado', usuario };
+            const resultado = await gravar(corpo, agora);
+            return resultado.estado === 'outra_conta' ? { ...resultado, origem: 'codigo' } : resultado;
         } catch {
             return { erro: ERRO_GRAVAR };
         }

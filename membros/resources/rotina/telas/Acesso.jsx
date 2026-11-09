@@ -24,7 +24,7 @@ function csrfDaCasca() {
 
 // Estado `entrar`: código por e-mail em dois passos, que funciona no app
 // adicionado à tela de início; o link mágico fica como segunda opção.
-function Entrar({ aoLiberar }) {
+function Entrar({ aoLiberar, aoOutraConta }) {
     const [passo, setPasso] = useState('email');
     const [email, setEmail] = useState('');
     // E-mail que de fato foi enviado: o passo 2 e a confirmação usam este, não o campo.
@@ -64,6 +64,11 @@ function Entrar({ aoLiberar }) {
         const r = await confirmarCodigo({ email: enviado, codigo, csrf: csrfDaCasca() });
         if (r.estado === 'liberado') {
             aoLiberar?.(r.usuario);
+            return;
+        }
+        if (r.estado === 'outra_conta') {
+            // O aparelho guarda clientes de outra conta: nada foi gravado, o App decide.
+            aoOutraConta?.(r);
             return;
         }
         setEnviando(false);
@@ -199,9 +204,10 @@ function Erro({ aoTentarDeNovo }) {
 
 const CONTEUDOS = { entrar: Entrar, inativo: Inativo, sem_rede: SemRede, erro: Erro };
 
-// Props: `estado` ('entrar' | 'inativo' | 'sem_rede' | 'erro'), `aoTentarDeNovo()`
-// e `aoLiberar(usuario)`, que põe a ferramenta no estado liberado.
-export default function Acesso({ estado, aoTentarDeNovo, aoLiberar }) {
+// Props: `estado` ('entrar' | 'inativo' | 'sem_rede' | 'erro'), `aoTentarDeNovo()`,
+// `aoLiberar(usuario)`, que põe a ferramenta no estado liberado, e
+// `aoOutraConta(resultado)`, que repassa ao App o `outra_conta` do código por e-mail.
+export default function Acesso({ estado, aoTentarDeNovo, aoLiberar, aoOutraConta }) {
     const Conteudo = CONTEUDOS[estado] ?? Entrar;
 
     return (
@@ -211,7 +217,7 @@ export default function Acesso({ estado, aoTentarDeNovo, aoLiberar }) {
                     <span aria-hidden="true" className="mb-4 block h-0.5 w-10 bg-caneta" />
                     <h1 className="text-2xl font-medium">Rotina do Dia</h1>
                 </div>
-                <Conteudo aoTentarDeNovo={aoTentarDeNovo} aoLiberar={aoLiberar} />
+                <Conteudo aoTentarDeNovo={aoTentarDeNovo} aoLiberar={aoLiberar} aoOutraConta={aoOutraConta} />
             </main>
         </div>
     );
