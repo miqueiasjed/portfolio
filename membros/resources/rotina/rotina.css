@@ -1,0 +1,31 @@
+/* Varredura própria: só resources/rotina entra, o CSS da área de membros fica de fora. */
+@import 'tailwindcss' source(none);
+
+@source './';
+
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --color-grafite: #1C1D20;
+    --color-papel: #F2EFE9;
+    --color-creme: #F5F2EC;
+    --color-tinta: #1C1E24;
+    --color-apoio: #92959D;
+    --color-filete: #3E4046;
+    --color-filete-claro: #CECAC1;
+    --color-caneta: #CE4C3C;
+    --color-caneta-creme: #B8433A;
+}
+
+body {
+    @apply bg-creme text-tinta font-sans font-light antialiased;
+    -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 {
+    @apply font-medium;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-caneta-creme);
+    outline-offset: 2px;
+}
