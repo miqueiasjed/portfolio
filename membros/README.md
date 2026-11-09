@@ -71,7 +71,7 @@ php artisan membros:admin email@x.com --hash="$(php -r 'echo password_hash("NOVA
 php artisan membros:compras            # últimas compras
 php artisan membros:liberar email@x.com kit   # libera na mão e envia o link
 php artisan membros:revogar email@x.com kit   # reembolso: tira o acesso
-php artisan test                       # 10 testes: compra, aviso, link mágico, download
+php artisan test                       # 14 testes: compra, aviso, link mágico, download e admin
 ```
 
 ## Produtos
