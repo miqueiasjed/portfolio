@@ -3,6 +3,7 @@
 // Funções puras: não leem o relógio nem o banco.
 
 import { diasEntre, ehDiaValido, formatarDiaMes } from '../regras/datas.js';
+import { primeiroNome } from '../regras/preencher.js';
 import { PROCESSOS } from './rotulos.js';
 
 const ORDEM = ['01', '05', '04'];
@@ -66,4 +67,47 @@ export function dataDoTopo(hoje) {
 // Caminho da tela Mensagem para a entrada.
 export function rotaDaMensagem({ item, etapa } = {}) {
     return `#/mensagem/${encodeURIComponent(item?.id ?? '')}/${encodeURIComponent(etapa ?? '')}`;
+}
+
+// Chave de comparação do primeiro nome: sem caixa e sem acento, para
+// `Érica` e `ERICA` contarem como o mesmo nome na tela.
+function chaveDoNome(nome) {
+    return nome.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('pt-BR');
+}
+
+const LIGACOES = new Set(['da', 'de', 'do', 'das', 'dos', 'e']);
+
+// Inicial do sobrenome (última palavra que não é `da`, `de`, `dos`...),
+// em maiúscula e com ponto: `Maria da Silva` dá `S.`. Sem sobrenome, ''.
+function inicialDoSobrenome(nome) {
+    const palavras = texto(nome).split(/\s+/).slice(1).filter((p) => !LIGACOES.has(p.toLocaleLowerCase('pt-BR')));
+    const sobrenome = palavras[palavras.length - 1];
+    if (!sobrenome) return '';
+    return `${sobrenome.charAt(0).toLocaleUpperCase('pt-BR')}.`;
+}
+
+// Nome que cada linha da Hoje mostra, por `item.id`. Normalmente o primeiro
+// nome; quando dois clientes diferentes da lista têm o mesmo primeiro nome,
+// os dois ganham a inicial do sobrenome (`Maria S.` e `Maria A.`). Quem não
+// tem sobrenome fica só com o primeiro nome. O mesmo cliente em duas linhas
+// conta uma vez só.
+export function nomesDaLista(entradas = []) {
+    const clientesPorNome = new Map();
+    for (const entrada of entradas) {
+        const nome = primeiroNome(entrada?.cliente?.nome);
+        if (!nome) continue;
+        const chave = chaveDoNome(nome);
+        if (!clientesPorNome.has(chave)) clientesPorNome.set(chave, new Set());
+        clientesPorNome.get(chave).add(entrada.cliente.id ?? chaveDoNome(texto(entrada.cliente.nome)));
+    }
+
+    const nomes = new Map();
+    for (const entrada of entradas) {
+        if (!entrada?.item) continue;
+        const nome = primeiroNome(entrada.cliente?.nome);
+        const repetido = nome !== '' && clientesPorNome.get(chaveDoNome(nome)).size > 1;
+        const inicial = repetido ? inicialDoSobrenome(entrada.cliente.nome) : '';
+        nomes.set(entrada.item.id, inicial ? `${nome} ${inicial}` : nome);
+    }
+    return nomes;
 }

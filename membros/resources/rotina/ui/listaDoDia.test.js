@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { agruparPorProcesso, dataDoTopo, linhaDeApoio, rotaDaMensagem } from './listaDoDia.js';
+import { agruparPorProcesso, dataDoTopo, linhaDeApoio, nomesDaLista, rotaDaMensagem } from './listaDoDia.js';
 
 function entrada(processo, id, extra = {}) {
     return { item: { id, processo, data: '2026-12-10' }, cliente: { nome: 'Ana' }, processo, etapa: 'd1', atraso_dias: 0, ...extra };
@@ -64,5 +64,47 @@ describe('dataDoTopo', () => {
 describe('rotaDaMensagem', () => {
     it('leva ao item e à etapa', () => {
         expect(rotaDaMensagem({ item: { id: 'ab c' }, etapa: 'd3' })).toBe('#/mensagem/ab%20c/d3');
+    });
+});
+
+describe('nomesDaLista', () => {
+    function linha(itemId, clienteId, nome) {
+        return { item: { id: itemId }, cliente: { id: clienteId, nome }, processo: '01', etapa: 'vespera', atraso_dias: 0 };
+    }
+
+    it('primeiro nome sozinho quando não há outro igual', () => {
+        const nomes = nomesDaLista([linha('a', 1, 'Maria Silva'), linha('b', 2, 'Ana Souza')]);
+        expect(nomes.get('a')).toBe('Maria');
+        expect(nomes.get('b')).toBe('Ana');
+    });
+
+    it('dois clientes com o mesmo primeiro nome ganham a inicial do sobrenome', () => {
+        const nomes = nomesDaLista([linha('a', 1, 'Maria Silva'), linha('b', 2, 'maria aparecida alves'), linha('c', 3, 'Ana')]);
+        expect(nomes.get('a')).toBe('Maria S.');
+        expect(nomes.get('b')).toBe('Maria A.');
+        expect(nomes.get('c')).toBe('Ana');
+    });
+
+    it('compara sem caixa e sem acento, e pula "da", "de", "dos"', () => {
+        const nomes = nomesDaLista([linha('a', 1, 'Érica da Costa'), linha('b', 2, 'ERICA Mendes dos santos')]);
+        expect(nomes.get('a')).toBe('Érica C.');
+        expect(nomes.get('b')).toBe('Erica S.');
+    });
+
+    it('sem sobrenome fica só o primeiro nome', () => {
+        const nomes = nomesDaLista([linha('a', 1, 'Maria'), linha('b', 2, 'Maria Silva')]);
+        expect(nomes.get('a')).toBe('Maria');
+        expect(nomes.get('b')).toBe('Maria S.');
+    });
+
+    it('o mesmo cliente em duas linhas não conta como repetido', () => {
+        const nomes = nomesDaLista([linha('a', 1, 'Maria Silva'), linha('b', 1, 'Maria Silva')]);
+        expect(nomes.get('a')).toBe('Maria');
+        expect(nomes.get('b')).toBe('Maria');
+    });
+
+    it('lista vazia ou sem nome não quebra', () => {
+        expect(nomesDaLista().size).toBe(0);
+        expect(nomesDaLista([linha('a', 1, '')]).get('a')).toBe('');
     });
 });

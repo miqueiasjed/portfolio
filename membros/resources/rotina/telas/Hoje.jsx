@@ -15,8 +15,7 @@ import { lerAjustes } from '../dados/ajustes.js';
 import { listaDeHoje } from '../regras/hoje.js';
 import { hojeEmFortaleza } from '../regras/datas.js';
 import { ehPrimeiroUso } from '../regras/primeiroUso.js';
-import { primeiroNome } from '../regras/preencher.js';
-import { agruparPorProcesso, dataDoTopo, linhaDeApoio, rotaDaMensagem } from '../ui/listaDoDia.js';
+import { agruparPorProcesso, dataDoTopo, linhaDeApoio, nomesDaLista, rotaDaMensagem } from '../ui/listaDoDia.js';
 import Botao from '../ui/Botao.jsx';
 import PrimeiroUso from './PrimeiroUso.jsx';
 
@@ -35,7 +34,7 @@ async function lerLista(hoje) {
     };
 }
 
-function Linha({ entrada, hoje, urgente }) {
+function Linha({ entrada, nome, hoje, urgente }) {
     const servico = typeof entrada.item.servico === 'string' ? entrada.item.servico.trim() : '';
     return (
         <li className="border-b border-filete-claro last:border-b-0">
@@ -46,7 +45,7 @@ function Linha({ entrada, hoje, urgente }) {
                 }`}
             >
                 <span className="flex min-w-0 items-baseline gap-2">
-                    <span className="shrink-0 font-medium">{primeiroNome(entrada.cliente.nome)}</span>
+                    <span className="shrink-0 font-medium">{nome}</span>
                     {servico && <span className="truncate">{servico}</span>}
                 </span>
                 <span className="text-sm">{linhaDeApoio(entrada, hoje)}</span>
@@ -120,6 +119,7 @@ export default function Hoje() {
     } else if (lista !== null) {
         const grupos = agruparPorProcesso(lista);
         const primeira = grupos[0]?.entradas[0];
+        const nomes = nomesDaLista(lista);
         conteudo = (
             <div className="mt-4 flex flex-col gap-6">
                 {grupos.map((grupo) => (
@@ -132,6 +132,7 @@ export default function Hoje() {
                                 <Linha
                                     key={entrada.item.id}
                                     entrada={entrada}
+                                    nome={nomes.get(entrada.item.id)}
                                     hoje={hoje}
                                     urgente={entrada === primeira}
                                 />
