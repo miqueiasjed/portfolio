@@ -235,9 +235,8 @@ class TokenDoAparelhoTest extends TestCase
 
     public function test_erro_na_casca_sai_em_html(): void
     {
-        // A casca /rotina só nasce no Plano 2; até lá dá 404. Quando ela
-        // existir, troque por uma rota de teste em /rotina que dê erro.
-        $resposta = $this->get('/rotina')->assertNotFound();
+        // Método errado na casca (POST /rotina) dá 405: o erro tem de sair em HTML.
+        $resposta = $this->post('/rotina')->assertStatus(405);
 
         $this->assertStringStartsWith('text/html', $resposta->headers->get('Content-Type'));
     }

@@ -11,6 +11,7 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EntrarController;
 use App\Http\Controllers\PagBankWebhookController;
+use App\Http\Controllers\RotinaCascaController;
 use App\Http\Controllers\RotinaController;
 use App\Http\Middleware\LimiteDeFalhasDoAparelho;
 use App\Http\Middleware\SomenteAdmin;
@@ -41,6 +42,9 @@ Route::middleware('auth')->group(function () {
 
 // ferramenta Rotina do Dia
 Route::prefix('rotina')->name('rotina.')->group(function () {
+    // Casca e manifest: públicos, sem dado de usuário. O acesso vem depois, pelo token do aparelho.
+    Route::get('/', [RotinaCascaController::class, 'casca'])->name('casca');
+    Route::get('/manifest.webmanifest', [RotinaCascaController::class, 'manifest'])->name('manifest');
     Route::get('/entrar', [RotinaController::class, 'entrar'])->middleware('auth')->name('entrar');
     // Com usuário na request, o throttle conta pelo id dele. O prefixo separa
     // o limite de cada rota; sem ele, todas somariam no mesmo contador.
