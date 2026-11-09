@@ -6,6 +6,7 @@ import { useRota } from './rotas.js';
 import Moldura from './ui/Moldura.jsx';
 import Acesso from './telas/Acesso.jsx';
 import OutraConta from './telas/OutraConta.jsx';
+import Hoje from './telas/Hoje.jsx';
 import Novo from './telas/Novo.jsx';
 import Clientes from './telas/Clientes.jsx';
 import Cliente from './telas/Cliente.jsx';
@@ -47,7 +48,9 @@ function Ferramenta() {
 
     return (
         <Moldura rota={rota}>
-            {rota.tela === 'novo' ? (
+            {rota.tela === 'hoje' ? (
+                <Hoje />
+            ) : rota.tela === 'novo' ? (
                 <Novo />
             ) : rota.tela === 'clientes' ? (
                 <Clientes />
