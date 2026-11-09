@@ -31,3 +31,55 @@ body {
 .btn-claro {
     @apply inline-block bg-papel text-grafite px-7 py-4 font-medium no-underline transition hover:-translate-y-0.5;
 }
+
+/* admin */
+.admin :focus-visible {
+    outline: 2px solid var(--color-caneta);
+    outline-offset: 2px;
+}
+
+.admin-dialogo::backdrop {
+    background: rgb(28 29 32 / 0.55);
+}
+
+html:has(.admin-dialogo[open]) {
+    overflow: hidden;
+}
+
+.admin-dialogo[open] {
+    animation: admin-aparece 160ms ease-out;
+}
+
+.admin-gaveta-direita[open] {
+    animation: admin-desliza-da-direita 200ms ease-out;
+}
+
+.admin-gaveta-esquerda[open] {
+    animation: admin-desliza-da-esquerda 200ms ease-out;
+}
+
+.admin-toast {
+    animation: admin-aparece 200ms ease-out;
+}
+
+@keyframes admin-aparece {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: none; }
+}
+
+@keyframes admin-desliza-da-direita {
+    from { transform: translateX(100%); }
+    to { transform: none; }
+}
+
+@keyframes admin-desliza-da-esquerda {
+    from { transform: translateX(-100%); }
+    to { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .admin-dialogo[open],
+    .admin-toast {
+        animation: none;
+    }
+}

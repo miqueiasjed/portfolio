@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import { useState } from 'react';
 import Layout, { Ponto } from '../Layout';
+import { BarraProgresso, ListaCurso, concluidasTexto, duracao, foco, urlAula } from '../aluno/curso';
 
 function Copiar({ texto }) {
     const [ok, setOk] = useState(false);
@@ -21,8 +22,8 @@ function Copiar({ texto }) {
     }
 
     return (
-        <button onClick={copiar} className="absolute top-3 right-3 border border-filete text-papel text-xs font-medium px-3 py-1.5 cursor-pointer">
-            {ok ? 'Copiado!' : 'Copiar'}
+        <button type="button" onClick={copiar} className={`absolute top-3 right-3 border border-filete text-papel text-xs font-medium px-3 py-1.5 cursor-pointer ${foco}`}>
+            <span aria-live="polite">{ok ? 'Copiado!' : 'Copiar'}</span>
         </button>
     );
 }
@@ -61,25 +62,84 @@ function Bloco({ b }) {
     return null;
 }
 
-export default function Produto({ produto, temArquivo, raioX }) {
+function ResumoCurso({ slug, curso }) {
+    const terminou = !curso.proxima;
+    const comecou = curso.concluidas > 0;
+    const primeira = curso.modulos[0]?.aulas[0];
+    const minutos = curso.modulos.reduce((t, m) => t + m.aulas.reduce((s, a) => s + (a.duracao_minutos || 0), 0), 0);
+
+    return (
+        <div className="mt-10 max-w-xl">
+            <div className="flex items-baseline justify-between gap-4 mb-2 text-sm">
+                <span>
+                    {concluidasTexto(curso.concluidas, curso.total)}
+                    {minutos > 0 && <span className="text-apoio"> · {duracao(minutos)} no total</span>}
+                </span>
+                <span className="text-apoio">{curso.percentual}%</span>
+            </div>
+            <BarraProgresso percentual={curso.percentual} escuro />
+
+            {terminou ? (
+                <>
+                    <p className="text-papel mt-6">Você concluiu o curso<Ponto /></p>
+                    {primeira && (
+                        <Link href={urlAula(slug, primeira.id)} className={`btn-claro mt-6 ${foco}`}>Rever do início</Link>
+                    )}
+                </>
+            ) : (
+                <>
+                    {comecou && <p className="text-apoio text-sm mt-6">Próxima aula: <span className="text-papel">{curso.proxima.titulo}</span></p>}
+                    <Link href={urlAula(slug, curso.proxima.id)} className={`btn-claro mt-6 ${foco}`}>
+                        {comecou ? 'Continuar' : 'Começar'}
+                    </Link>
+                </>
+            )}
+
+            {curso.ultima_concluida && (
+                <p className="text-xs text-apoio mt-6">
+                    Última concluída: {curso.ultima_concluida.titulo}, em {curso.ultima_concluida.em}
+                </p>
+            )}
+        </div>
+    );
+}
+
+export default function Produto({ produto, temArquivo, curso = null, raioX }) {
     const blocos = produto.conteudo?.blocos ?? [];
+    const ehKit = blocos.length > 0;
 
     return (
         <Layout titulo={produto.nome}>
             <section className="bg-grafite text-papel">
                 <div className="max-w-4xl mx-auto px-6 py-16">
-                    <Link href="/" className="rotulo !text-apoio no-underline">← Minhas compras</Link>
+                    <Link href="/" className={`rotulo !text-apoio no-underline ${foco}`}>← Minhas compras</Link>
                     <h1 className="text-4xl sm:text-5xl font-medium leading-tight mt-6 mb-4">
                         {produto.nome}<Ponto />
                     </h1>
                     {produto.descricao && <p className="text-lg text-apoio max-w-xl">{produto.descricao}</p>}
+                    {curso && <ResumoCurso slug={produto.slug} curso={curso} />}
                     {temArquivo && (
-                        <a href={`/produtos/${produto.slug}/download`} className="btn-claro mt-8">Baixar o PDF</a>
+                        <a
+                            href={`/produtos/${produto.slug}/download`}
+                            className={curso ? `inline-block mt-8 text-sm font-medium text-papel underline underline-offset-4 decoration-filete ${foco}` : `btn-claro mt-8 ${foco}`}
+                        >
+                            {ehKit ? 'Baixar o PDF' : 'Baixar o material'}
+                        </a>
                     )}
                 </div>
             </section>
 
-            {blocos.length > 0 && (
+            {curso && (
+                <section className="max-w-4xl mx-auto px-6 py-16" aria-labelledby="conteudo-curso">
+                    <p className="rotulo mb-4">Conteúdo do curso</p>
+                    <h2 id="conteudo-curso" className="text-3xl font-medium leading-tight mb-8">
+                        {curso.modulos.length === 1 ? '1 módulo' : `${curso.modulos.length} módulos`}, {curso.total === 1 ? '1 aula' : `${curso.total} aulas`}<Ponto />
+                    </h2>
+                    <ListaCurso slug={produto.slug} modulos={curso.modulos} proximaId={curso.proxima?.id ?? null} />
+                </section>
+            )}
+
+            {ehKit && (
                 <section className="max-w-4xl mx-auto px-6 py-8">
                     {blocos.map((b, i) => <Bloco key={i} b={b} />)}
                 </section>
@@ -87,13 +147,15 @@ export default function Produto({ produto, temArquivo, raioX }) {
 
             <section className="bg-grafite text-papel">
                 <div className="max-w-4xl mx-auto px-6 py-16">
-                    <p className="rotulo mb-4">Quando o kit já não dá conta</p>
-                    <h2 className="text-3xl font-medium leading-tight mb-4">Bateu em dois ou mais sinais de limite?</h2>
+                    <p className="rotulo mb-4">{ehKit ? 'Quando o kit já não dá conta' : 'Próximo passo'}</p>
+                    <h2 className="text-3xl font-medium leading-tight mb-4">
+                        {ehKit ? 'Bateu em dois ou mais sinais de limite?' : 'Sua operação ainda trava em algum ponto?'}
+                    </h2>
                     <p className="text-apoio max-w-xl">
                         O Raio-X da Operação é uma conversa de 40 minutos, gratuita, para encontrar onde a sua operação
                         trava e se você precisa mesmo de um sistema.
                     </p>
-                    <a href={raioX} className="btn-claro mt-8">Pedir meu Raio-X</a>
+                    <a href={raioX} className={`btn-claro mt-8 ${foco}`}>Pedir meu Raio-X</a>
                 </div>
             </section>
         </Layout>

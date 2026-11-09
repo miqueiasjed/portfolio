@@ -44,6 +44,7 @@ class EntrarController extends Controller
 
         Auth::login($usuario, remember: true);
         $request->session()->regenerate();
+        $usuario->registrarEntrada();
 
         return redirect()->intended(route('area'));
     }

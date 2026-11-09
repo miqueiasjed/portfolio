@@ -38,6 +38,14 @@ return [
             'throw' => false,
         ],
 
+        // arquivos enviados pelo admin (curso e anexos de aula), entregues só por download protegido
+        'uploads' => [
+            'driver' => 'local',
+            'root' => storage_path('app/private/uploads'),
+            'serve' => false,
+            'throw' => false,
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app/private'),

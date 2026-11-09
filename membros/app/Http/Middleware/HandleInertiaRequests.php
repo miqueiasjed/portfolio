@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -35,11 +36,18 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
-        return [
+        $compartilhado = [
             ...parent::share($request),
             'usuario' => fn () => $request->user()?->only(['name', 'email']),
             'site' => config('membros.site_url'),
             'aviso' => fn () => $request->session()->get('aviso'),
         ];
+
+        // lista do modal "Liberar acesso", só nas telas do admin
+        if ($request->user()?->is_admin && $request->is('admin', 'admin/*')) {
+            $compartilhado['adminProdutos'] = fn () => Product::orderBy('nome')->get(['slug', 'nome']);
+        }
+
+        return $compartilhado;
     }
 }

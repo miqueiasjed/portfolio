@@ -57,7 +57,9 @@ A URL de aviso é enviada em cada checkout (`notification_urls`), não precisa c
 
 ## Administração
 
-Painel em `membros.miqueias.ia.br/admin` (e-mail e senha, só para quem é `is_admin`): vendas, receita, compras com busca, liberar acesso na mão e revogar (reembolso).
+Painel em `membros.miqueias.ia.br/admin` (e-mail e senha, só para quem é `is_admin`): visão geral de vendas e receita, compras com filtros e exportação em CSV, alunos com acessos e progresso, liberar acesso na mão, revogar (reembolso) e cadastro de cursos (módulos, aulas com vídeo do YouTube ou Vimeo, material para baixar).
+
+Arquivos enviados pelo admin ficam em `storage/app/private/uploads` (disco `uploads`, nunca servido direto), com até 50 MB cada. Para aceitar esse tamanho, o PHP do servidor precisa de `upload_max_filesize` e `post_max_size` de pelo menos 50M, e o Nginx de `client_max_body_size` igual ou maior.
 
 Criar ou trocar a senha de um admin (a senha nunca vai em texto claro):
 
@@ -71,9 +73,9 @@ php artisan membros:admin email@x.com --hash="$(php -r 'echo password_hash("NOVA
 php artisan membros:compras            # últimas compras
 php artisan membros:liberar email@x.com kit   # libera na mão e envia o link
 php artisan membros:revogar email@x.com kit   # reembolso: tira o acesso
-php artisan test                       # 14 testes: compra, aviso, link mágico, download e admin
+php artisan test                       # 32 testes: compra, aviso, link mágico, download, admin, cursos e aulas
 ```
 
 ## Produtos
 
-Cadastrados em `database/seeders/ProdutoSeeder.php`. O PDF fica em `resources/produtos/` (nunca exposto direto) e o conteúdo da página do produto em `database/data/*.json`. O CMS de curso entra na fase 2.
+O kit é criado por `database/seeders/ProdutoSeeder.php` só quando ainda não existe, então o deploy não desfaz o que foi editado no admin. O PDF do kit fica em `resources/produtos/` (nunca exposto direto) e os blocos da página dele em `database/data/kit-conteudo.json`. Cursos novos, módulos e aulas são cadastrados em `/admin/cursos`.
