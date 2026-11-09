@@ -47,7 +47,11 @@ class CompraController extends Controller
     /** Volta do PagBank. O acesso é liberado pelo aviso do PagBank, não por esta página. */
     public function obrigado(Request $request)
     {
-        $compra = Purchase::with('product')->where('reference', (string) $request->query('ref'))->first();
+        // ?ref[]=x chega como array: trata como referência desconhecida em vez de quebrar
+        $ref = $request->query('ref');
+        $compra = is_string($ref) && $ref !== ''
+            ? Purchase::with('product')->where('reference', $ref)->first()
+            : null;
 
         return Inertia::render('Obrigado', [
             'paga' => (bool) $compra?->estaPaga(),

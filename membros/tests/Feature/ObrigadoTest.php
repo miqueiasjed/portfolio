@@ -70,4 +70,15 @@ class ObrigadoTest extends TestCase
             ->where('slug', null)
             ->where('produto', null));
     }
+
+    public function test_referencia_em_lista_responde_como_desconhecida(): void
+    {
+        $this->compra(Product::ROTINA, Purchase::PAGA);
+
+        $this->get('/obrigado?ref[]=x')->assertOk()->assertInertia(fn (Assert $p) => $p
+            ->component('Obrigado')
+            ->where('paga', false)
+            ->where('slug', null)
+            ->where('produto', null));
+    }
 }
