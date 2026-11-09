@@ -2,6 +2,26 @@ import { Link } from '@inertiajs/react';
 import Layout, { Ponto } from '../Layout';
 import { BarraProgresso, contagem, foco, focoDentro, urlAula } from '../aluno/curso';
 
+const ROTINA = 'rotina-do-dia';
+const linkTexto = `inline-flex items-center min-h-11 text-sm font-medium text-tinta underline underline-offset-4 decoration-filete-claro ${foco}`;
+
+function BotaoFerramenta() {
+    return <a href="/rotina" className={`btn !px-5 !py-3 text-sm ${foco}`}>Abrir a ferramenta</a>;
+}
+
+function CardRotina({ p }) {
+    return (
+        <div className="bg-creme p-7 flex flex-col">
+            <h2 className="text-xl font-medium mb-2">{p.nome}</h2>
+            {p.descricao && <p className="text-[15px] text-apoio">{p.descricao}</p>}
+            <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-auto pt-6">
+                <BotaoFerramenta />
+                <Link href={`/produtos/${p.slug}`} className={linkTexto}>Ver o produto</Link>
+            </div>
+        </div>
+    );
+}
+
 function CardCurso({ p }) {
     const { curso } = p;
     const terminou = !curso.proxima;
@@ -29,14 +49,19 @@ function CardCurso({ p }) {
             </div>
 
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-auto pt-6">
-                {terminou ? (
+                {p.slug === ROTINA ? (
+                    <>
+                        <BotaoFerramenta />
+                        <Link href={`/produtos/${p.slug}`} className={linkTexto}>Ver as aulas</Link>
+                    </>
+                ) : terminou ? (
                     <Link href={`/produtos/${p.slug}`} className={`btn !px-5 !py-3 text-sm ${foco}`}>Rever o curso</Link>
                 ) : (
                     <Link href={urlAula(p.slug, curso.proxima.id)} className={`btn !px-5 !py-3 text-sm ${foco}`}>
                         {comecou ? 'Continuar' : 'Começar'}
                     </Link>
                 )}
-                {!terminou && (
+                {p.slug !== ROTINA && !terminou && (
                     <Link href={`/produtos/${p.slug}`} className={`text-sm font-medium text-tinta underline underline-offset-4 decoration-filete-claro ${foco}`}>
                         Ver todas as aulas
                     </Link>
@@ -64,6 +89,8 @@ export default function Area({ produtos, raioX }) {
                         {produtos.map((p) =>
                             p.curso ? (
                                 <CardCurso key={p.slug} p={p} />
+                            ) : p.slug === ROTINA ? (
+                                <CardRotina key={p.slug} p={p} />
                             ) : (
                                 <Link key={p.slug} href={`/produtos/${p.slug}`} className={`bg-creme p-7 no-underline text-tinta hover:bg-white transition ${focoDentro}`}>
                                     <h2 className="text-xl font-medium mb-2">{p.nome}</h2>

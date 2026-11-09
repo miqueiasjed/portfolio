@@ -11,6 +11,8 @@ use App\Http\Controllers\AreaController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\EntrarController;
 use App\Http\Controllers\PagBankWebhookController;
+use App\Http\Controllers\RotinaController;
+use App\Http\Middleware\LimiteDeFalhasDoAparelho;
 use App\Http\Middleware\SomenteAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +37,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/produtos/{product}/aulas/{lesson}', [AreaController::class, 'aula'])->name('aula');
     Route::post('/produtos/{product}/aulas/{lesson}/concluir', [AreaController::class, 'concluir'])->name('aula.concluir');
     Route::get('/produtos/{product}/aulas/{lesson}/anexo', [AreaController::class, 'anexo'])->name('aula.anexo');
+});
+
+// ferramenta Rotina do Dia
+Route::prefix('rotina')->name('rotina.')->group(function () {
+    Route::get('/entrar', [RotinaController::class, 'entrar'])->middleware('auth')->name('entrar');
+    // Com usuário na request, o throttle conta pelo id dele. O prefixo separa
+    // o limite de cada rota; sem ele, todas somariam no mesmo contador.
+    Route::post('/aparelho', [RotinaController::class, 'aparelho'])->middleware(['auth', 'throttle:10,1,rotina-aparelho'])->name('aparelho');
+    // aparelho antes do throttle: o limite conta por usuário, não por IP.
+    // O limite de falhas vem antes de tudo e conta só os 401, por IP.
+    Route::get('/acesso', [RotinaController::class, 'acesso'])->middleware([LimiteDeFalhasDoAparelho::class, 'aparelho', 'throttle:60,1,rotina-acesso'])->name('acesso');
+    // Entrada por código (fora do CSRF no bootstrap/app.php). Throttle por IP
+    // aqui; o limite por e-mail fica no controller, sem header na resposta.
+    Route::post('/codigo', [RotinaController::class, 'pedirCodigo'])->middleware('throttle:5,1,rotina-codigo')->name('codigo');
+    Route::post('/codigo/confirmar', [RotinaController::class, 'confirmarCodigo'])->middleware('throttle:10,1,rotina-confirmar')->name('codigo.confirmar');
 });
 
 // administração (e-mail e senha, só para is_admin)

@@ -20,5 +20,16 @@ class ProdutoSeeder extends Seeder
             'conteudo' => json_decode(file_get_contents(database_path('data/kit-conteudo.json')), true),
             'ativo' => true,
         ]);
+
+        Product::firstOrCreate(['slug' => Product::ROTINA], [
+            'nome' => 'Rotina do Dia',
+            'descricao' => 'A lista do dia com as mensagens prontas para confirmar horário, cobrar e retomar orçamento.',
+            'preco_centavos' => 14700,
+            'arquivo_path' => 'Isso-nunca-deveria-ser-manual.pdf',
+            'arquivo_nome' => 'Isso-nunca-deveria-ser-manual.pdf',
+            'arquivo_disco' => 'produtos',
+            'conteudo' => null,
+            'ativo' => true,
+        ]);
     }
 }

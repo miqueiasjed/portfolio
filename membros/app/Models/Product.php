@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
+    public const ROTINA = 'rotina-do-dia';
+
     protected $fillable = [
         'slug', 'nome', 'descricao', 'preco_centavos',
         'arquivo_path', 'arquivo_nome', 'arquivo_disco', 'conteudo', 'ativo',
@@ -45,6 +47,15 @@ class Product extends Model
     public function lessons(): HasManyThrough
     {
         return $this->hasManyThrough(Lesson::class, Module::class);
+    }
+
+    /** Mesma regra do AreaController::exigirCompra: compra paga deste produto no nome do usuário. */
+    public function compradoPor(User $user): bool
+    {
+        return $this->purchases()
+            ->where('user_id', $user->id)
+            ->where('status', Purchase::PAGA)
+            ->exists();
     }
 
     public function precoFormatado(): string

@@ -64,9 +64,9 @@ class AdminComprasAlunosTest extends TestCase
             ->where('numeros.checkouts_abertos', 1)
             ->has('receita30', 30)
             ->where('receita30.29.centavos', 9700)
-            ->has('porProduto', 2)
+            ->has('porProduto', 3)
             ->has('ultimas', 2)
-            ->has('adminProdutos', 2));
+            ->has('adminProdutos', 3));
     }
 
     public function test_filtros_de_compras_e_csv(): void

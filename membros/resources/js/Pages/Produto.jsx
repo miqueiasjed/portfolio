@@ -3,6 +3,8 @@ import { useState } from 'react';
 import Layout, { Ponto } from '../Layout';
 import { BarraProgresso, ListaCurso, concluidasTexto, duracao, foco, urlAula } from '../aluno/curso';
 
+const ROTINA = 'rotina-do-dia';
+
 function Copiar({ texto }) {
     const [ok, setOk] = useState(false);
 
@@ -117,11 +119,20 @@ export default function Produto({ produto, temArquivo, curso = null, raioX }) {
                         {produto.nome}<Ponto />
                     </h1>
                     {produto.descricao && <p className="text-lg text-apoio max-w-xl">{produto.descricao}</p>}
+                    {produto.slug === ROTINA && (
+                        <a href="/rotina" className={`btn-claro mt-8 ${foco}`}>Abrir a ferramenta</a>
+                    )}
                     {curso && <ResumoCurso slug={produto.slug} curso={curso} />}
                     {temArquivo && (
                         <a
                             href={`/produtos/${produto.slug}/download`}
-                            className={curso ? `inline-block mt-8 text-sm font-medium text-papel underline underline-offset-4 decoration-filete ${foco}` : `btn-claro mt-8 ${foco}`}
+                            className={
+                                curso
+                                    ? `inline-block mt-8 text-sm font-medium text-papel underline underline-offset-4 decoration-filete ${foco}`
+                                    : produto.slug === ROTINA
+                                      ? `flex items-center w-fit min-h-11 mt-4 text-sm font-medium text-papel underline underline-offset-4 decoration-filete ${foco}`
+                                      : `btn-claro mt-8 ${foco}`
+                            }
                         >
                             {ehKit ? 'Baixar o PDF' : 'Baixar o material'}
                         </a>

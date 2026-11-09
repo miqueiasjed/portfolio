@@ -53,10 +53,10 @@ class AdminCursosTest extends TestCase
 
         $this->get('/admin/cursos')->assertOk()->assertInertia(fn (Assert $p) => $p
             ->component('Admin/Cursos', false)
-            ->has('cursos', 2)
+            ->has('cursos', 3)
             ->where('cursos.0.slug', 'automacao-na-pratica')
             ->where('cursos.0.link_compra', rtrim(config('app.url'), '/').'/comprar/automacao-na-pratica')
-            ->has('adminProdutos', 2));
+            ->has('adminProdutos', 3));
 
         $this->put('/admin/cursos/automacao-na-pratica', ['nome' => 'Automação', 'slug' => 'automacao', 'descricao' => 'Curso curto', 'preco_centavos' => 100, 'ativo' => false])
             ->assertRedirect('/admin/cursos/automacao');
@@ -239,6 +239,45 @@ class AdminCursosTest extends TestCase
         $this->assertSame('Kit editado', $kit->nome);
         $this->assertSame(4700, $kit->preco_centavos);
         $this->assertSame(1, Product::where('slug', 'kit')->count());
+    }
+
+    public function test_seeder_cria_rotina_sem_sobrescrever(): void
+    {
+        $this->seed(ProdutoSeeder::class);
+
+        $rotina = Product::where('slug', Product::ROTINA)->firstOrFail();
+        $this->assertSame('rotina-do-dia', Product::ROTINA);
+        $this->assertSame('Rotina do Dia', $rotina->nome);
+        $this->assertSame(14700, $rotina->preco_centavos);
+
+        $rotina->update(['nome' => 'Rotina editada', 'preco_centavos' => 19700]);
+
+        $this->seed(ProdutoSeeder::class);
+
+        $rotina = Product::where('slug', Product::ROTINA)->first();
+        $this->assertSame('Rotina editada', $rotina->nome);
+        $this->assertSame(19700, $rotina->preco_centavos);
+        $this->assertSame(1, Product::where('slug', Product::ROTINA)->count());
+    }
+
+    public function test_comprado_por_so_com_compra_paga(): void
+    {
+        $rotina = Product::where('slug', Product::ROTINA)->firstOrFail();
+        $kit = Product::where('slug', 'kit')->firstOrFail();
+        $aluno = User::create(['email' => 'aluno@x.com']);
+        $compra = fn (Product $p, string $status) => Purchase::create([
+            'product_id' => $p->id, 'user_id' => $aluno->id, 'reference' => (string) Str::uuid(),
+            'valor_centavos' => 14700, 'status' => $status,
+        ]);
+
+        $compra($rotina, Purchase::PENDENTE);
+        $compra($rotina, Purchase::REEMBOLSADA);
+        $compra($kit, Purchase::PAGA);
+        $this->assertFalse($rotina->compradoPor($aluno));
+
+        $compra($rotina, Purchase::PAGA);
+        $this->assertTrue($rotina->compradoPor($aluno));
+        $this->assertFalse($rotina->compradoPor(User::create(['email' => 'outro@x.com'])));
     }
 
     public function test_cliente_recebe_403_em_todas_as_rotas_novas_do_admin(): void
