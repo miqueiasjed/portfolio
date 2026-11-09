@@ -1,6 +1,7 @@
 // Decide, ao abrir a ferramenta, se o dono entra ou qual tela de acesso vê.
-// As únicas chamadas de rede são GET /rotina/acesso e POST /rotina/aparelho,
-// e a única coisa que sai do aparelho é o próprio token.
+// As chamadas de rede são GET /rotina/acesso, POST /rotina/aparelho e, na
+// entrada por código, POST /rotina/codigo e /rotina/codigo/confirmar. Sai do
+// aparelho só o próprio token, ou o e-mail e o código digitados pelo dono.
 
 import { apagar, lerMeta, transacao } from './banco.js';
 
@@ -196,4 +197,134 @@ export async function resolverAcesso({ fetch = globalThis.fetch, agora = Date.no
     }
 
     return liberarPelaSessao(buscar, csrf, xsrf, agora);
+}
+
+// Entrada por código (app adicionado à tela de início, sem o cookie do Safari).
+// Os erros de validação do Laravel saem em inglês, por isso o e-mail e o
+// código são conferidos aqui antes de postar e nenhum texto em inglês chega à
+// tela: só passam as mensagens que o controller escreve em português.
+
+export const ERRO_EMAIL = 'Confira o e-mail digitado.';
+export const ERRO_CODIGO = 'O código tem 6 dígitos.';
+export const ERRO_MUITAS = 'Muitas tentativas. Espere um minuto.';
+export const ERRO_REDE = 'Sem conexão. Confira a internet e tente de novo.';
+export const ERRO_GERAL = 'Não deu certo agora. Tente de novo em instantes.';
+export const ERRO_GRAVAR = 'Não consegui gravar a entrada neste aparelho. Peça um novo código.';
+// Rede caiu ou a resposta veio ilegível depois do envio: o servidor pode já ter
+// aceitado e apagado o código, então a orientação é tentar o mesmo e, se falhar, pedir outro.
+export const ERRO_CONFIRMAR_INCERTO = 'Não deu para confirmar agora. Se o mesmo código não funcionar, peça um novo.';
+
+const FORMATO_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function emailValido(email) {
+    return email.length <= 255 && FORMATO_EMAIL.test(email);
+}
+
+function textoDe(valor) {
+    return typeof valor === 'string' ? valor.trim() : '';
+}
+
+async function postarJson(buscar, url, dados, csrf) {
+    const headers = { Accept: 'application/json', 'Content-Type': 'application/json' };
+    if (csrf) {
+        headers['X-CSRF-TOKEN'] = csrf;
+    }
+    return buscar(url, { method: 'POST', headers, body: JSON.stringify(dados) });
+}
+
+// 429 com texto próprio do controller vira a mensagem; o throttle por IP manda
+// "Too Many Attempts." em inglês junto com o header Retry-After, e aí vale o
+// texto padrão.
+function erroDe429(resposta, corpo) {
+    const mensagem = textoDe(corpo?.message);
+    const doThrottle = Boolean(resposta.headers?.get?.('retry-after'));
+    return { erro: mensagem && !doThrottle ? mensagem : ERRO_MUITAS };
+}
+
+// Pede o código por e-mail. Devolve true quando o servidor aceitou o pedido
+// (204, tenha o e-mail comprado ou não) ou { erro } com o texto para a tela.
+export async function pedirCodigo({ email, csrf, fetch = globalThis.fetch } = {}) {
+    const buscar = fetch;
+    const limpo = textoDe(email);
+    if (!emailValido(limpo)) {
+        return { erro: ERRO_EMAIL };
+    }
+
+    let resposta;
+    try {
+        resposta = await postarJson(buscar, '/rotina/codigo', { email: limpo }, csrf);
+    } catch {
+        return { erro: ERRO_REDE };
+    }
+
+    if (resposta.status === 204) {
+        return true;
+    }
+
+    const corpo = await lerJson(resposta);
+    // 429 em HTML (limite da Cloudflare) não tem JSON, mas continua sendo excesso de tentativas.
+    if (resposta.status === 429) {
+        return erroDe429(resposta, corpo);
+    }
+    if (!corpo) {
+        return { erro: ERRO_GERAL };
+    }
+    if (resposta.status === 422) {
+        return { erro: ERRO_EMAIL };
+    }
+    return { erro: ERRO_GERAL };
+}
+
+// Troca o código pelo aparelho liberado. Devolve { estado: 'liberado', usuario }
+// depois de gravar token, usuario e acesso_ok_em, ou { erro } com o texto para a tela.
+// `gravar` existe para os testes simularem falha na gravação.
+export async function confirmarCodigo({
+    email,
+    codigo,
+    csrf,
+    fetch = globalThis.fetch,
+    agora = Date.now(),
+    gravar = gravarEntrada,
+} = {}) {
+    const buscar = fetch;
+    const limpo = textoDe(email);
+    const digitos = textoDe(codigo).replace(/\s+/g, '');
+    if (!emailValido(limpo)) {
+        return { erro: ERRO_EMAIL };
+    }
+    if (!/^\d{6}$/.test(digitos)) {
+        return { erro: ERRO_CODIGO };
+    }
+
+    let resposta;
+    try {
+        resposta = await postarJson(buscar, '/rotina/codigo/confirmar', { email: limpo, codigo: digitos }, csrf);
+    } catch {
+        return { erro: ERRO_CONFIRMAR_INCERTO };
+    }
+
+    const corpo = await lerJson(resposta);
+    if (resposta.status === 429) {
+        return erroDe429(resposta, corpo);
+    }
+    if (!corpo) {
+        return { erro: ERRO_CONFIRMAR_INCERTO };
+    }
+
+    if (resposta.status === 201 && typeof corpo.token === 'string' && corpo.token !== '') {
+        try {
+            const usuario = await gravar(corpo, agora);
+            return { estado: 'liberado', usuario };
+        } catch {
+            return { erro: ERRO_GRAVAR };
+        }
+    }
+
+    if (resposta.status === 422) {
+        // Com `errors`, é a validação do Laravel (texto em inglês): não vai para a tela.
+        const mensagem = corpo.errors ? '' : textoDe(corpo.message);
+        return { erro: mensagem || 'Confira o e-mail e o código.' };
+    }
+
+    return { erro: ERRO_GERAL };
 }

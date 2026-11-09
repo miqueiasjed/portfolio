@@ -1,7 +1,21 @@
 import 'fake-indexeddb/auto';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { NOME_BANCO, fechar, gravarMeta, lerMeta } from './banco.js';
-import { DIAS_SEM_REDE, gravarEntrada, lerXsrf, resolverAcesso } from './acesso.js';
+import {
+    DIAS_SEM_REDE,
+    ERRO_CODIGO,
+    ERRO_CONFIRMAR_INCERTO,
+    ERRO_EMAIL,
+    ERRO_GERAL,
+    ERRO_GRAVAR,
+    ERRO_MUITAS,
+    ERRO_REDE,
+    confirmarCodigo,
+    gravarEntrada,
+    lerXsrf,
+    pedirCodigo,
+    resolverAcesso,
+} from './acesso.js';
 
 const DIA = 24 * 60 * 60 * 1000;
 const AGORA = Date.parse('2026-12-10T12:00:00.000Z');
@@ -370,5 +384,191 @@ describe('lerXsrf', () => {
 
     it('não confunde com cookie de nome parecido', () => {
         expect(lerXsrf('OUTRO-XSRF-TOKEN=abc')).toBeNull();
+    });
+});
+
+const semConteudo = () => new Response(null, { status: 204 });
+// 429 do throttle por IP: texto em inglês e header Retry-After.
+const throttle = () =>
+    Response.json({ message: 'Too Many Attempts.' }, { status: 429, headers: { 'retry-after': '60' } });
+
+describe('pedirCodigo', () => {
+    it('204: true, com o e-mail limpo no corpo', async () => {
+        const fetch = fetchFalso(semConteudo());
+
+        const r = await pedirCodigo({ email: '  ana@exemplo.com ', fetch });
+
+        expect(r).toBe(true);
+        expect(fetch.chamadas).toHaveLength(1);
+        expect(fetch.chamadas[0].url).toBe('/rotina/codigo');
+        expect(fetch.chamadas[0].opcoes.method).toBe('POST');
+        expect(fetch.chamadas[0].opcoes.headers).toEqual({
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        });
+        expect(JSON.parse(fetch.chamadas[0].opcoes.body)).toEqual({ email: 'ana@exemplo.com' });
+    });
+
+    it('com csrf: manda o X-CSRF-TOKEN', async () => {
+        const fetch = fetchFalso(semConteudo());
+
+        await pedirCodigo({ email: 'ana@exemplo.com', csrf: 'csrf-1', fetch });
+
+        expect(fetch.chamadas[0].opcoes.headers['X-CSRF-TOKEN']).toBe('csrf-1');
+    });
+
+    it('e-mail inválido: erro sem chamar o fetch', async () => {
+        const fetch = fetchFalso();
+
+        for (const email of ['', 'ana', 'ana@exemplo', 'ana @exemplo.com', undefined]) {
+            expect(await pedirCodigo({ email, fetch })).toEqual({ erro: ERRO_EMAIL });
+        }
+        expect(fetch.chamadas).toHaveLength(0);
+    });
+
+    it('422 da validação (texto em inglês): erro em português', async () => {
+        const fetch = fetchFalso(
+            json(422, { message: 'The email field must be a valid email address.', errors: { email: ['x'] } }),
+        );
+
+        expect(await pedirCodigo({ email: 'ana@exemplo.com', fetch })).toEqual({ erro: ERRO_EMAIL });
+    });
+
+    it('429 do throttle: texto padrão, nunca o inglês', async () => {
+        expect(await pedirCodigo({ email: 'ana@exemplo.com', fetch: fetchFalso(throttle()) })).toEqual({
+            erro: ERRO_MUITAS,
+        });
+    });
+
+    it('429 em HTML (limite da Cloudflare): ERRO_MUITAS', async () => {
+        expect(await pedirCodigo({ email: 'ana@exemplo.com', fetch: fetchFalso(html(429)) })).toEqual({
+            erro: ERRO_MUITAS,
+        });
+    });
+
+    it('sem rede, 5xx ou resposta que não é JSON: erro curto', async () => {
+        expect(await pedirCodigo({ email: 'ana@exemplo.com', fetch: fetchFalso(SEM_REDE) })).toEqual({ erro: ERRO_REDE });
+        expect(await pedirCodigo({ email: 'ana@exemplo.com', fetch: fetchFalso(html(502)) })).toEqual({
+            erro: ERRO_GERAL,
+        });
+        expect(await pedirCodigo({ email: 'ana@exemplo.com', fetch: fetchFalso(json(500, { message: 'Server Error' })) })).toEqual({
+            erro: ERRO_GERAL,
+        });
+    });
+});
+
+describe('confirmarCodigo', () => {
+    it('201: grava token, usuario e acesso_ok_em e devolve liberado', async () => {
+        const fetch = fetchFalso(json(201, { token: 'tok-codigo', nome: 'Ana', email: 'ana@exemplo.com' }));
+
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch, agora: AGORA });
+
+        expect(r).toEqual({ estado: 'liberado', usuario: ANA });
+        expect(await lerMeta('token')).toBe('tok-codigo');
+        expect(await lerMeta('usuario')).toEqual(ANA);
+        expect(await lerMeta('acesso_ok_em')).toBe(new Date(AGORA).toISOString());
+        expect(fetch.chamadas[0].url).toBe('/rotina/codigo/confirmar');
+        expect(fetch.chamadas[0].opcoes.method).toBe('POST');
+        expect(JSON.parse(fetch.chamadas[0].opcoes.body)).toEqual({ email: 'ana@exemplo.com', codigo: '123456' });
+    });
+
+    it('422 do código errado: a mensagem do servidor, sem gravar nada', async () => {
+        const fetch = fetchFalso(json(422, { message: 'Código errado ou vencido. Peça um novo.' }));
+
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '000000', fetch, agora: AGORA });
+
+        expect(r).toEqual({ erro: 'Código errado ou vencido. Peça um novo.' });
+        expect(await lerMeta('token')).toBeUndefined();
+        expect(await lerMeta('acesso_ok_em')).toBeUndefined();
+    });
+
+    it('422 da validação do Laravel: não leva o texto em inglês', async () => {
+        const fetch = fetchFalso(
+            json(422, { message: 'The codigo field must be 6 digits.', errors: { codigo: ['x'] } }),
+        );
+
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch });
+
+        expect(r.erro).toBe('Confira o e-mail e o código.');
+    });
+
+    it('e-mail inválido ou código fora de 6 dígitos: erro sem chamar o fetch', async () => {
+        const fetch = fetchFalso();
+
+        expect(await confirmarCodigo({ email: 'ana@', codigo: '123456', fetch })).toEqual({ erro: ERRO_EMAIL });
+        for (const codigo of ['12345', '1234567', '12a456', '', undefined]) {
+            expect(await confirmarCodigo({ email: 'ana@exemplo.com', codigo, fetch })).toEqual({ erro: ERRO_CODIGO });
+        }
+        expect(fetch.chamadas).toHaveLength(0);
+    });
+
+    it('429 sem message: texto padrão', async () => {
+        const r = await confirmarCodigo({
+            email: 'ana@exemplo.com',
+            codigo: '123456',
+            fetch: fetchFalso(json(429, {})),
+        });
+
+        expect(r).toEqual({ erro: ERRO_MUITAS });
+    });
+
+    it('429 do limite por e-mail: a mensagem do servidor', async () => {
+        const fetch = fetchFalso(json(429, { message: 'Muitas tentativas. Peça um novo código daqui a pouco.' }));
+
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch });
+
+        expect(r).toEqual({ erro: 'Muitas tentativas. Peça um novo código daqui a pouco.' });
+    });
+
+    it('429 do throttle por IP: texto padrão, nunca o inglês', async () => {
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch: fetchFalso(throttle()) });
+
+        expect(r).toEqual({ erro: ERRO_MUITAS });
+    });
+
+    it('sem rede depois do envio: orienta a tentar o mesmo código e pedir outro, nada gravado', async () => {
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch: fetchFalso(SEM_REDE) });
+
+        expect(r).toEqual({ erro: ERRO_CONFIRMAR_INCERTO });
+        expect(ERRO_CONFIRMAR_INCERTO).toBe('Não deu para confirmar agora. Se o mesmo código não funcionar, peça um novo.');
+        expect(await lerMeta('token')).toBeUndefined();
+    });
+
+    it('201 sem token: erro geral e nada gravado', async () => {
+        const email = 'ana@exemplo.com';
+        expect(await confirmarCodigo({ email, codigo: '123456', fetch: fetchFalso(json(201, { nome: 'Ana' })) })).toEqual({
+            erro: ERRO_GERAL,
+        });
+        expect(await lerMeta('token')).toBeUndefined();
+    });
+
+    it('resposta ilegível (HTML) depois do envio: orienta como na queda de rede', async () => {
+        const email = 'ana@exemplo.com';
+        expect(await confirmarCodigo({ email, codigo: '123456', fetch: fetchFalso(html(201)) })).toEqual({
+            erro: ERRO_CONFIRMAR_INCERTO,
+        });
+        expect(await confirmarCodigo({ email, codigo: '123456', fetch: fetchFalso(html(502)) })).toEqual({
+            erro: ERRO_CONFIRMAR_INCERTO,
+        });
+        expect(await lerMeta('token')).toBeUndefined();
+    });
+
+    it('201 com token, mas a gravação falha: ERRO_GRAVAR e não liberado', async () => {
+        const fetch = fetchFalso(json(201, { token: 'tok-codigo', nome: 'Ana', email: 'ana@exemplo.com' }));
+        const gravar = async () => {
+            throw new Error('QuotaExceededError');
+        };
+
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch, agora: AGORA, gravar });
+
+        expect(r).toEqual({ erro: ERRO_GRAVAR });
+        expect(r.estado).toBeUndefined();
+        expect(await lerMeta('token')).toBeUndefined();
+    });
+
+    it('429 em HTML (limite da Cloudflare): ERRO_MUITAS', async () => {
+        const r = await confirmarCodigo({ email: 'ana@exemplo.com', codigo: '123456', fetch: fetchFalso(html(429)) });
+
+        expect(r).toEqual({ erro: ERRO_MUITAS });
     });
 });
