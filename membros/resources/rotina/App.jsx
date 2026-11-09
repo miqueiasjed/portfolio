@@ -6,6 +6,7 @@ import { useRota } from './rotas.js';
 import Moldura from './ui/Moldura.jsx';
 import Acesso from './telas/Acesso.jsx';
 import OutraConta from './telas/OutraConta.jsx';
+import Novo from './telas/Novo.jsx';
 import AvisoVersao from './ui/AvisoVersao.jsx';
 
 const CARREGANDO = { estado: 'carregando', usuario: null };
@@ -43,7 +44,7 @@ function Ferramenta() {
 
     return (
         <Moldura rota={rota}>
-            <EmBreve nome={NOMES[rota.tela] ?? NOMES.hoje} />
+            {rota.tela === 'novo' ? <Novo /> : <EmBreve nome={NOMES[rota.tela] ?? NOMES.hoje} />}
         </Moldura>
     );
 }
