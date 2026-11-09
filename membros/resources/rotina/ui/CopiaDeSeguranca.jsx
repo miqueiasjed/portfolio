@@ -5,6 +5,7 @@
 
 import { useId, useRef, useState } from 'react';
 import { exportarBackup, importarBackup } from '../dados/backup.js';
+import { limparPendente } from '../dados/envioPendente.js';
 import { lerCopia, nomeDoArquivoDeCopia, textoDaCopia } from '../regras/copia.js';
 import { hojeEmFortaleza } from '../regras/datas.js';
 import { baixarArquivo } from './baixarArquivo.js';
@@ -31,7 +32,10 @@ function textoDoResumo({ clientes, pendencias }) {
     return `A cópia tem ${quantos} e ${abertas}. Tudo o que está neste aparelho agora será trocado por ela.`;
 }
 
-export default function CopiaDeSeguranca() {
+// Props:
+// - `aoRestaurar()`: opcional, chamada depois que a cópia trocou os dados do
+//   aparelho, para a tela reler o que mostra (a Ajustes relê os ajustes).
+export default function CopiaDeSeguranca({ aoRestaurar } = {}) {
     // 'parado' | 'baixando' | 'lendo' | 'restaurando'
     const [etapa, setEtapa] = useState('parado');
     const [aviso, setAviso] = useState('');
@@ -97,13 +101,27 @@ export default function CopiaDeSeguranca() {
         setEtapa('restaurando');
         try {
             await importarBackup(pendente.dados);
-            setAviso('Cópia restaurada.');
         } catch {
             setErro(ERRO_RESTAURAR);
-        } finally {
             setPendente(null);
             setEtapa('parado');
+            return;
         }
+        // A cópia não leva o `meta`: um "Enviou?" guardado apontaria para um
+        // item que talvez nem exista mais. Falhar aqui não desfaz a restauração.
+        try {
+            await limparPendente();
+        } catch {
+            // Segue: o pendente vence sozinho em 12 horas.
+        }
+        try {
+            await aoRestaurar?.();
+        } catch {
+            // Quem chamou cuida do próprio erro; a cópia já entrou.
+        }
+        setAviso('Cópia restaurada.');
+        setPendente(null);
+        setEtapa('parado');
     }
 
     function voltar() {
@@ -115,7 +133,7 @@ export default function CopiaDeSeguranca() {
         <section aria-labelledby={idTitulo} className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
                 <h2 id={idTitulo} className="text-xl font-medium">
-                    Cópia de segurança
+                    Cópia dos seus dados
                 </h2>
                 <p className="font-light">
                     Seus clientes ficam só neste aparelho. Baixe uma cópia de vez em quando e guarde fora do celular.
