@@ -4,6 +4,7 @@
 // cliente `{ nome, whatsapp }` e item `{ processo, data, hora, servico, valor_centavos }`.
 import { transacao } from './banco.js';
 import { normalizarTexto } from './clientes.js';
+import { avisar } from './registro.js';
 
 // Resultados aceitos ao resolver, por processo. Os nomes mostrados na tela
 // ficam em ui/rotulos.js, com as mesmas chaves.
@@ -151,15 +152,21 @@ export function atualizarPendencia(id, campos = {}) {
 
 // Marca o item como resolvido com um resultado do processo dele. Resultado de
 // outro processo rejeita. Item que já não está aberto fica como está.
-export function resolverPendencia(id, resultado) {
-    return alterarItem(id, (atual) => {
+// Só quando o status muda, avisa o gancho de registro.js depois de gravar.
+export async function resolverPendencia(id, resultado) {
+    let mudou = false;
+    const momento = agora();
+    const item = await alterarItem(id, (atual) => {
         const aceitos = RESULTADOS[atual.processo] ?? [];
         if (!aceitos.includes(resultado)) {
             return new Error(`Resultado "${resultado}" não vale para esta pendência. Use: ${aceitos.join(', ')}.`);
         }
         if (atual.status !== 'aberto') return null;
-        return { ...atual, status: 'resolvido', resultado, atualizado_em: agora() };
+        mudou = true;
+        return { ...atual, status: 'resolvido', resultado, atualizado_em: momento };
     });
+    if (mudou) avisar('resolvido', { processo: item.processo, quando: momento });
+    return item;
 }
 
 // Marca o item como cancelado. Item que já não está aberto fica como está.
