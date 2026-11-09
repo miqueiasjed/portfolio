@@ -117,10 +117,35 @@ async function checarToken(buscar, token, agora) {
     return semRede(agora);
 }
 
+// Valor do cookie XSRF-TOKEN já decodificado, ou null quando não existe ou
+// vem mal formado. Recebe o texto de document.cookie.
+export function lerXsrf(cookies) {
+    const texto = typeof cookies === 'string' ? cookies : '';
+    for (const parte of texto.split(';')) {
+        const [nome, ...resto] = parte.trim().split('=');
+        if (nome !== 'XSRF-TOKEN') {
+            continue;
+        }
+        try {
+            const valor = decodeURIComponent(resto.join('='));
+            return valor === '' ? null : valor;
+        } catch {
+            return null;
+        }
+    }
+    return null;
+}
+
 // Libera este aparelho pela sessão do navegador (link mágico).
-async function liberarPelaSessao(buscar, csrf, agora) {
+// O Laravel renova o cookie XSRF-TOKEN a cada resposta, e a meta csrf-token
+// pode estar velha quando a casca vem do cache. Como o Laravel lê primeiro o
+// X-CSRF-TOKEN e só olha o X-XSRF-TOKEN quando o outro falta, mandar os dois
+// com a meta velha daria 419 de novo: com o cookie, vai só ele.
+async function liberarPelaSessao(buscar, csrf, xsrf, agora) {
     const headers = { Accept: 'application/json' };
-    if (csrf) {
+    if (xsrf) {
+        headers['X-XSRF-TOKEN'] = xsrf;
+    } else if (csrf) {
         headers['X-CSRF-TOKEN'] = csrf;
     }
 
@@ -156,7 +181,8 @@ async function liberarPelaSessao(buscar, csrf, agora) {
 
 // Devolve { estado, usuario }, com estado em 'liberado' | 'entrar' | 'inativo' | 'sem_rede'.
 // `usuario` ({ nome, email }) só vem preenchido em 'liberado'.
-export async function resolverAcesso({ fetch = globalThis.fetch, agora = Date.now(), csrf } = {}) {
+// `csrf` é a meta csrf-token; `xsrf`, o cookie XSRF-TOKEN decodificado (lerXsrf).
+export async function resolverAcesso({ fetch = globalThis.fetch, agora = Date.now(), csrf, xsrf } = {}) {
     // Passado adiante e sempre chamado como função solta: chamado como método
     // de outro objeto, o fetch do navegador dispara "Illegal invocation".
     const buscar = fetch;
@@ -169,5 +195,5 @@ export async function resolverAcesso({ fetch = globalThis.fetch, agora = Date.no
         }
     }
 
-    return liberarPelaSessao(buscar, csrf, agora);
+    return liberarPelaSessao(buscar, csrf, xsrf, agora);
 }

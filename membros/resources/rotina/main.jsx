@@ -1,3 +1,6 @@
 import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
 
-createRoot(document.getElementById('rotina')).render(<p>Rotina do Dia</p>);
+const csrf = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ?? '';
+
+createRoot(document.getElementById('rotina')).render(<App csrf={csrf} />);

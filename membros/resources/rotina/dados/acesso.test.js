@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { describe, it, expect, beforeEach } from 'vitest';
 import { NOME_BANCO, fechar, gravarMeta, lerMeta } from './banco.js';
-import { DIAS_SEM_REDE, gravarEntrada, resolverAcesso } from './acesso.js';
+import { DIAS_SEM_REDE, gravarEntrada, lerXsrf, resolverAcesso } from './acesso.js';
 
 const DIA = 24 * 60 * 60 * 1000;
 const AGORA = Date.parse('2026-12-10T12:00:00.000Z');
@@ -330,5 +330,45 @@ describe('sem token', () => {
         await resolverAcesso({ fetch, agora: AGORA });
 
         expect(fetch.chamadas[0].opcoes.headers).toEqual({ Accept: 'application/json' });
+    });
+
+    it('com cookie XSRF: manda só o X-XSRF-TOKEN, mesmo com a meta', async () => {
+        const fetch = fetchFalso(json(201, { token: 'tok-novo', nome: 'Ana', email: 'ana@exemplo.com' }));
+
+        const r = await resolverAcesso({ fetch, agora: AGORA, csrf: 'meta-velha', xsrf: 'cookie=novo' });
+
+        expect(r.estado).toBe('liberado');
+        expect(fetch.chamadas[0].opcoes.headers).toEqual({
+            Accept: 'application/json',
+            'X-XSRF-TOKEN': 'cookie=novo',
+        });
+    });
+
+    it('com token guardado e válido: não faz o POST nem usa o XSRF', async () => {
+        await aparelhoGuardado({ diasDesdeChecagem: 2 });
+        const fetch = fetchFalso(json(200, { nome: 'Ana', email: 'ana@exemplo.com', liberado: true }));
+
+        await resolverAcesso({ fetch, agora: AGORA, xsrf: 'cookie' });
+
+        expect(fetch.chamadas).toHaveLength(1);
+        expect(fetch.chamadas[0].opcoes.headers['X-XSRF-TOKEN']).toBeUndefined();
+    });
+});
+
+describe('lerXsrf', () => {
+    it('acha e decodifica o cookie entre outros', () => {
+        expect(lerXsrf('a=1; XSRF-TOKEN=eyJpdiI6%3D%3D; laravel_session=xyz')).toBe('eyJpdiI6==');
+    });
+
+    it('sem o cookie, vazio ou mal formado: null', () => {
+        expect(lerXsrf('laravel_session=xyz')).toBeNull();
+        expect(lerXsrf('')).toBeNull();
+        expect(lerXsrf(undefined)).toBeNull();
+        expect(lerXsrf('XSRF-TOKEN=')).toBeNull();
+        expect(lerXsrf('XSRF-TOKEN=%E0%A4%A')).toBeNull();
+    });
+
+    it('não confunde com cookie de nome parecido', () => {
+        expect(lerXsrf('OUTRO-XSRF-TOKEN=abc')).toBeNull();
     });
 });
