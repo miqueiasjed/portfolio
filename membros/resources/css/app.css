@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+
+@source '../js/**/*.jsx';
+@source '../views/**/*.blade.php';
+
+@theme {
+    --font-sans: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+    --color-grafite: #1C1D20;
+    --color-papel: #F2EFE9;
+    --color-creme: #F5F2EC;
+    --color-tinta: #1C1E24;
+    --color-apoio: #92959D;
+    --color-filete: #3E4046;
+    --color-filete-claro: #CECAC1;
+    --color-caneta: #CE4C3C;
+    --color-caneta-creme: #B8433A;
+}
+
+body {
+    @apply bg-creme text-tinta font-sans font-light antialiased;
+}
+
+.rotulo {
+    @apply text-xs tracking-[0.28em] uppercase text-apoio;
+}
+
+.btn {
+    @apply inline-block bg-grafite text-papel px-7 py-4 font-medium no-underline transition hover:-translate-y-0.5;
+}
+
+.btn-claro {
+    @apply inline-block bg-papel text-grafite px-7 py-4 font-medium no-underline transition hover:-translate-y-0.5;
+}
