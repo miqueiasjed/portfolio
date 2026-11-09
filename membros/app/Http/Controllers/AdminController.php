@@ -92,6 +92,14 @@ class AdminController extends Controller
         return back()->with('aviso', 'Acesso liberado e link enviado para '.$dados['email'].'.');
     }
 
+    public function reenviar(Purchase $purchase, Acesso $acesso)
+    {
+        abort_unless($purchase->estaPaga() && $purchase->user, 422);
+        $acesso->reenviarAcesso($purchase);
+
+        return back()->with('aviso', 'Link de acesso reenviado para '.$purchase->email.'.');
+    }
+
     /** Reembolso: tira o acesso daquela compra. */
     public function revogar(Purchase $purchase)
     {

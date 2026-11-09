@@ -36,6 +36,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::middleware(SomenteAdmin::class)->group(function () {
         Route::get('/', [AdminController::class, 'painel'])->name('painel');
         Route::post('/liberar', [AdminController::class, 'liberar'])->name('liberar');
+        Route::post('/compras/{purchase}/reenviar', [AdminController::class, 'reenviar'])->name('reenviar');
         Route::post('/compras/{purchase}/revogar', [AdminController::class, 'revogar'])->name('revogar');
         Route::post('/sair', [AdminController::class, 'sair'])->name('sair');
     });

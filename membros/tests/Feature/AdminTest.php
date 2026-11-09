@@ -59,6 +59,9 @@ class AdminTest extends TestCase
         $this->assertTrue($compra->estaPaga());
         Mail::assertSent(AcessoLiberado::class);
 
+        $this->post("/admin/compras/{$compra->id}/reenviar")->assertRedirect();
+        Mail::assertSent(AcessoLiberado::class, 2);
+
         $this->post("/admin/compras/{$compra->id}/revogar")->assertRedirect();
         $this->assertSame(Purchase::REEMBOLSADA, $compra->fresh()->status);
     }

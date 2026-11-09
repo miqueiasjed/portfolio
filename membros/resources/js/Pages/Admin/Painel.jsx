@@ -109,7 +109,10 @@ export default function Painel({ resumo, compras, produtos, busca }) {
                                             <td className="px-4 py-3 text-apoio">{c.origem ?? '—'}</td>
                                             <td className="px-4 py-3 text-right">
                                                 {c.status === 'paid' && (
-                                                    <button onClick={() => revogar(c)} className="text-caneta-creme underline underline-offset-4 cursor-pointer">Revogar</button>
+                                                    <span className="inline-flex gap-4 whitespace-nowrap">
+                                                        <button onClick={() => router.post(`/admin/compras/${c.id}/reenviar`, {}, { preserveScroll: true })} className="underline underline-offset-4 decoration-filete-claro cursor-pointer">Reenviar link</button>
+                                                        <button onClick={() => revogar(c)} className="text-caneta-creme underline underline-offset-4 cursor-pointer">Revogar</button>
+                                                    </span>
                                                 )}
                                             </td>
                                         </tr>

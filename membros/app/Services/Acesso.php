@@ -47,6 +47,13 @@ class Acesso
         return $usuario;
     }
 
+    /** Reenvia o e-mail de acesso de uma compra paga (link novo, 7 dias). */
+    public function reenviarAcesso(Purchase $compra): void
+    {
+        $token = LoginToken::emitir($compra->user, config('membros.link_compra_minutos'));
+        Mail::to($compra->user->email)->send(new AcessoLiberado($compra->loadMissing('product'), $token));
+    }
+
     /** Manda um link de entrada novo para quem já tem cadastro. */
     public function enviarLink(User $usuario): void
     {
