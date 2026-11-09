@@ -10,7 +10,7 @@ const MINIMO_LETRAS = 2;
 export function normalizarTexto(valor) {
     return String(valor ?? '')
         .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '')
+        .replace(/[\u0300-\u036f]/g, '')
         .toLowerCase()
         .replace(/\s+/g, ' ')
         .trim();
