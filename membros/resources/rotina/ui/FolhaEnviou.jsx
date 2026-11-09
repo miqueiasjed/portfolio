@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react';
 import Botao from './Botao.jsx';
 import Folha from './Folha.jsx';
 import {
+    AVISO_MESMO_HORARIO,
     conferirRemarcacao,
     desfazerRemarcacao,
     opcoesDeResultado,
@@ -164,8 +165,10 @@ export default function FolhaEnviou({ item, etapa, pendente, aberta = true, aoEn
     const salvarRemarcacao = (evento) => {
         evento.preventDefault();
         if (emCurso.current) return;
-        const conferido = conferirRemarcacao(remarcacao);
+        // Mesmo dia e hora do item: avisa e fica no passo, sem criar item novo.
+        const conferido = conferirRemarcacao(remarcacao, item);
         setErrosRemarcacao(conferido.erros);
+        setErro(conferido.aviso ?? '');
         if (!conferido.ok) return;
         gravarETerminar(() =>
             responderRemarcou({
@@ -189,6 +192,7 @@ export default function FolhaEnviou({ item, etapa, pendente, aberta = true, aoEn
 
     const mudarRemarcacao = (campo, valor) => {
         setRemarcacao((atual) => ({ ...atual, [campo]: valor }));
+        setErro((atual) => (atual === AVISO_MESMO_HORARIO ? '' : atual));
         setErrosRemarcacao((atual) => (atual[campo] ? { ...atual, [campo]: undefined } : atual));
     };
 

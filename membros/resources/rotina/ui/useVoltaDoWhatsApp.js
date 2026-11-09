@@ -202,9 +202,15 @@ export async function responderSoRespondeu({ toque, agora = agoraIso, marcar = m
     await marcar(toque.id, agora());
 }
 
+// Aviso do "Remarcou" salvo com o mesmo dia e a mesma hora do item.
+export const AVISO_MESMO_HORARIO = 'É o mesmo dia e a mesma hora de antes. Mude um dos dois ou toque em Voltar.';
+
 // Data e hora novas do "Remarcou", com a mesma leitura e as mesmas frases da
 // tela Novo. Devolve `{ ok, erros, data, hora }`; com erro, data e hora vêm null.
-export function conferirRemarcacao({ data, hora } = {}) {
+// `atual` é o item que está sendo remarcado: dia e hora iguais aos dele não
+// passam (o item 01 novo cairia na lista de novo, repetido), e a resposta traz
+// `aviso` com AVISO_MESMO_HORARIO em vez de erro de campo.
+export function conferirRemarcacao({ data, hora } = {}, atual = null) {
     const erros = {};
     const dataTexto = String(data ?? '').trim();
     const horaTexto = String(hora ?? '').trim();
@@ -217,6 +223,9 @@ export function conferirRemarcacao({ data, hora } = {}) {
     else if (horaLida === null) erros.hora = MENSAGENS.horaInvalida;
 
     const ok = Object.keys(erros).length === 0;
+    if (ok && atual && lerData(atual.data) === dataLida && lerHora(atual.hora) === horaLida) {
+        return { ok: false, erros, aviso: AVISO_MESMO_HORARIO, data: null, hora: null };
+    }
     return { ok, erros, data: ok ? dataLida : null, hora: ok ? horaLida : null };
 }
 

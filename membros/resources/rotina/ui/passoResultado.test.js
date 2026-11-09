@@ -7,6 +7,7 @@ import { listaDeHoje } from '../regras/hoje.js';
 import { somarDias } from '../regras/datas.js';
 import { MENSAGENS } from '../regras/campos.js';
 import {
+    AVISO_MESMO_HORARIO,
     conferirRemarcacao,
     desfazerRemarcacao,
     opcoesDeResultado,
@@ -75,6 +76,34 @@ describe('conferirRemarcacao', () => {
         expect(ruim.ok).toBe(false);
         expect(ruim.data).toBeNull();
         expect(ruim.erros).toEqual({ data: MENSAGENS.dataInvalida, hora: MENSAGENS.horaInvalida });
+    });
+
+    it('mesmo dia e mesma hora do item não passam e trazem o aviso', () => {
+        const atual = { data: '2026-12-20', hora: '09:30' };
+        expect(conferirRemarcacao({ data: '2026-12-20', hora: '09:30' }, atual)).toEqual({
+            ok: false,
+            erros: {},
+            aviso: AVISO_MESMO_HORARIO,
+            data: null,
+            hora: null,
+        });
+        // Hora escrita de outro jeito ainda é a mesma.
+        expect(conferirRemarcacao({ data: '20/12/2026', hora: '9h30' }, atual).aviso).toBe(AVISO_MESMO_HORARIO);
+    });
+
+    it('mudar só o dia ou só a hora passa', () => {
+        const atual = { data: '2026-12-20', hora: '09:30' };
+        expect(conferirRemarcacao({ data: '2026-12-21', hora: '09:30' }, atual).ok).toBe(true);
+        expect(conferirRemarcacao({ data: '2026-12-20', hora: '10:00' }, atual).ok).toBe(true);
+        // Item sem hora gravada: qualquer hora nova é mudança.
+        expect(conferirRemarcacao({ data: '2026-12-20', hora: '09:30' }, { data: '2026-12-20', hora: '' }).ok).toBe(true);
+    });
+
+    it('erro de campo vem antes do aviso de mesmo horário', () => {
+        const conferido = conferirRemarcacao({ data: '', hora: '09:30' }, { data: '', hora: '09:30' });
+        expect(conferido.ok).toBe(false);
+        expect(conferido.aviso).toBeUndefined();
+        expect(conferido.erros.data).toBe(MENSAGENS.dataVazia['01']);
     });
 });
 
