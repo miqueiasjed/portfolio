@@ -1,6 +1,8 @@
 // Moldura da ferramenta: área de conteúdo e barra inferior fixa com Hoje, Clientes e Ajustes.
 // Sem acento vermelho aqui: ele fica livre para as telas.
 
+import AvisoInstalar from './AvisoInstalar.jsx';
+
 const ITENS = [
     { chave: 'hoje', rotulo: 'Hoje', href: '#/hoje', telas: ['hoje', 'mensagem'] },
     { chave: 'clientes', rotulo: 'Clientes', href: '#/clientes', telas: ['clientes', 'cliente', 'novo'] },
@@ -13,13 +15,15 @@ export default function Moldura({ rota, children }) {
 
     return (
         <div className="min-h-dvh bg-creme text-tinta">
-            <main className="mx-auto w-full max-w-xl px-4 pt-4 pb-[calc(4.5rem+env(safe-area-inset-bottom))]">
+            <AvisoInstalar />
+
+            <main className="moldura-conteudo mx-auto w-full max-w-xl px-4 pt-4 pb-[calc(4.5rem+env(safe-area-inset-bottom))]">
                 {children}
             </main>
 
             <nav
                 aria-label="Principal"
-                className="fixed inset-x-0 bottom-0 border-t border-filete bg-grafite pb-[env(safe-area-inset-bottom)]"
+                className="fundo-escuro fixed inset-x-0 bottom-0 border-t border-filete bg-grafite pb-[env(safe-area-inset-bottom)]"
             >
                 <ul className="mx-auto flex max-w-xl">
                     {ITENS.map((item) => {

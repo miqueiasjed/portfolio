@@ -5,6 +5,7 @@ import { lerXsrf, resolverAcesso } from './dados/acesso.js';
 import { useRota } from './rotas.js';
 import Moldura from './ui/Moldura.jsx';
 import Acesso from './telas/Acesso.jsx';
+import AvisoVersao from './ui/AvisoVersao.jsx';
 
 const CARREGANDO = { estado: 'carregando', usuario: null };
 
@@ -87,6 +88,12 @@ export default function App({ csrf }) {
         tela = <Acesso estado={acesso.estado} aoTentarDeNovo={tentarDeNovo} aoLiberar={liberar} />;
     }
 
-    // Avisos que valem para qualquer estado (versão nova, iPhone) entram ao lado de `tela`.
-    return tela;
+    // O aviso de versão nova vale para qualquer estado e fica na mesma posição
+    // da árvore, para o registro do service worker não recomeçar a cada troca.
+    return (
+        <>
+            {tela}
+            <AvisoVersao acimaDaBarra={acesso.estado === 'liberado'} />
+        </>
+    );
 }

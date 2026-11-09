@@ -17,6 +17,7 @@
 }
 
 body {
+    --foco: var(--color-tinta);
     @apply bg-creme text-tinta font-sans font-light antialiased;
     -webkit-tap-highlight-color: transparent;
 }
@@ -26,6 +27,21 @@ h1, h2, h3, h4 {
 }
 
 :focus-visible {
-    outline: 2px solid var(--color-caneta-creme);
+    /* O contorno fica fora do elemento, sobre o fundo da área: a cor vem de
+       --foco, que cada área escura troca para papel. O vermelho continua
+       reservado para o único acento da tela. */
+    outline: 2px solid var(--foco);
     outline-offset: 2px;
+}
+
+/* Área de fundo grafite: contorno de foco claro. */
+.fundo-escuro {
+    --foco: var(--color-papel);
+}
+
+/* Com o aviso de versão nova acima da barra (AvisoVersao marca o <html>), o
+   fim do conteúdo sobe mais 53 px, a altura da faixa: 44 do botão, 8 de
+   respiro e 1 do filete. Fora de camada, vence o pb-[...] da moldura. */
+[data-aviso-versao] .moldura-conteudo {
+    padding-bottom: calc(4.5rem + 53px + env(safe-area-inset-bottom));
 }
