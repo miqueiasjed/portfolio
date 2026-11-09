@@ -7,6 +7,7 @@
 import { useRef, useState } from 'react';
 import { lerPlanilha, modeloPlanilha } from '../regras/planilha.js';
 import { importarPendencias } from '../dados/pendencias.js';
+import { baixarArquivo } from './baixarArquivo.js';
 
 const NOME_MODELO = 'modelo-rotina-do-dia.csv';
 
@@ -48,18 +49,9 @@ function deQuemE(campos = {}) {
         .join(', ');
 }
 
-// Baixa o modelo de planilha. Local até a task 4.12 criar ui/baixarArquivo.js.
+// Baixa o modelo de planilha, gerado aqui no aparelho.
 function baixarModelo() {
-    const arquivo = new Blob([modeloPlanilha()], { type: 'text/csv;charset=utf-8' });
-    const endereco = URL.createObjectURL(arquivo);
-    const link = document.createElement('a');
-    link.href = endereco;
-    link.download = NOME_MODELO;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    // Safari no iPhone ainda lê o endereço logo depois do clique.
-    setTimeout(() => URL.revokeObjectURL(endereco), 1000);
+    baixarArquivo(NOME_MODELO, modeloPlanilha(), 'text/csv;charset=utf-8');
 }
 
 // Props:

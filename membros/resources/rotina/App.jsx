@@ -9,6 +9,7 @@ import OutraConta from './telas/OutraConta.jsx';
 import Novo from './telas/Novo.jsx';
 import Clientes from './telas/Clientes.jsx';
 import Cliente from './telas/Cliente.jsx';
+import Ajustes from './telas/Ajustes.jsx';
 import AvisoVersao from './ui/AvisoVersao.jsx';
 
 const CARREGANDO = { estado: 'carregando', usuario: null };
@@ -52,6 +53,8 @@ function Ferramenta() {
                 <Clientes />
             ) : rota.tela === 'cliente' ? (
                 <Cliente id={rota.params.id} />
+            ) : rota.tela === 'ajustes' ? (
+                <Ajustes />
             ) : (
                 <EmBreve nome={NOMES[rota.tela] ?? NOMES.hoje} />
             )}
