@@ -97,7 +97,7 @@ function conferirEdicao(processo, rascunho) {
 function Campo({ id, rotulo, erro, ...resto }) {
     return (
         <div className="flex flex-col gap-1">
-            <label htmlFor={id} className="text-sm text-apoio">
+            <label htmlFor={id} className="text-sm text-tinta">
                 {rotulo}
             </label>
             <input
@@ -192,7 +192,7 @@ export default function PendenciaCartao({ item, toques = [], aoMudar }) {
                 <h3 id={`${prefixo}-titulo`} className="text-base font-medium">
                     {PROCESSOS[processo] ?? processo}
                 </h3>
-                <span className="text-sm text-apoio">{SITUACOES[estado] ?? estado}</span>
+                <span className="text-sm text-tinta">{SITUACOES[estado] ?? estado}</span>
             </header>
 
             {modo === 'editar' ? (
@@ -255,30 +255,30 @@ export default function PendenciaCartao({ item, toques = [], aoMudar }) {
             ) : (
                 <>
                     <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-base">
-                        <dt className="text-apoio">{NOME_DATA[processo] ?? 'Data'}</dt>
+                        <dt className="text-tinta">{NOME_DATA[processo] ?? 'Data'}</dt>
                         <dd>{`${dataTexto}${horaTexto}`}</dd>
                         {valorTexto && (
                             <>
-                                <dt className="text-apoio">Valor</dt>
+                                <dt className="text-tinta">Valor</dt>
                                 <dd>{valorTexto}</dd>
                             </>
                         )}
                         {item.servico && (
                             <>
-                                <dt className="text-apoio">Serviço</dt>
+                                <dt className="text-tinta">Serviço</dt>
                                 <dd className="wrap-anywhere">{item.servico}</dd>
                             </>
                         )}
                         {item.status === 'resolvido' && item.resultado && (
                             <>
-                                <dt className="text-apoio">Resultado</dt>
+                                <dt className="text-tinta">Resultado</dt>
                                 <dd className="font-medium">{NOMES_RESULTADOS[item.resultado] ?? item.resultado}</dd>
                             </>
                         )}
                     </dl>
 
                     <div className="mt-4 border-t border-filete-claro pt-3">
-                        <h4 className="text-sm text-apoio">Mensagens</h4>
+                        <h4 className="text-sm text-tinta">Mensagens</h4>
                         {listaToques.length === 0 ? (
                             <p className="mt-1 text-base">Nenhuma mensagem enviada ainda.</p>
                         ) : (
@@ -298,7 +298,7 @@ export default function PendenciaCartao({ item, toques = [], aoMudar }) {
 
                     {aberto && modo === 'resolver' && (
                         <div className="mt-4 flex flex-col gap-2">
-                            <p className="text-sm text-apoio">Como ficou?</p>
+                            <p className="text-sm text-tinta">Como ficou?</p>
                             <div className="flex flex-wrap gap-2">
                                 {(RESULTADOS[processo] ?? []).map((resultado) => (
                                     <button

@@ -156,7 +156,7 @@ export default function ImportarPlanilha({ aoTerminar, aoFechar }) {
                             Um cliente por linha, com o cabeçalho na primeira: nome, whatsapp, processo, data, hora,
                             valor e servico.
                         </p>
-                        <p className="text-sm text-apoio">
+                        <p className="text-sm text-tinta">
                             Hora vale para confirmar horário e valor para cobrança. No Excel ou no Google Planilhas,
                             salve como CSV. O arquivo é lido aqui e os dados ficam só neste aparelho.
                         </p>
@@ -188,7 +188,7 @@ export default function ImportarPlanilha({ aoTerminar, aoFechar }) {
                                 : contar(planilha.validas, 'linha pronta para importar', 'linhas prontas para importar')}
                         </p>
                         {invalidas.length > 0 && (
-                            <p className="text-apoio">
+                            <p className="text-tinta">
                                 {invalidas.length === 1
                                     ? '1 linha com erro fica de fora:'
                                     : `${invalidas.length.toLocaleString('pt-BR')} linhas com erro ficam de fora:`}
@@ -212,7 +212,7 @@ export default function ImportarPlanilha({ aoTerminar, aoFechar }) {
                                             <span className="font-medium">Linha {linha.numero}:</span>{' '}
                                             {linha.erros.join(' ')}
                                         </p>
-                                        {quem && <p className="text-sm text-apoio wrap-anywhere">{quem}</p>}
+                                        {quem && <p className="text-sm text-tinta wrap-anywhere">{quem}</p>}
                                     </li>
                                 );
                             })}
