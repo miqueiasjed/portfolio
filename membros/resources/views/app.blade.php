@@ -14,6 +14,7 @@
     </x-inertia::head>
 </head>
 <body>
+    <noscript><p style="padding:24px;font-family:sans-serif">Ative o JavaScript para acessar a área de membros.</p></noscript>
     <x-inertia::app />
 </body>
 </html>
