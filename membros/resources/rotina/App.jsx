@@ -2,7 +2,10 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { lerXsrf, resolverAcesso, voltarDaOutraConta } from './dados/acesso.js';
-import { useRota } from './rotas.js';
+import { irPara, lerRota, useRota } from './rotas.js';
+import { pegar } from './dados/banco.js';
+import { lerPendente, limparPendente } from './dados/envioPendente.js';
+import { decidirPendenteAoAbrir } from './ui/mensagem.js';
 import Moldura from './ui/Moldura.jsx';
 import Acesso from './telas/Acesso.jsx';
 import OutraConta from './telas/OutraConta.jsx';
@@ -11,6 +14,7 @@ import Novo from './telas/Novo.jsx';
 import Clientes from './telas/Clientes.jsx';
 import Cliente from './telas/Cliente.jsx';
 import Ajustes from './telas/Ajustes.jsx';
+import Mensagem from './telas/Mensagem.jsx';
 import AvisoVersao from './ui/AvisoVersao.jsx';
 
 const CARREGANDO = { estado: 'carregando', usuario: null };
@@ -42,9 +46,32 @@ function Carregando() {
     );
 }
 
+// Envio pendente ao abrir a ferramenta. No iPhone, a PWA morta pelo sistema
+// reabre em `#/hoje` e a pergunta "Enviou?" nunca apareceria: com o item ainda
+// aberto, leva para a mensagem dele, onde a folha abre sozinha. Item que já
+// não existe ou não está aberto tem o pendente limpo e a tela segue normal.
+async function levarAoPendente() {
+    const hashAoAbrir = window.location.hash;
+    const pendente = await lerPendente(new Date());
+    if (!pendente) return;
+    const item = await pegar('itens', pendente.item_id);
+    const decisao = decidirPendenteAoAbrir({ pendente, item, rotaAtual: lerRota(hashAoAbrir) });
+    if (decisao.acao === 'limpar') {
+        await limparPendente();
+    } else if (decisao.acao === 'ir' && window.location.hash === hashAoAbrir) {
+        // Só se o dono não trocou de tela enquanto a leitura corria.
+        irPara(decisao.rota);
+    }
+}
+
 // Ferramenta liberada: moldura com a tela da rota atual.
 function Ferramenta() {
     const rota = useRota();
+
+    // Uma vez, ao montar. Falha de leitura não atrapalha a tela.
+    useEffect(() => {
+        levarAoPendente().catch(() => {});
+    }, []);
 
     return (
         <Moldura rota={rota}>
@@ -58,6 +85,12 @@ function Ferramenta() {
                 <Cliente id={rota.params.id} />
             ) : rota.tela === 'ajustes' ? (
                 <Ajustes />
+            ) : rota.tela === 'mensagem' ? (
+                <Mensagem
+                    key={`${rota.params.itemId}|${rota.params.etapa}`}
+                    itemId={rota.params.itemId}
+                    etapa={rota.params.etapa}
+                />
             ) : (
                 <EmBreve nome={NOMES[rota.tela] ?? NOMES.hoje} />
             )}

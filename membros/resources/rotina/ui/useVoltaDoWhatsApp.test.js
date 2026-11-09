@@ -155,6 +155,20 @@ describe('criarVoltaDoWhatsApp', () => {
         expect(await terceira).toBe(true);
     });
 
+    it('folha aberta pela memória da tela: leitura em curso que termina depois do encerrar não reabre', async () => {
+        const armazem = armazemLento({ item_id: 'i1', etapa: 2, aberto_em: ABERTO });
+        const limpar = vi.fn(async () => {
+            throw new Error('falhou');
+        });
+        const volta = criarVoltaDoWhatsApp({ itemId: 'i1', etapa: 2, ler: armazem.ler, limpar });
+
+        // O hook ainda não leu nada; a tela abriu a folha com o pendente da memória.
+        const emCurso = volta.checar();
+        await volta.encerrar(ABERTO);
+        armazem.soltar();
+        expect(await emCurso).toBe(false);
+    });
+
     it('a leitura que começa durante a limpeza espera por ela', async () => {
         let terminarLimpeza;
         let valor = { item_id: 'i1', etapa: 2, aberto_em: ABERTO };

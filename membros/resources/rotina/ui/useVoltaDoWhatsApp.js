@@ -32,7 +32,7 @@ export function criarVoltaDoWhatsApp({
 }) {
     let perguntar = false;
     let pendente = null; // último pendente lido deste item e etapa, com aberto_em
-    let respondido = null; // aberto_em do pendente já respondido nesta sessão
+    const respondidos = new Set(); // aberto_em dos pendentes já respondidos nesta sessão
     let leitura = null; // checagem em curso, dividida entre chamadas juntas
     let limpeza = null; // limpeza em curso: a próxima leitura espera por ela
     let ativo = true;
@@ -49,7 +49,7 @@ export function criarVoltaDoWhatsApp({
             const lido = await ler(agora());
             // Enquanto a leitura corria, alguém pode ter aberto, respondido ou desmontado.
             if (!ativo || perguntar) return perguntar;
-            if (!deste(lido) || lido.aberto_em === respondido) return false;
+            if (!deste(lido) || respondidos.has(lido.aberto_em)) return false;
             pendente = lido;
             perguntar = true;
             emitir();
@@ -85,8 +85,11 @@ export function criarVoltaDoWhatsApp({
 
     // Fecha a pergunta e limpa o pendente. O mesmo pendente não reabre depois,
     // nem se uma leitura antiga terminar agora ou se a limpeza falhar.
-    function encerrar() {
-        if (pendente) respondido = pendente.aberto_em;
+    // `abertoEm`: o da folha aberta pela memória da tela ("Já voltei"), que o
+    // hook talvez ainda não tenha lido; também fica marcado como respondido.
+    function encerrar(abertoEm) {
+        if (pendente) respondidos.add(pendente.aberto_em);
+        if (abertoEm) respondidos.add(abertoEm);
         if (perguntar) {
             perguntar = false;
             emitir();
@@ -293,7 +296,7 @@ export function useVoltaDoWhatsApp({ itemId, etapa }) {
     }, [chave, itemId, etapa]);
 
     const abrir = useCallback(() => controle.current?.abrir() ?? Promise.resolve(false), []);
-    const encerrar = useCallback(() => controle.current?.encerrar() ?? Promise.resolve(), []);
+    const encerrar = useCallback((abertoEm) => controle.current?.encerrar(abertoEm) ?? Promise.resolve(), []);
 
     // Estado de outro item ou etapa (antes de o efeito trocar o controle) não vale.
     const vale = estado.chave === chave;
