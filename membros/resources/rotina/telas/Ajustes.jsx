@@ -6,17 +6,12 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { lerAjustes, salvarAjustes } from '../dados/ajustes.js';
-import { formularioDosAjustes, validarPrazos } from '../regras/ajustes.js';
+import { SEGMENTOS, formularioDosAjustes, validarPrazos } from '../regras/ajustes.js';
 import Botao from '../ui/Botao.jsx';
 import Campo from '../ui/Campo.jsx';
 import CopiaDeSeguranca from '../ui/CopiaDeSeguranca.jsx';
 
 const URL_DA_AULA = '/produtos/rotina-do-dia';
-
-const SEGMENTOS = [
-    { valor: 'clinica', rotulo: 'Clínica, consultório ou estética' },
-    { valor: 'servicos', rotulo: 'Prestador de serviço' },
-];
 
 const PRAZOS = [
     {

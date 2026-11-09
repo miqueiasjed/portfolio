@@ -5,24 +5,34 @@
 //
 // A lista é lida de novo a cada montagem: o App desmonta esta tela ao abrir a
 // Mensagem, então a volta depois de "Enviei" já não traz aquele item.
+//
+// Aparelho sem ajustes gravados e sem clientes mostra o primeiro uso no lugar
+// da tela (`ehPrimeiroUso`).
 
 import { useEffect, useState } from 'react';
-import { listar, listarPorIndice } from '../dados/banco.js';
+import { listar, listarPorIndice, pegar } from '../dados/banco.js';
 import { lerAjustes } from '../dados/ajustes.js';
 import { listaDeHoje } from '../regras/hoje.js';
 import { hojeEmFortaleza } from '../regras/datas.js';
+import { ehPrimeiroUso } from '../regras/primeiroUso.js';
 import { primeiroNome } from '../regras/preencher.js';
 import { agruparPorProcesso, dataDoTopo, linhaDeApoio, rotaDaMensagem } from '../ui/listaDoDia.js';
 import Botao from '../ui/Botao.jsx';
+import PrimeiroUso from './PrimeiroUso.jsx';
 
 async function lerLista(hoje) {
-    const [itens, toques, clientes, ajustes] = await Promise.all([
+    const [itens, toques, clientes, ajustes, ajustesSalvos] = await Promise.all([
         listarPorIndice('itens', 'status', 'aberto'),
         listar('toques'),
         listar('clientes'),
         lerAjustes(),
+        // `lerAjustes` sempre devolve o padrão; o registro cru diz se já há ajustes.
+        pegar('ajustes', 'geral'),
     ]);
-    return listaDeHoje({ itens, toques, clientes, hoje, ajustes });
+    return {
+        lista: listaDeHoje({ itens, toques, clientes, hoje, ajustes }),
+        primeiroUso: ehPrimeiroUso(ajustesSalvos, clientes),
+    };
 }
 
 function Linha({ entrada, hoje, urgente }) {
@@ -50,6 +60,7 @@ export default function Hoje() {
     const [hoje] = useState(() => hojeEmFortaleza());
     // null enquanto a leitura não volta: nada de vazio antes dos dados.
     const [lista, setLista] = useState(null);
+    const [primeiroUso, setPrimeiroUso] = useState(false);
     const [erro, setErro] = useState(false);
     const [versao, setVersao] = useState(0);
 
@@ -58,7 +69,8 @@ export default function Hoje() {
         lerLista(hoje)
             .then((achados) => {
                 if (!ativo) return;
-                setLista(achados);
+                setLista(achados.lista);
+                setPrimeiroUso(achados.primeiroUso);
                 setErro(false);
             })
             .catch(() => {
@@ -73,6 +85,17 @@ export default function Hoje() {
         setErro(false);
         setLista(null);
         setVersao((n) => n + 1);
+    }
+
+    // "Fazer isso depois": os ajustes já foram gravados no passo 2, então a
+    // releitura cai na Hoje normal.
+    function sairDoPrimeiroUso() {
+        setPrimeiroUso(false);
+        tentarDeNovo();
+    }
+
+    if (primeiroUso && !erro) {
+        return <PrimeiroUso aoTerminar={sairDoPrimeiroUso} />;
     }
 
     let conteudo = null;

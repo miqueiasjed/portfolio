@@ -4,6 +4,12 @@
 
 import { PRAZOS_PADRAO } from './hoje.js';
 
+// Tipos de negócio, na ordem em que aparecem (Ajustes e primeiro uso).
+export const SEGMENTOS = Object.freeze([
+    Object.freeze({ valor: 'clinica', rotulo: 'Clínica, consultório ou estética' }),
+    Object.freeze({ valor: 'servicos', rotulo: 'Prestador de serviço' }),
+]);
+
 export const PRAZO_MINIMO = 1;
 export const PRAZO_MAXIMO = 60;
 
