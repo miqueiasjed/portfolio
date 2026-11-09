@@ -45,6 +45,7 @@ Route::prefix('rotina')->name('rotina.')->group(function () {
     // Casca e manifest: públicos, sem dado de usuário. O acesso vem depois, pelo token do aparelho.
     Route::get('/', [RotinaCascaController::class, 'casca'])->name('casca');
     Route::get('/manifest.webmanifest', [RotinaCascaController::class, 'manifest'])->name('manifest');
+    Route::get('/sw.js', [RotinaCascaController::class, 'sw'])->name('sw');
     Route::get('/entrar', [RotinaController::class, 'entrar'])->middleware('auth')->name('entrar');
     // Com usuário na request, o throttle conta pelo id dele. O prefixo separa
     // o limite de cada rota; sem ele, todas somariam no mesmo contador.
