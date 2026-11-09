@@ -1,5 +1,5 @@
 // Tela Ajustes (`#/ajustes`): o dono define o tipo de negócio, o nome, a
-// assinatura, a chave Pix, os prazos de cada lembrete e o texto preferido.
+// assinatura, a chave Pix, os prazos de cada retorno e lembrete e o texto preferido.
 // Cada campo grava ao sair dele (ou ao escolher, no select e no texto
 // preferido), sem botão Salvar, e a Mensagem relê os ajustes ao abrir. Embaixo,
 // o link da aula e a cópia dos dados. Fundo creme, sem acento vermelho.
@@ -10,6 +10,7 @@ import { SEGMENTOS, formularioDosAjustes, validarPrazos } from '../regras/ajuste
 import Botao from '../ui/Botao.jsx';
 import Campo from '../ui/Campo.jsx';
 import CopiaDeSeguranca from '../ui/CopiaDeSeguranca.jsx';
+import { rotuloDoPrazo } from '../ui/rotulos.js';
 
 const URL_DA_AULA = '/produtos/rotina-do-dia';
 
@@ -262,7 +263,7 @@ export default function Ajustes() {
                                         <div key={chave}>
                                             <Campo
                                                 id={`ajustes-${grupo}-${indice}`}
-                                                rotulo={`${indice + 1}º lembrete após quantos dias`}
+                                                rotulo={rotuloDoPrazo(grupo, indice)}
                                                 inputMode="numeric"
                                                 autoComplete="off"
                                                 enterKeyHint="done"

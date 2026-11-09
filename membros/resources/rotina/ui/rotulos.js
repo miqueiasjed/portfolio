@@ -16,6 +16,21 @@ export const ETAPAS = Object.freeze({
     d15: '3º lembrete',
 });
 
+// Etapas de cada grupo de prazos dos Ajustes, na ordem dos campos.
+const ETAPAS_DOS_PRAZOS = Object.freeze({
+    orcamento: Object.freeze(['d3', 'd7']),
+    cobranca: Object.freeze(['d1', 'd5', 'd15']),
+});
+
+// Rótulo do campo de prazo nos Ajustes, com o mesmo nome de etapa da
+// Mensagem e do Cliente: "1º retorno após quantos dias" no orçamento,
+// "1º lembrete após quantos dias" na cobrança.
+export function rotuloDoPrazo(grupo, indice) {
+    const etapa = ETAPAS_DOS_PRAZOS[grupo]?.[indice];
+    const nome = etapa ? ETAPAS[etapa] : `${indice + 1}º lembrete`;
+    return `${nome} após quantos dias`;
+}
+
 export const RESULTADOS = Object.freeze({
     confirmou: 'Confirmou',
     remarcou: 'Remarcou',
