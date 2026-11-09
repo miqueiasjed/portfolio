@@ -1,0 +1,304 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rotina do Dia · A lista de hoje, pronta para clicar</title><meta name="description" content="Quem confirmar, quem cobrar, quem chamar de volta. A ferramenta monta a lista e escreve a mensagem. Você aperta enviar. R$ 147 até 22/12.">
+<meta property="og:type" content="website"><meta property="og:url" content="https://miqueias.ia.br/rotina-do-dia/">
+<meta property="og:title" content="Rotina do Dia, por Miquéias Mesquita"><meta property="og:description" content="A lista de quem confirmar, cobrar e chamar de volta hoje, com a mensagem pronta. Não mexe no seu número. Preço de fundação até 22/12.">
+<!-- trocar og:image quando houver arte 1200x630 -->
+<meta property="og:image" content="https://miqueias.ia.br/foto.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1C1D20;--gt:#F2EFE9;--c:#F5F2EC;--ct:#1C1E24;--cz:#92959D;--fg:#3E4046;--fc:#CECAC1;--r:#CE4C3C;--rc:#B8433A}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Poppins,system-ui,sans-serif;font-weight:300;background:var(--c);color:var(--ct);line-height:1.6;-webkit-font-smoothing:antialiased}
+b,strong,h1,h2,h3{font-weight:500}
+.w{max-width:1040px;margin:0 auto;padding:0 24px}
+section{padding:96px 0}
+.dark{background:var(--g);color:var(--gt)}
+.lbl{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:var(--cz);margin-bottom:20px}
+h1{font-size:clamp(40px,7vw,76px);line-height:1.06;letter-spacing:-.015em}
+h2{font-size:clamp(28px,4vw,44px);line-height:1.15;letter-spacing:-.01em;margin-bottom:24px;max-width:780px}
+.lead{font-size:clamp(17px,2vw,21px);color:var(--cz);max-width:640px}
+.dot{color:var(--r)} .light .dot,section:not(.dark) .dot{color:var(--rc)}
+.btn{display:inline-block;max-width:100%;background:var(--gt);color:var(--g);padding:18px 32px;font-weight:500;font-size:16px;text-decoration:none;letter-spacing:.02em;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+section:not(.dark) .btn{background:var(--g);color:var(--gt)}
+.btn small{font-weight:300;opacity:.7;margin-left:8px}
+.note{font-size:13px;color:var(--cz);margin-top:14px}
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;padding:112px 0 80px}
+.hero>.w{width:100%}
+.hero .top{position:absolute;top:28px;left:0;right:0}
+.hero .top .w{display:flex;justify-content:space-between;gap:16px;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--cz)}
+.hero-g{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(30px,4.6vw,56px);line-height:1.1;margin-bottom:24px}
+.hero .cta{margin-top:32px}
+.video{width:100%;max-width:360px;aspect-ratio:9/16;justify-self:end;border:1px solid var(--fg);background:var(--g);overflow:hidden}
+.video video,.video iframe{display:block;width:100%;height:100%;border:0;background:#000}
+.tela{height:100%;background:var(--c);color:var(--ct);padding:22px 18px;display:flex;flex-direction:column;font-size:13px;line-height:1.4}
+.tela .cab{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--fc)}
+.tela .cab b{font-size:22px}
+.tela .gr{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--cz);margin:16px 0 2px}
+.tela .it{display:flex;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--fc)}
+.tela .it span{color:#55575d;text-align:right}
+.tela .wa{margin-top:auto;background:var(--g);color:var(--gt);text-align:center;padding:14px;font-weight:500}
+.grid{display:grid;gap:1px;background:var(--fc);border:1px solid var(--fc)}
+.dark .grid{background:var(--fg);border-color:var(--fg)}
+.g3{grid-template-columns:repeat(3,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+.cell{background:var(--c);padding:28px}
+.dark .cell{background:var(--g)}
+.cell .n{font-size:13px;letter-spacing:.2em;color:var(--cz);margin-bottom:10px;display:block}
+.cell h3{font-size:18px;line-height:1.3;margin-bottom:8px}
+.cell p{font-size:15px;color:var(--cz)}
+.placa{background:var(--c);color:var(--ct);margin-top:48px}
+.placa table{width:100%;border-collapse:collapse;font-size:16px}
+.placa td{padding:20px 24px;border-bottom:1px solid var(--fc)}
+.placa td:last-child{text-align:right;font-weight:500;white-space:nowrap}
+.placa tr.crit td{color:var(--rc)} .placa tr.crit td:first-child{border-left:3px solid var(--rc)}
+.placa tr.tot td{background:#EDE9E1;font-size:18px}
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:40px}
+.duo ul{list-style:none}
+.duo li{padding:14px 0;border-bottom:1px solid var(--fc);font-size:16px}
+.duo h3{font-size:14px;letter-spacing:.2em;text-transform:uppercase;color:var(--cz);margin-bottom:8px}
+.sobre{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+.sobre p{margin-bottom:16px;font-size:17px}
+.offer{border:1px solid var(--fg);padding:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:center;margin-top:40px}
+.offer ul{list-style:none}
+.offer li{padding:10px 0;border-bottom:1px solid var(--fg);font-size:16px}
+.offer li:before{content:"- ";color:var(--cz)}
+.price{font-size:64px;font-weight:500;line-height:1;margin:8px 0 6px}
+.price span{font-size:22px;vertical-align:top;margin-right:4px}
+details{border-bottom:1px solid var(--fc);padding:22px 0}
+details summary{cursor:pointer;font-weight:500;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+details summary::-webkit-details-marker{display:none}
+details summary:after{content:"+";color:var(--cz)} details[open] summary:after{content:"-"}
+details p{margin-top:12px;color:#55575d;font-size:16px;max-width:760px}
+.fim{text-align:left}
+.fim .achei{font-size:clamp(48px,8vw,96px);font-weight:500;line-height:1;margin-bottom:32px}
+footer{padding:32px 0;border-top:1px solid var(--fg);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--cz)}
+footer .w{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+footer b{color:var(--gt)}
+.sticky{position:fixed;left:0;right:0;bottom:0;background:var(--g);color:var(--gt);padding:12px 16px;display:none;justify-content:space-between;align-items:center;gap:12px;z-index:9;border-top:1px solid var(--fg)}
+.sticky a{background:var(--gt);color:var(--g);padding:12px 18px;min-height:44px;text-decoration:none;font-weight:500;font-size:14px}
+@media (max-width:820px){
+ section{padding:72px 0}
+ .g3,.g2,.duo,.sobre,.offer,.hero-g{grid-template-columns:1fr}
+ .offer{padding:28px}
+ .hero{min-height:0;padding:64px 0 64px}
+ .hero .top{top:22px}
+ .hero .top .w,.hero .lbl{letter-spacing:.16em}
+ .hero h1{margin-bottom:18px}
+ .hero .lead{font-size:16px}
+ .hero .cta{margin-top:24px}
+ .hero-g{gap:48px}
+ .video{justify-self:start}
+ .btn{padding:18px 24px}
+ .sticky{display:flex}
+ body{padding-bottom:84px}
+}
+/* 7.3 */
+.placa th{padding:14px 24px;border-bottom:1px solid var(--fc);text-align:left;font-size:12px;font-weight:300;letter-spacing:.2em;text-transform:uppercase;color:var(--cz)} .placa th:last-child{text-align:right}
+.depois{padding:14px 0;border-bottom:1px solid var(--fc);font-size:16px}
+@media (max-width:520px){
+ .placa table{font-size:15px}
+ .placa td,.placa th{padding:16px 14px}
+ .placa tr.tot td{font-size:16px}
+}
+/* 7.4 */
+.limite{max-width:720px;margin-top:8px}
+.limite p{font-size:clamp(17px,2vw,19px);margin-bottom:16px}
+.limite p:last-child{color:var(--cz);margin-bottom:0}
+/* 7.5 */
+.garantia{margin-top:56px;padding-top:32px;border-top:1px solid var(--fc);max-width:720px}
+.garantia h3{font-size:24px;line-height:1.25;margin-bottom:10px}
+.garantia p{font-size:16px;color:#55575d}
+body{background:var(--g)} section{background:var(--c)}
+</style></head><body>
+<section class="dark hero">
+ <div class="top"><div class="w"><span>Miquéias Mesquita</span><span>Rotina do Dia</span></div></div>
+ <div class="w hero-g">
+  <div>
+   <div class="lbl">Para quem atende pelo WhatsApp</div>
+   <h1>Quem confirmar, quem cobrar, quem chamar de volta. A lista de hoje, pronta para clicar<span class="dot">.</span></h1>
+   <p class="lead">Toda manhã, a Rotina do Dia monta a lista de quem precisa de uma mensagem. O texto já vem escrito, com o nome do cliente, a data e o valor. Um toque abre a conversa no seu WhatsApp.</p>
+   <div class="cta"><a class="btn js-checkout" href="https://membros.miqueias.ia.br/comprar/rotina-do-dia">Quero a Rotina do Dia<small>R$ 147</small></a><p class="note">Preço de fundação até 22/12 · Pagamento único · Acesso na hora · 7 dias de garantia</p></div>
+  </div>
+  <!-- data-video: vazio mostra o quadro; aceita hoje.mp4 (ou .webm) nesta pasta, link do YouTube ou do Vimeo -->
+  <div class="video" data-video="">
+   <div class="tela" role="img" aria-label="Tela Hoje da Rotina do Dia com a lista de confirmações e cobranças do dia.">
+    <div class="cab"><b>Hoje</b><span>15/12</span></div>
+    <div class="gr">Confirmação</div>
+    <div class="it"><b>Ana Paula</b><span>amanhã, 09:00</span></div>
+    <div class="it"><b>Carlos Lima</b><span>amanhã, 14:30</span></div>
+    <div class="it"><b>Juliana Rocha</b><span>amanhã, 16:00</span></div>
+    <div class="gr">Cobrança</div>
+    <div class="it"><b>Marcos Souza</b><span>R$ 180,00 · 5 dias</span></div>
+    <div class="it"><b>Fernanda Alves</b><span>R$ 350,00 · 1 dia</span></div>
+    <div class="gr">Orçamento</div>
+    <div class="it"><b>Roberto Dias</b><span>enviado há 3 dias</span></div>
+    <div class="it"><b>Patrícia Melo</b><span>enviado há 7 dias</span></div>
+    <div class="wa">Abrir no WhatsApp</div>
+   </div>
+  </div>
+ </div>
+</section>
+<section>
+ <div class="w">
+  <div class="lbl">O problema</div>
+  <h2>Toda manhã começa com a mesma pergunta: quem eu tinha que chamar hoje?</h2>
+  <p class="lead">A resposta está espalhada. Um pedaço na agenda, outro no caderno, o resto na sua cabeça. A cliente que não confirmou e faltou. O orçamento que você mandou com cuidado e virou silêncio. A cobrança que ficou para amanhã porque dá vergonha de cobrar. Cada uma parece pequena. Juntas, levam dinheiro todo mês, e quase ninguém faz essa conta.</p>
+ </div>
+</section>
+
+<section style="padding-top:0">
+ <div class="w">
+  <div class="lbl">A conta</div>
+  <h2>Isso custa mais do que parece.</h2>
+  <div class="placa">
+   <table>
+    <tr><th>Onde escapa</th><th>Quanto</th></tr>
+    <tr><td>3 faltas por semana sem confirmação</td><td>R$ 1.800/mês</td></tr>
+    <tr><td>Contatos que esfriam esperando resposta</td><td>R$ 3.000/mês</td></tr>
+    <tr class="crit"><td>Orçamentos enviados que ninguém acompanhou</td><td>R$ 2.400/mês</td></tr>
+    <tr><td>Respondendo a mesma pergunta</td><td>15 h/mês</td></tr>
+    <tr class="tot"><td>Total em dinheiro, fora as horas</td><td>R$ 7.200/mês</td></tr>
+   </table>
+  </div>
+  <p class="note">Exemplo com números de um negócio de serviço com ticket entre R$ 150 e R$ 1.200. Os seus serão outros. A tabela mostra por onde o dinheiro sai; o tamanho do buraco depende da sua agenda.</p>
+ </div>
+</section>
+
+<section class="dark">
+ <div class="w">
+  <div class="lbl">Como a rotina funciona</div>
+  <h2>Dez minutos de manhã, em três passos.</h2>
+  <div class="grid g3" style="margin-top:40px">
+   <div class="cell"><span class="n">01</span><h3>Abre</h3><p>Você abre a tela Hoje. A lista já está montada: quem tem horário amanhã, que orçamento ficou parado, quem está com pagamento atrasado.</p></div>
+   <div class="cell"><span class="n">02</span><h3>Revisa</h3><p>Toca no nome e lê a mensagem. Ela vem escrita no tom do seu tipo de negócio, com nome, data e valor no lugar. Mudou alguma coisa? Ajusta ali mesmo.</p></div>
+   <div class="cell"><span class="n">03</span><h3>Aperta enviar</h3><p>O botão abre a conversa no seu WhatsApp com o texto pronto. Você envia, volta, e a ferramenta registra o que aconteceu: enviado, respondeu, confirmou, pagou.</p></div>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="w">
+  <div class="lbl">O que você recebe</div>
+  <h2>Três processos agora. Os outros, conforme saírem.</h2>
+  <div class="duo">
+   <div><h3>Agora</h3><ul>
+    <li><b>01 Confirmação de horário:</b> quem tem horário amanhã entra na lista de hoje. Menos cadeira vazia e menos agenda bloqueada à toa.</li>
+    <li><b>04 Orçamento sem retorno:</b> três dias depois do envio, o cliente aparece na lista. Se continuar calado, volta no sétimo dia.</li>
+    <li><b>05 Cobrança sem constrangimento:</b> um, cinco e quinze dias depois do vencimento, com o tom subindo aos poucos e a sua chave Pix no texto.</li>
+    <li><b>Os textos:</b> escritos para dois tipos de negócio. Clínica, consultório e estética. Prestador de serviço.</li>
+    <li><b>A aula:</b> uma aula curta que termina com você fazendo o primeiro envio.</li>
+   </ul></div>
+   <div><h3>Depois</h3><p class="depois">A partir de janeiro, os outros processos entram um por vez. Primeira resposta ao contato novo, retomada de quem sumiu, boas-vindas ao cliente novo, pedido de depoimento, volta do cliente que parou de comprar, os números da semana e os demais. Cada um chega como atualização da ferramenta que você já tem. Você não paga de novo.</p></div>
+  </div>
+ </div>
+</section>
+<section class="dark">
+ <div class="w">
+  <div class="lbl">O limite, dito com franqueza</div>
+  <h2>Não mexe no seu número. Você aperta enviar<span class="dot">.</span></h2>
+  <div class="limite">
+   <p>A Rotina do Dia não envia nada sozinha. Ela decide quem entra na lista, escreve a mensagem e abre a conversa. Quem envia é você, do seu WhatsApp, como já faz hoje.</p>
+   <p>Nada fica ligado à sua conta. Não tem QR code para escanear nem custo por mensagem. Como nada de fora encosta no seu número, ele não corre risco de bloqueio por causa da ferramenta.</p>
+  </div>
+ </div>
+</section>
+
+<section>
+ <div class="w">
+  <div class="lbl">Antes de comprar</div>
+  <h2>Feita para negócio pequeno que já vende.</h2>
+  <div class="duo">
+   <div><h3>É para você se</h3><ul>
+    <li>Você já vende e atende pelo WhatsApp.</li>
+    <li>Trabalha sozinho ou com uma ou duas pessoas.</li>
+    <li>Já perdeu horário, orçamento ou pagamento porque ninguém lembrou de chamar.</li>
+    <li>Tem clínica, consultório, estética ou presta serviço. Os textos de agora foram escritos para esses casos.</li>
+   </ul></div>
+   <div><h3>Não é para você se</h3><ul>
+    <li>Você ainda não tem clientes.</li>
+    <li>Quer que alguém mande as mensagens no seu lugar.</li>
+    <li>Sua operação já tem dezenas de pessoas.</li>
+    <li>Procura algo que dispare mensagens sem você tocar no celular.</li>
+   </ul></div>
+  </div>
+ </div>
+</section>
+
+<section class="dark">
+ <div class="w sobre">
+  <div><div class="lbl">Quem fez</div><h2>Miquéias Mesquita<span class="dot">.</span></h2><p style="color:var(--cz)">Engenheiro de Operações Digitais.</p></div>
+  <div>
+   <p>Passei quase dez anos à frente de cinco autoescolas, trocando papel que andava de mão em mão por processo digital, régua de cobrança e equipe com meta.</p>
+   <p>Hoje entro em empresas que já faturam para achar onde a operação trava. Numa ótica ou numa fábrica com mais de 100 pessoas, o gargalo costuma ser parecido: uma tarefa repetida que continua na mão de alguém.</p>
+   <p>Confirmar, acompanhar orçamento e cobrar são as que eu mais encontro. A Rotina do Dia começa por elas.</p>
+  </div>
+ </div>
+</section>
+<section id="oferta">
+ <div class="w">
+  <div class="lbl">Preço de fundação</div>
+  <h2>Quem entra agora paga uma vez e recebe o que sair depois.</h2>
+  <div class="offer" style="border-color:var(--fc)">
+   <ul style="--fg:var(--fc)">
+    <li>A ferramenta no celular, com confirmação, orçamento e cobrança</li>
+    <li>Textos para clínica, consultório e estética e para prestador de serviço</li>
+    <li>Uma aula para fazer o primeiro envio</li>
+    <li>Os outros processos, conforme saírem, a partir de janeiro</li>
+    <li>Pagamento único, sem mensalidade</li>
+   </ul>
+   <div>
+    <div class="lbl" style="margin-bottom:0">Pagamento único</div>
+    <div class="price"><span>R$</span>147</div>
+    <p class="note" style="margin:0 0 24px">Preço de fundação, válido até 22/12. Pix ou cartão · acesso na hora.</p>
+    <a class="btn js-checkout" href="https://membros.miqueias.ia.br/comprar/rotina-do-dia">Quero entrar agora<small>R$ 147</small></a>
+   </div>
+  </div>
+  <div class="garantia">
+   <div class="lbl">Garantia</div>
+   <h3>Garantia de 7 dias.</h3>
+   <p>Use com os seus clientes de verdade. Se não servir para você, peça o reembolso em até 7 dias depois da compra e o dinheiro volta inteiro. Não precisa explicar o motivo.</p>
+  </div>
+ </div>
+</section>
+
+<section style="padding-top:0">
+ <div class="w">
+  <div class="lbl">Perguntas</div>
+  <details><summary>Preciso instalar alguma coisa?</summary><p>Não. A ferramenta abre no navegador do celular. Se quiser, você põe o ícone na tela de início, e daí em diante ela abre como um aplicativo.</p></details>
+  <details><summary>Funciona no iPhone e no Android?</summary><p>Nos dois. No iPhone, abra pelo Safari para colocar o ícone na tela de início; a própria ferramenta mostra como. No Android, pelo Chrome.</p></details>
+  <details><summary>Onde ficam os dados dos meus clientes?</summary><p>No seu celular. Nomes, telefones e valores ficam guardados só no aparelho em que você usa a ferramenta. Eu não vejo esses dados, e ninguém mais vê.</p></details>
+  <details><summary>E se eu trocar de celular?</summary><p>Antes de trocar, faça a cópia de segurança: a ferramenta salva um arquivo com tudo. No celular novo, você entra com o mesmo e-mail, abre esse arquivo e seus clientes voltam.</p></details>
+  <details><summary>Funciona com o WhatsApp comum e com o Business?</summary><p>Com os dois. O botão abre o WhatsApp que estiver instalado. Se você tiver os dois no mesmo celular, ele pode perguntar qual usar.</p></details>
+  <details><summary>Preciso de internet?</summary><p>Para entrar na primeira vez e para mandar a mensagem, sim, como em qualquer conversa de WhatsApp. A lista do dia fica guardada no celular e abre mesmo com sinal fraco.</p></details>
+  <details><summary>Quando chegam os outros processos?</summary><p>A partir de janeiro, um por vez. Cada um aparece na ferramenta que você já tem, sem pagar nada a mais.</p></details>
+  <details><summary>Como peço o reembolso?</summary><p>Responda o e-mail que chegou com o seu acesso pedindo o reembolso, dentro de 7 dias da compra. Não tem formulário nem pergunta.</p></details>
+ </div>
+</section>
+
+<section class="dark fim">
+ <div class="w">
+  <div class="achei">Achei<span class="dot">.</span></div>
+  <h2>Achei o gargalo. Agora ele cabe numa rotina de 10 minutos.</h2>
+  <div style="margin-top:32px"><a class="btn js-checkout" href="https://membros.miqueias.ia.br/comprar/rotina-do-dia">Quero a Rotina do Dia<small>R$ 147</small></a><p class="note">Preço de fundação até 22/12 · 7 dias de garantia</p></div>
+ </div>
+</section>
+<footer class="dark"><div class="w"><span><b>Miquéias Mesquita</b> · Engenheiro de Operações Digitais</span><span>Vetor Labs · CNPJ 65.705.312/0001-46</span></div></footer>
+<div class="sticky"><span>Rotina do Dia · R$ 147</span><a class="js-checkout" href="https://membros.miqueias.ia.br/comprar/rotina-do-dia">Quero entrar</a></div>
+<script>
+// vídeo do herói: arquivo .mp4/.webm, YouTube ou Vimeo; qualquer outro valor mantém o quadro estático
+(function(){var b=document.querySelector('[data-video]');if(!b)return;var v=(b.getAttribute('data-video')||'').trim(),el=null,m;if(!v)return;
+function fr(src){var f=document.createElement('iframe');f.src=src;f.title='Vídeo da tela Hoje da Rotina do Dia';f.setAttribute('allow','fullscreen; picture-in-picture');f.setAttribute('allowfullscreen','');f.loading='lazy';return f;}
+if(/\.(mp4|webm)(\?.*)?$/i.test(v)){el=document.createElement('video');el.controls=true;el.setAttribute('playsinline','');el.preload='metadata';el.src=v;el.setAttribute('aria-label','Tela Hoje da Rotina do Dia com a lista de confirmações e cobranças do dia.');}
+else if((m=v.match(/(?:youtube\.com\/watch\?(?:[^#]*&)?v=|youtu\.be\/)([\w-]{6,})/))){el=fr('https://www.youtube-nocookie.com/embed/'+m[1]);}
+else if((m=v.match(/vimeo\.com\/(?:video\/)?(\d+)/))){el=fr('https://player.vimeo.com/video/'+m[1]);}
+if(el){b.innerHTML='';b.appendChild(el);}})();
+</script>
+<script>
+// repassa UTMs da página para o checkout
+(function(){try{var q=location.search;if(!q)return;document.querySelectorAll('.js-checkout').forEach(function(a){if(a.href.indexOf('http')!==0)return;a.href+=(a.href.indexOf('?')<0?'?':'&')+q.slice(1);});}catch(e){}})();
+</script>
+</body></html>
