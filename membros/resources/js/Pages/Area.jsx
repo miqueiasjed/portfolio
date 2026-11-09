@@ -13,7 +13,7 @@ function CardRotina({ p }) {
     return (
         <div className="bg-creme p-7 flex flex-col">
             <h2 className="text-xl font-medium mb-2">{p.nome}</h2>
-            {p.descricao && <p className="text-[15px] text-apoio">{p.descricao}</p>}
+            {p.descricao && <p className="text-[15px] text-tinta">{p.descricao}</p>}
             <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-auto pt-6">
                 <BotaoFerramenta />
                 <Link href={`/produtos/${p.slug}`} className={linkTexto}>Ver o produto</Link>
@@ -34,16 +34,16 @@ function CardCurso({ p }) {
                     {p.nome}
                 </Link>
             </h2>
-            {p.descricao && <p className="text-[15px] text-apoio">{p.descricao}</p>}
+            {p.descricao && <p className="text-[15px] text-tinta">{p.descricao}</p>}
 
             <div className="mt-6">
                 <div className="flex items-baseline justify-between gap-4 mb-2 text-sm">
                     <span>{contagem(curso.concluidas, curso.total)}</span>
-                    <span className="text-apoio">{curso.percentual}%</span>
+                    <span className="text-tinta">{curso.percentual}%</span>
                 </div>
                 <BarraProgresso percentual={curso.percentual} rotulo={`Progresso em ${p.nome}`} />
                 {!terminou && comecou && (
-                    <p className="text-sm text-apoio mt-3 truncate">Próxima: {curso.proxima.titulo}</p>
+                    <p className="text-sm text-tinta mt-3 truncate">Próxima: {curso.proxima.titulo}</p>
                 )}
                 {terminou && <p className="text-sm text-caneta mt-3">Curso concluído.</p>}
             </div>
@@ -94,7 +94,7 @@ export default function Area({ produtos, raioX }) {
                             ) : (
                                 <Link key={p.slug} href={`/produtos/${p.slug}`} className={`bg-creme p-7 no-underline text-tinta hover:bg-white transition ${focoDentro}`}>
                                     <h2 className="text-xl font-medium mb-2">{p.nome}</h2>
-                                    {p.descricao && <p className="text-[15px] text-apoio">{p.descricao}</p>}
+                                    {p.descricao && <p className="text-[15px] text-tinta">{p.descricao}</p>}
                                     <span className="inline-block mt-5 text-sm font-medium">Abrir →</span>
                                 </Link>
                             ),

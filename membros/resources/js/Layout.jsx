@@ -20,9 +20,10 @@ export default function Layout({ titulo, children, escuro = false, largo = false
             >
                 Pular para o conteúdo
             </a>
+            {/* links do cabeçalho com 44 px de toque; a margem negativa devolve a altura original do cabeçalho */}
             <header className="bg-grafite text-papel">
                 <div className={`${largura} mx-auto px-6 py-5 flex items-center justify-between gap-4`}>
-                    <Link href={usuario ? '/' : '/entrar'} className={`rotulo !text-papel no-underline ${foco}`}>
+                    <Link href={usuario ? '/' : '/entrar'} className={`rotulo !text-papel no-underline inline-flex items-center min-h-11 -my-3.5 ${foco}`}>
                         Miquéias Mesquita
                     </Link>
                     {usuario && (
@@ -31,7 +32,7 @@ export default function Layout({ titulo, children, escuro = false, largo = false
                             <button
                                 type="button"
                                 onClick={() => router.post('/sair')}
-                                className={`text-papel underline underline-offset-4 decoration-filete cursor-pointer ${foco}`}
+                                className={`text-papel underline underline-offset-4 decoration-filete cursor-pointer inline-flex items-center min-h-11 min-w-11 justify-center -my-3 -mx-2 px-2 ${foco}`}
                             >
                                 Sair
                             </button>
