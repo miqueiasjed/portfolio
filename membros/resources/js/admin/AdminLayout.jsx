@@ -1,7 +1,7 @@
 import { Head, Link, router, usePage } from '@inertiajs/react';
 import { useEffect, useId, useState } from 'react';
 import { Botao } from './Campos';
-import { IconeAlunos, IconeCompras, IconeCursos, IconeMais, IconeMenu, IconeSair, IconeVisao } from './icones';
+import { IconeAlunos, IconeCompras, IconeCursos, IconeMais, IconeMenu, IconeRelogio, IconeSair, IconeVisao } from './icones';
 import { LiberarProvider, useLiberar } from './LiberarAcesso';
 import { BotaoFechar, useDialogo } from './Modal';
 import { ToastProvider, useToast } from './Toast';
@@ -10,6 +10,7 @@ const ITENS = [
     { href: '/admin', rotulo: 'Visão geral', icone: IconeVisao, exato: true },
     { href: '/admin/compras', rotulo: 'Compras', icone: IconeCompras },
     { href: '/admin/alunos', rotulo: 'Alunos', icone: IconeAlunos },
+    { href: '/admin/rotina', rotulo: 'Rotina do Dia', icone: IconeRelogio },
     { href: '/admin/cursos', rotulo: 'Cursos', icone: IconeCursos },
 ];
 
