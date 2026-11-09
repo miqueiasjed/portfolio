@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AulasController;
 use App\Http\Controllers\Admin\ComprasController;
 use App\Http\Controllers\Admin\CursosController;
 use App\Http\Controllers\Admin\ModulosController;
+use App\Http\Controllers\Admin\RotinaDoDiaController;
 use App\Http\Controllers\Admin\SessaoController;
 use App\Http\Controllers\Admin\VisaoGeralController;
 use App\Http\Controllers\AreaController;
@@ -82,6 +83,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/alunos/{user}', [AlunosController::class, 'show'])->name('alunos.show');
         Route::patch('/alunos/{user}', [AlunosController::class, 'update'])->name('alunos.update');
         Route::post('/alunos/{user}/link', [AlunosController::class, 'enviarLink'])->name('alunos.link');
+
+        // medição da Rotina do Dia
+        Route::get('/rotina', RotinaDoDiaController::class)->name('rotina.index');
 
         // cursos
         Route::get('/cursos', [CursosController::class, 'index'])->name('cursos.index');
