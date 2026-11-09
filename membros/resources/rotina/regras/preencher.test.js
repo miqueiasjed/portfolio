@@ -42,7 +42,13 @@ describe('primeiroNome', () => {
 
     it('mantém caixa mista como veio', () => {
         expect(primeiroNome('McDonald Silva')).toBe('McDonald');
-        expect(primeiroNome('ANA Maria')).toBe('ANA');
+    });
+
+    it('decide a caixa pela primeira palavra', () => {
+        expect(primeiroNome('MARIA da Silva')).toBe('Maria');
+        expect(primeiroNome('ana MARIA')).toBe('Ana');
+        expect(primeiroNome('ANA Maria')).toBe('Ana');
+        expect(primeiroNome('McDonald SILVA')).toBe('McDonald');
     });
 
     it('devolve vazio para nome ausente', () => {
@@ -97,6 +103,12 @@ describe('valoresDaMensagem', () => {
 });
 
 describe('preencher', () => {
+    it('valores null ou undefined valem como objeto vazio', () => {
+        expect(preencher('Oi, {nome}!', null)).toBe('Oi, {nome}!');
+        expect(preencher('Oi, {nome}!', undefined)).toBe('Oi, {nome}!');
+        expect(preencher('Sem variável.', null)).toBe('Sem variável.');
+    });
+
     it('troca as variáveis pelos valores', () => {
         const resultado = preencher('Oi, {nome}! Seu horário é dia {data} às {hora}.', {
             nome: 'Ana',

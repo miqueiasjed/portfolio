@@ -50,7 +50,11 @@ export function hojeEmFortaleza(agora = new Date()) {
 }
 
 // Soma n dias (n pode ser negativo). Conta feita em UTC.
+// `n` que não é número finito lança erro, para não virar `NaN-NaN-NaN`.
 export function somarDias(dia, n) {
+    if (typeof n !== 'number' || !Number.isFinite(n)) {
+        throw new Error(`Quantidade de dias inválida: ${String(n)}`);
+    }
     return deUtc(emUtc(dia) + Math.trunc(n) * UM_DIA_MS);
 }
 

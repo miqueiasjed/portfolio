@@ -27,14 +27,15 @@ function capitalizar(palavra) {
     return minusculas.charAt(0).toLocaleUpperCase('pt-BR') + minusculas.slice(1);
 }
 
-// Primeira palavra do nome. Nome todo em maiúsculas ou todo em minúsculas
-// sai capitalizado; caixa mista fica como veio.
+// Primeira palavra do nome. A caixa é decidida só por ela: toda em
+// maiúsculas ou toda em minúsculas sai capitalizada (`MARIA da Silva` vira
+// `Maria`); caixa mista fica como veio (`McDonald`).
 export function primeiroNome(nome) {
     const limpo = comoTexto(nome);
     if (!limpo) return '';
     const primeira = limpo.split(/\s+/)[0];
-    const todoMaiusculo = limpo === limpo.toLocaleUpperCase('pt-BR');
-    const todoMinusculo = limpo === limpo.toLocaleLowerCase('pt-BR');
+    const todoMaiusculo = primeira === primeira.toLocaleUpperCase('pt-BR');
+    const todoMinusculo = primeira === primeira.toLocaleLowerCase('pt-BR');
     if (todoMaiusculo || todoMinusculo) return capitalizar(primeira);
     return primeira;
 }
@@ -76,8 +77,10 @@ function limparLinha(linha) {
 // variáveis estão vazias sai inteira, desde que ao menos uma delas seja de
 // linha própria; nas demais, a variável vazia some e a pontuação em volta é
 // limpa. Variável desconhecida fica como está.
-export function preencher(texto, valores = {}) {
+export function preencher(texto, valoresRecebidos) {
     if (typeof texto !== 'string') return '';
+    // null, undefined ou qualquer coisa que não seja objeto vale como `{}`.
+    const valores = valoresRecebidos && typeof valoresRecebidos === 'object' ? valoresRecebidos : {};
     const conhecida = (nome) => Object.prototype.hasOwnProperty.call(valores, nome);
     const valorDe = (nome) => comoTexto(valores[nome]);
 

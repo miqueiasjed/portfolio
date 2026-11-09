@@ -34,6 +34,12 @@ describe('somarDias', () => {
     it('recusa dia inválido', () => {
         expect(() => somarDias('2026-02-30', 1)).toThrow();
     });
+
+    it('recusa quantidade de dias que não é número finito', () => {
+        for (const n of [NaN, Infinity, -Infinity, '3', undefined, null, {}]) {
+            expect(() => somarDias('2026-12-08', n)).toThrow(/Quantidade de dias inválida/);
+        }
+    });
 });
 
 describe('diasEntre', () => {

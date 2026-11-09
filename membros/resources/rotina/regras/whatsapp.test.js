@@ -66,6 +66,21 @@ describe('linkWhatsApp', () => {
         expect(texto).toBe('Oi, Ana!\nAmanhã às 14:00 & #1');
     });
 
+    it('surrogate solto vira U+FFFD em vez de lançar URIError', () => {
+        const casos = [
+            ['Oi \uD83D', 'Oi \uFFFD'],
+            ['\uDE00 fim', '\uFFFD fim'],
+            ['a\uDE00\uD83Db', 'a\uFFFD\uFFFDb'],
+            ['par certo \uD83D\uDE00 e solto \uD83D', 'par certo \uD83D\uDE00 e solto \uFFFD'],
+        ];
+        for (const [entrada, esperado] of casos) {
+            const r = linkWhatsApp('85999998888', entrada);
+            expect(r.ok).toBe(true);
+            expect(decodeURIComponent(r.link.split('?text=')[1])).toBe(esperado);
+        }
+        expect(linkWhatsApp('85999998888', 'Oi \uD83D').link).toContain('%EF%BF%BD');
+    });
+
     it('sem texto, sai sem ?text=', () => {
         expect(linkWhatsApp('85999998888', '').link).toBe('https://wa.me/5585999998888');
         expect(linkWhatsApp('85999998888').link).toBe('https://wa.me/5585999998888');

@@ -54,6 +54,30 @@ export function normalizarTelefone(entrada) {
     return falha(ERROS.numero);
 }
 
+// Troca surrogate solto (metade de um par UTF-16, como um emoji cortado ao
+// meio) por U+FFFD. Sem isso, `encodeURIComponent` lança `URIError`.
+// Feito à mão porque `String.prototype.toWellFormed` falta em Safari antigo.
+function trocarSurrogatesSoltos(texto) {
+    let saida = '';
+    for (let i = 0; i < texto.length; i += 1) {
+        const codigo = texto.charCodeAt(i);
+        if (codigo >= 0xd800 && codigo <= 0xdbff) {
+            const proximo = texto.charCodeAt(i + 1);
+            if (proximo >= 0xdc00 && proximo <= 0xdfff) {
+                saida += texto[i] + texto[i + 1];
+                i += 1;
+            } else {
+                saida += '\uFFFD';
+            }
+        } else if (codigo >= 0xdc00 && codigo <= 0xdfff) {
+            saida += '\uFFFD';
+        } else {
+            saida += texto[i];
+        }
+    }
+    return saida;
+}
+
 // Monta `https://wa.me/<numero>?text=<texto>`. Sem texto, o link vai sem `?text=`.
 export function linkWhatsApp(telefone, texto) {
     const resultado = normalizarTelefone(telefone);
@@ -61,7 +85,7 @@ export function linkWhatsApp(telefone, texto) {
 
     const base = `https://wa.me/${resultado.numero}`;
     const mensagem = texto === null || texto === undefined ? '' : String(texto);
-    const link = mensagem === '' ? base : `${base}?text=${encodeURIComponent(mensagem)}`;
+    const link = mensagem === '' ? base : `${base}?text=${encodeURIComponent(trocarSurrogatesSoltos(mensagem))}`;
     return { ok: true, link };
 }
 
