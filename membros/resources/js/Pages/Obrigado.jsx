@@ -39,9 +39,12 @@ export default function Obrigado({ paga, produto, slug }) {
                     <Ponto />
                 </h1>
                 <p className="text-lg text-apoio max-w-xl">
-                    {paga
-                        ? 'O link de acesso já foi para o seu e-mail. Clique nele para entrar na sua área.'
-                        : 'Assim que o pagamento for confirmado, o link de acesso chega no seu e-mail. No Pix e no cartão isso costuma levar poucos minutos.'}
+                    {/* "e-mail" sem quebra no hífen: em 375 px a linha partia em "e-" e "mail" */}
+                    {paga ? (
+                        <>O link de acesso já foi para o seu <span className="whitespace-nowrap">e-mail</span>. Clique nele para entrar na sua área.</>
+                    ) : (
+                        <>Assim que o pagamento for confirmado, o link de acesso chega no seu <span className="whitespace-nowrap">e-mail</span>. No Pix e no cartão isso costuma levar poucos minutos.</>
+                    )}
                 </p>
                 {rotina && !paga && (
                     <p className="text-lg text-apoio max-w-xl mt-4">
