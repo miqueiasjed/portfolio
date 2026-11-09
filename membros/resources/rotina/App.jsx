@@ -113,7 +113,16 @@ export default function App({ csrf }) {
     } else if (acesso.estado === 'liberado') {
         tela = <Ferramenta />;
     } else if (acesso.estado === 'outra_conta') {
-        tela = <OutraConta dono={acesso.dono} email={acesso.pendente?.email ?? ''} aoVoltar={voltar} />;
+        // Apagar e entrar grava a conta nova e libera a ferramenta, já vazia.
+        tela = (
+            <OutraConta
+                dono={acesso.dono}
+                email={acesso.pendente?.email ?? ''}
+                pendente={acesso.pendente}
+                aoVoltar={voltar}
+                aoLiberar={liberar}
+            />
+        );
     } else {
         tela = (
             <Acesso
