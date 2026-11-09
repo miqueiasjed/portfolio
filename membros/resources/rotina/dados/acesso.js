@@ -314,17 +314,49 @@ async function liberarPelaSessao(buscar, csrf, xsrf, agora) {
     return semRede(agora);
 }
 
+// Meta csrf-token de uma casca em HTML, ou null.
+function csrfDoHtml(html) {
+    const achado = /<meta\s+name="csrf-token"\s+content="([^"]*)"/.exec(typeof html === 'string' ? html : '');
+    return achado && achado[1] !== '' ? achado[1] : null;
+}
+
+const lerCookiesDoDocumento = () => globalThis.document?.cookie ?? '';
+
 // Encerra a sessão do navegador (POST /sair). Usada no Voltar da tela de outra
 // conta que veio do link mágico: com a sessão viva, cada recarga faria outro
 // POST /rotina/aparelho e reabriria a tela. Ignora resposta e falha de rede.
-export async function sairDaSessao({ fetch = globalThis.fetch, xsrf, csrf } = {}) {
+// 419 (sessão vencida com o cookie de "lembrar" ainda valendo, ou XSRF velho):
+// pede a casca de novo, direto da rede, para o Laravel mandar um XSRF-TOKEN
+// da sessão atual, e tenta o POST /sair uma vez mais com ele (ou, sem cookie
+// legível, com a meta csrf-token da casca nova). Sem isso, a recarga entraria
+// de novo pelo "lembrar" e voltaria à tela de outra conta.
+// `lerCookies` devolve o texto de document.cookie, trocável no teste.
+export async function sairDaSessao({ fetch = globalThis.fetch, xsrf, csrf, lerCookies = lerCookiesDoDocumento } = {}) {
     const buscar = fetch;
-    try {
-        await buscar('/sair', {
+    const postar = (csrfDaVez, xsrfDaVez) =>
+        buscar('/sair', {
             method: 'POST',
-            headers: headersDaSessao(csrf, xsrf),
+            headers: headersDaSessao(csrfDaVez, xsrfDaVez),
             credentials: 'same-origin',
         });
+    try {
+        const resposta = await postar(csrf, xsrf);
+        if (resposta?.status !== 419) {
+            return;
+        }
+        const casca = await buscar('/rotina', {
+            method: 'GET',
+            headers: { Accept: 'text/html' },
+            credentials: 'same-origin',
+            cache: 'no-store',
+        });
+        const xsrfNovo = lerXsrf(lerCookies());
+        const csrfNovo = xsrfNovo ? null : csrfDoHtml(await casca.text().catch(() => ''));
+        if (!xsrfNovo && !csrfNovo) {
+            // Sem token novo, repetir daria o mesmo 419.
+            return;
+        }
+        await postar(csrfNovo, xsrfNovo);
     } catch {
         // Sem rede: nada a fazer aqui.
     }

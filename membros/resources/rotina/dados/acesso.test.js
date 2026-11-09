@@ -971,7 +971,59 @@ describe('Voltar da tela de outra conta', () => {
 
     it('sairDaSessao ignora falha de rede e resposta de erro', async () => {
         await expect(sairDaSessao({ fetch: fetchFalso(SEM_REDE) })).resolves.toBeUndefined();
-        await expect(sairDaSessao({ fetch: fetchFalso(json(419, { message: 'CSRF token mismatch.' })) })).resolves.toBeUndefined();
+        await expect(sairDaSessao({ fetch: fetchFalso(json(500, { message: 'Server Error' })) })).resolves.toBeUndefined();
+        await expect(sairDaSessao({ fetch: fetchFalso(json(419, { message: 'CSRF token mismatch.' }), SEM_REDE) })).resolves.toBeUndefined();
+    });
+
+    it('sairDaSessao com 419 renova o XSRF pela casca e tenta o POST /sair uma vez mais', async () => {
+        let cookies = 'XSRF-TOKEN=velho';
+        const casca = new Response('<html></html>', { status: 200, headers: { 'content-type': 'text/html' } });
+        const fetch = fetchFalso(json(419, { message: 'CSRF token mismatch.' }), casca, html(200));
+        const buscar = async (url, opcoes) => {
+            const resposta = await fetch(url, opcoes);
+            // A casca nova vem com o cookie XSRF-TOKEN da sessão atual.
+            if (url === '/rotina') cookies = 'outro=1; XSRF-TOKEN=novo%3D';
+            return resposta;
+        };
+
+        await sairDaSessao({ fetch: buscar, xsrf: 'velho', csrf: 'meta-velha', lerCookies: () => cookies });
+
+        expect(fetch.chamadas.map((c) => c.url)).toEqual(['/sair', '/rotina', '/sair']);
+        expect(fetch.chamadas[1].opcoes).toEqual({
+            method: 'GET',
+            headers: { Accept: 'text/html' },
+            credentials: 'same-origin',
+            cache: 'no-store',
+        });
+        expect(fetch.chamadas[2].opcoes).toEqual({
+            method: 'POST',
+            headers: { Accept: 'application/json', 'X-XSRF-TOKEN': 'novo=' },
+            credentials: 'same-origin',
+        });
+    });
+
+    it('sairDaSessao com 419 e sem cookie legível usa a meta da casca nova', async () => {
+        const casca = new Response('<html><head><meta name="csrf-token" content="meta-nova"></head></html>', {
+            status: 200,
+            headers: { 'content-type': 'text/html' },
+        });
+        const fetch = fetchFalso(json(419, { message: 'CSRF token mismatch.' }), casca, html(200));
+
+        await sairDaSessao({ fetch, csrf: 'meta-velha', lerCookies: () => '' });
+
+        expect(fetch.chamadas.map((c) => c.url)).toEqual(['/sair', '/rotina', '/sair']);
+        expect(fetch.chamadas[2].opcoes.headers).toEqual({ Accept: 'application/json', 'X-CSRF-TOKEN': 'meta-nova' });
+    });
+
+    it('sairDaSessao tenta de novo uma vez só: segundo 419 ou casca sem token param ali', async () => {
+        const de419 = () => json(419, { message: 'CSRF token mismatch.' });
+        const duas = fetchFalso(de419(), html(200), de419());
+        await expect(sairDaSessao({ fetch: duas, lerCookies: () => 'XSRF-TOKEN=novo' })).resolves.toBeUndefined();
+        expect(duas.chamadas.map((c) => c.url)).toEqual(['/sair', '/rotina', '/sair']);
+
+        const semToken = fetchFalso(de419(), html(200));
+        await expect(sairDaSessao({ fetch: semToken, lerCookies: () => '' })).resolves.toBeUndefined();
+        expect(semToken.chamadas.map((c) => c.url)).toEqual(['/sair', '/rotina']);
     });
 
     it('sairDaSessao sem cookie XSRF manda a meta csrf', async () => {
