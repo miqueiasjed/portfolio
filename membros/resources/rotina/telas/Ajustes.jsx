@@ -252,8 +252,8 @@ export default function Ajustes() {
                                 aria-describedby={`ajustes-${grupo}-ajuda`}
                                 className="flex min-w-0 flex-col gap-3"
                             >
-                                <legend className="text-base font-medium">{titulo}</legend>
-                                <p id={`ajustes-${grupo}-ajuda`} className="-mt-2 text-sm">
+                                <legend className="mb-1 text-base font-medium">{titulo}</legend>
+                                <p id={`ajustes-${grupo}-ajuda`} className="text-sm">
                                     {ajuda}
                                 </p>
                                 {form[grupo].map((texto, indice) => {
