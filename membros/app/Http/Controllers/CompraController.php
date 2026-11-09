@@ -52,6 +52,8 @@ class CompraController extends Controller
         return Inertia::render('Obrigado', [
             'paga' => (bool) $compra?->estaPaga(),
             'produto' => $compra?->product?->nome,
+            // a página é pública: só nome, slug e situação, nada de e-mail, valor ou usuário
+            'slug' => $compra?->product?->slug,
         ]);
     }
 }
