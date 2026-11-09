@@ -19,7 +19,7 @@ O código mora na pasta `membros/` do repositório do site.
 2. **Repositório:** `miqueiasjed/portfolio`, branch `main`.
 3. **Web Directory:** `/membros/public`.
 4. **Banco:** MySQL do próprio servidor, banco e usuário `membros`.
-5. **Environment** (`.env` do site): copie do `.env.example` e preencha `APP_KEY` (o Forge gera), `APP_URL=https://membros.miqueias.ia.br`, `APP_LOCALE=pt_BR`, banco, `PAGBANK_TOKEN`, `PAGBANK_SANDBOX` e o bloco do Resend.
+5. **Environment** (`.env` do site): copie do `.env.example` e preencha `APP_KEY` (o Forge gera), `APP_URL=https://membros.miqueias.ia.br`, `APP_LOCALE=pt_BR`, banco, `PAGBANK_TOKEN`, `PAGBANK_SANDBOX` e `RESEND_API`.
    Como o Forge grava o `.env` na raiz do site e o Laravel lê em `membros/`, crie o link uma vez:
    `ln -sfn /home/forge/membros.miqueias.ia.br/.env /home/forge/membros.miqueias.ia.br/membros/.env`
 6. **Deploy script:**
@@ -45,7 +45,7 @@ location ^~ /membros/ { deny all; return 404; }
 
 ## Resend
 
-Domínio `miqueias.ia.br` verificado no Resend (registros DNS na Cloudflare). O envio é por SMTP (`smtp.resend.com`, usuário `resend`, senha = API key), sem pacote extra.
+Envio pela API do Resend (`MAIL_MAILER=resend`), com a chave em `RESEND_API` (ou `RESEND_API_KEY`). O domínio `miqueias.ia.br` precisa estar verificado no Resend para enviar de `acesso@miqueias.ia.br`.
 
 ## PagBank
 

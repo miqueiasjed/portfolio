@@ -24,7 +24,8 @@ return [
     ],
 
     'resend' => [
-        'key' => env('RESEND_API_KEY'),
+        // aceita os dois nomes: o padrão do Laravel e o que está no .env do Forge
+        'key' => env('RESEND_API_KEY', env('RESEND_API')),
     ],
 
     'ses' => [
