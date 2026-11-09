@@ -1,10 +1,21 @@
 // Percebe que o dono voltou do WhatsApp e diz quando perguntar "Enviou?".
 // A lógica fica em funções sem React (criarVoltaDoWhatsApp, ouvirVolta,
-// responderEnviei, responderAindaNao) para os testes rodarem sem navegador.
+// responderEnviei, responderAindaNao e as do passo 2 da folha: opcoesDeResultado,
+// responderResultado, responderSoRespondeu, conferirRemarcacao, responderRemarcou,
+// desfazerRemarcacao) para os testes rodarem sem navegador.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { lerPendente, limparPendente } from '../dados/envioPendente.js';
-import { registrarToque } from '../dados/registro.js';
+import { marcarRespondeu, registrarToque } from '../dados/registro.js';
+import {
+    RESULTADOS,
+    atualizarPendencia,
+    cancelarPendencia,
+    registrarPendencia,
+    resolverPendencia,
+} from '../dados/pendencias.js';
+import { MENSAGENS, lerData, lerHora } from '../regras/campos.js';
+import { RESULTADOS as ROTULOS_RESULTADOS } from './rotulos.js';
 
 // Controla a pergunta de um item e etapa. A checagem é idempotente: com a
 // pergunta aberta não faz nada, e chamadas juntas (visibilitychange, pageshow
@@ -152,6 +163,108 @@ export async function responderAindaNao({ limpar = limparPendente } = {}) {
     } catch {
         // Mesmo motivo do responderEnviei.
     }
+}
+
+// Passo 2 da folha ("O cliente já respondeu?"). Nada aqui cria ou apaga toque:
+// o toque chega já gravado pelo "Enviei".
+
+// Botões de resultado do processo do item, na ordem de RESULTADOS, com o nome
+// de ui/rotulos.js. Processo desconhecido devolve lista vazia.
+export function opcoesDeResultado(processo) {
+    return (RESULTADOS[processo] ?? []).map((resultado) => ({
+        resultado,
+        rotulo: ROTULOS_RESULTADOS[resultado] ?? resultado,
+    }));
+}
+
+const agoraIso = () => new Date().toISOString();
+
+// Um resultado: marca a resposta no toque e resolve o item. As duas gravações
+// não repetem: marcarRespondeu não marca de novo e resolverPendencia deixa como
+// está o item que já não está aberto. Repetir depois de uma falha no meio é seguro.
+export async function responderResultado({
+    toque,
+    item,
+    resultado,
+    agora = agoraIso,
+    marcar = marcarRespondeu,
+    resolver = resolverPendencia,
+}) {
+    await marcar(toque.id, agora());
+    return resolver(item.id, resultado);
+}
+
+// "Respondeu, mas ainda não resolveu": só marca a resposta; o item fica aberto.
+export async function responderSoRespondeu({ toque, agora = agoraIso, marcar = marcarRespondeu }) {
+    await marcar(toque.id, agora());
+}
+
+// Data e hora novas do "Remarcou", com a mesma leitura e as mesmas frases da
+// tela Novo. Devolve `{ ok, erros, data, hora }`; com erro, data e hora vêm null.
+export function conferirRemarcacao({ data, hora } = {}) {
+    const erros = {};
+    const dataTexto = String(data ?? '').trim();
+    const horaTexto = String(hora ?? '').trim();
+    const dataLida = lerData(dataTexto);
+    const horaLida = lerHora(horaTexto);
+
+    if (dataTexto === '') erros.data = MENSAGENS.dataVazia['01'];
+    else if (dataLida === null) erros.data = MENSAGENS.dataInvalida;
+    if (horaTexto === '') erros.hora = MENSAGENS.horaVazia;
+    else if (horaLida === null) erros.hora = MENSAGENS.horaInvalida;
+
+    const ok = Object.keys(erros).length === 0;
+    return { ok, erros, data: ok ? dataLida : null, hora: ok ? horaLida : null };
+}
+
+// "Remarcou" com data nova: marca a resposta, cria o item 01 novo do mesmo
+// cliente e serviço e só depois resolve o antigo com `remarcou`. Não há
+// transação que junte as duas gravações, então a ordem garante que uma falha no
+// meio nunca deixe o cliente sem horário em aberto (no pior caso, ficam dois).
+// `memoria` (objeto que quem chama guarda entre tentativas) recebe o item novo
+// assim que ele é gravado; a nova tentativa reaproveita esse item em vez de criar
+// outro e, se a data ou a hora mudaram, corrige o item antes de resolver o antigo.
+// Sem `data`, é o "Pular": cancela o item novo de uma tentativa anterior, se
+// houver, e resolve o antigo sem criar outro.
+// Resolve com `{ antigo, novo }` (`novo` null no "Pular").
+export async function responderRemarcou({
+    toque,
+    item,
+    data = null,
+    hora = null,
+    memoria = {},
+    agora = agoraIso,
+    marcar = marcarRespondeu,
+    registrar = registrarPendencia,
+    atualizar = atualizarPendencia,
+    cancelar = cancelarPendencia,
+    resolver = resolverPendencia,
+}) {
+    await marcar(toque.id, agora());
+    if (!data) {
+        await desfazerRemarcacao({ memoria, cancelar });
+    } else if (!memoria.novo) {
+        const { item: novo } = await registrar({
+            cliente_id: item.cliente_id,
+            item: { processo: '01', data, hora, servico: item.servico ?? '', valor_centavos: null },
+        });
+        memoria.novo = novo;
+    } else if (memoria.novo.data !== data || memoria.novo.hora !== hora) {
+        memoria.novo = await atualizar(memoria.novo.id, { data, hora });
+    }
+    const antigo = await resolver(item.id, 'remarcou');
+    return { antigo, novo: data ? memoria.novo : null };
+}
+
+// Saída do passo 2 que não conclui o "Remarcou" (Esc, toque fora, "Voltar",
+// "Pular", outro resultado, "Ainda não respondeu"): cancela o item 01 novo que
+// uma tentativa anterior já gravou, para não ficar um horário a mais em aberto.
+// Sem item novo na `memoria`, não grava nada. Falhou, rejeita e a `memoria`
+// continua com o item, para a nova tentativa cancelar de novo.
+export async function desfazerRemarcacao({ memoria = {}, cancelar = cancelarPendencia } = {}) {
+    if (!memoria.novo) return;
+    await cancelar(memoria.novo.id);
+    delete memoria.novo;
 }
 
 // Hook da tela Mensagem. Devolve `{ perguntar, pendente, abrir, encerrar }`.
