@@ -73,8 +73,8 @@ php artisan membros:admin email@x.com --hash="$(php -r 'echo password_hash("NOVA
 php artisan membros:compras            # últimas compras
 php artisan membros:liberar email@x.com kit   # libera na mão e envia o link
 php artisan membros:revogar email@x.com kit   # reembolso: tira o acesso
-php artisan test                       # 177 testes: compra, aviso, link mágico, download, admin, cursos, aulas e Rotina do Dia
-npm run test:js                        # 724 testes da ferramenta Rotina do Dia (vitest)
+php artisan test                       # 178 testes: compra, aviso, link mágico, download, admin, cursos, aulas e Rotina do Dia
+npm run test:js                        # 738 testes da ferramenta Rotina do Dia (vitest)
 ```
 
 Nunca rode `php artisan test` com variáveis `DB_*` exportadas no shell: elas passam por cima do `phpunit.xml` e o `RefreshDatabase` zera o banco apontado. Confira antes com `env | grep DB_` (não deve imprimir nada).
