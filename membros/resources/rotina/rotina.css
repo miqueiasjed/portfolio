@@ -45,3 +45,53 @@ h1, h2, h3, h4 {
 [data-aviso-versao] .moldura-conteudo {
     padding-bottom: calc(4.5rem + 53px + env(safe-area-inset-bottom));
 }
+
+/* Folha (ui/Folha.jsx): sobe do rodapé sobre um véu grafite. Transição curta
+   só em CSS; navegador sem @starting-style abre sem movimento. */
+.folha {
+    translate: 0 100%;
+    transition:
+        translate 180ms ease-out,
+        overlay 180ms allow-discrete,
+        display 180ms allow-discrete;
+}
+
+.folha[open] {
+    translate: 0 0;
+}
+
+@starting-style {
+    .folha[open] {
+        translate: 0 100%;
+    }
+}
+
+.folha::backdrop {
+    background-color: rgb(28 29 32 / 0);
+    transition:
+        background-color 180ms ease-out,
+        overlay 180ms allow-discrete,
+        display 180ms allow-discrete;
+}
+
+.folha[open]::backdrop {
+    background-color: rgb(28 29 32 / 0.8);
+}
+
+@starting-style {
+    .folha[open]::backdrop {
+        background-color: rgb(28 29 32 / 0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .folha,
+    .folha::backdrop {
+        transition: none;
+    }
+}
+
+/* Com a folha aberta, a página de trás não rola junto. */
+html:has(.folha[open]) {
+    overflow: hidden;
+}
