@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RegistrarUsoRequest;
 use App\Models\Product;
 use App\Models\RotinaAparelho;
+use App\Models\RotinaUso;
 use App\Models\User;
 use App\Services\CodigoDaRotina;
 use Illuminate\Http\Request;
@@ -13,8 +15,8 @@ use function Illuminate\Support\defer;
 
 /**
  * Entrada da ferramenta Rotina do Dia: volta do link mágico, liberação de um
- * aparelho pela sessão ou por código no e-mail e checagem online pelo token
- * do aparelho.
+ * aparelho pela sessão ou por código no e-mail, checagem online pelo token
+ * do aparelho e medição de uso.
  */
 class RotinaController extends Controller
 {
@@ -113,6 +115,39 @@ class RotinaController extends Controller
             'email' => $user->email,
             'liberado' => true,
         ]);
+    }
+
+    /**
+     * Grava as contagens de uso que o aparelho mandou. O aparelho manda o
+     * total do dia, então o upsert substitui os números. Usuário e aparelho
+     * vêm do token, nunca do corpo; cada aparelho tem a própria linha por dia.
+     */
+    public function uso(RegistrarUsoRequest $request)
+    {
+        /** @var RotinaAparelho $aparelho */
+        $aparelho = $request->attributes->get('aparelho');
+        $agora = now();
+
+        $linhas = array_map(fn (array $dia) => [
+            'user_id' => $aparelho->user_id,
+            'rotina_aparelho_id' => $aparelho->id,
+            'dia' => $dia['dia'],
+            'enviados' => $dia['enviados'],
+            'respostas' => $dia['respostas'],
+            'resolvidos' => $dia['resolvidos'],
+            // Objeto sempre, inclusive vazio: {"01":3} ou {}.
+            'por_processo' => json_encode((object) $dia['por_processo']),
+            'created_at' => $agora,
+            'updated_at' => $agora,
+        ], $request->validated('dias'));
+
+        RotinaUso::upsert(
+            $linhas,
+            ['rotina_aparelho_id', 'dia'],
+            ['enviados', 'respostas', 'resolvidos', 'por_processo', 'updated_at'],
+        );
+
+        return response()->noContent();
     }
 
     /**
