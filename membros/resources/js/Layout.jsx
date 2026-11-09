@@ -42,7 +42,7 @@ export default function Layout({ titulo, children, escuro = false, largo = false
             <main id="conteudo" tabIndex={-1} className="flex-1 outline-none">{children}</main>
             <footer className="bg-grafite text-apoio border-t border-filete">
                 <div className={`${largura} mx-auto px-6 py-6 rotulo`}>
-                    <b className="text-papel font-medium">Miquéias Mesquita</b> · Engenheiro de Operações Digitais
+                    <b className="text-papel font-medium">Miquéias Mesquita</b> · Desenvolvedor de sistemas para operações
                 </div>
             </footer>
         </div>

@@ -1,6 +1,6 @@
 # Portfólio Miquéias Mesquita
 
-Site profissional de Miquéias Mesquita, Engenheiro de Operações Digitais. A oferta atende negócios de qualquer setor que já vendem, têm equipe e precisam corrigir um fluxo crítico.
+Site profissional de Miquéias Mesquita, Desenvolvedor de sistemas para operações. A oferta atende negócios de qualquer setor que já vendem, têm equipe e precisam corrigir um fluxo crítico.
 
 ## O que o site apresenta
 
