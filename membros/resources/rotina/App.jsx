@@ -1,10 +1,12 @@
 // Raiz da ferramenta: decide o acesso ao abrir e mostra a tela de acesso ou a moldura.
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import { lerXsrf, resolverAcesso, voltarDaOutraConta } from './dados/acesso.js';
 import { irPara, lerRota, useRota } from './rotas.js';
 import { pegar } from './dados/banco.js';
 import { lerPendente, limparPendente } from './dados/envioPendente.js';
+import { ligarContagem } from './dados/uso.js';
+import { iniciarEnvioDeUso } from './dados/enviarUso.js';
 import { decidirPendenteAoAbrir } from './ui/mensagem.js';
 import Moldura from './ui/Moldura.jsx';
 import Acesso from './telas/Acesso.jsx';
@@ -120,6 +122,18 @@ export default function App({ csrf }) {
             ativo = false;
         };
     }, [csrf, tentativa]);
+
+    // Ferramenta liberada (online ou pela carência sem rede): liga a contagem de
+    // uso antes da primeira pintura, para nenhum toque escapar, e depois o envio
+    // para o servidor, uma vez. A limpeza desliga timer e listener do envio.
+    const liberado = acesso.estado === 'liberado';
+    useLayoutEffect(() => {
+        if (liberado) ligarContagem();
+    }, [liberado]);
+    useEffect(() => {
+        if (!liberado) return undefined;
+        return iniciarEnvioDeUso();
+    }, [liberado]);
 
     const tentarDeNovo = useCallback(() => {
         setAcesso(CARREGANDO);

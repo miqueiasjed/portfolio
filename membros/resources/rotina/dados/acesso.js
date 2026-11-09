@@ -20,7 +20,7 @@ export const TOLERANCIA_RELOGIO_MS = DIA_MS;
 // Corpo JSON da resposta, ou null quando não é JSON (página de erro da
 // Cloudflare, portal de Wi-Fi, proxy). Resposta que não é JSON não veio do
 // Laravel e por isso nunca conta como recusa do servidor.
-async function lerJson(resposta) {
+export async function lerJson(resposta) {
     const tipo = resposta.headers?.get?.('content-type') ?? '';
     if (!tipo.includes('json')) {
         return null;
