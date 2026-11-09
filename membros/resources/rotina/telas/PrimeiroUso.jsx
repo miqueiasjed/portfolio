@@ -99,7 +99,7 @@ export default function PrimeiroUso({ aoTerminar }) {
                     <Campo
                         id="primeiro-uso-assinatura"
                         rotulo="Como você assina as mensagens?"
-                        ajuda="Vai no fim das mensagens. Ex.: Ana, da Clínica Sorriso."
+                        ajuda="Vai no fim das mensagens, acima do nome do negócio. Ex.: Ana."
                         autoComplete="off"
                         enterKeyHint="done"
                         value={assinatura}

@@ -214,7 +214,7 @@ export default function Ajustes() {
                             <Campo
                                 id="ajustes-assinatura"
                                 rotulo="Assinatura"
-                                ajuda="Vai no fim das mensagens. Ex.: Ana, da Clínica Sorriso."
+                                ajuda="Vai no fim das mensagens, acima do nome do negócio. Ex.: Ana."
                                 autoComplete="off"
                                 value={form.assinatura}
                                 onChange={(e) => mudarTexto('assinatura', e.target.value)}
