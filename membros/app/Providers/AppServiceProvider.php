@@ -32,10 +32,12 @@ class AppServiceProvider extends ServiceProvider
      */
     private function limitesDaRotina(): void
     {
-        // O 401 do middleware aparelho sai antes do throttle por usuário. Este
-        // limite conta só esses 401, por IP, e não pesa para quem tem token válido.
+        // O 401 (token) e o 403 (compra) do middleware aparelho saem antes do
+        // throttle por usuário. Este limite conta só essas recusas, por IP. Passou
+        // de 120 por minuto, o IP inteiro recebe 429, inclusive quem tem compra
+        // paga atrás do mesmo IP; no aparelho o 429 vira carência, sem perda.
         RateLimiter::for('rotina-aparelho-falhas', fn (Request $request) => Limit::perMinute(120)
             ->by($request->ip())
-            ->after(fn (Response $resposta) => $resposta->getStatusCode() === 401));
+            ->after(fn (Response $resposta) => in_array($resposta->getStatusCode(), [401, 403], true)));
     }
 }

@@ -212,6 +212,33 @@ class RotinaPontaAPontaTest extends TestCase
         $this->assertDatabaseCount('rotina_uso', 0);
     }
 
+    /**
+     * O 403 de compra sai do middleware aparelho antes do throttle por usuário.
+     * Sem contar no limite de falhas, um token de compra reembolsada batia sem teto.
+     */
+    public function test_muitos_403_de_compra_cortada_contam_no_limite_de_falhas(): void
+    {
+        $compra = $this->comprarPeloPagBank(Product::ROTINA);
+        $this->entrarPeloLink($compra->user);
+        $token = $this->postJson('/rotina/aparelho')->assertCreated()->json('token');
+        auth()->logout();
+        $compra->update(['status' => Purchase::REEMBOLSADA]);
+
+        for ($i = 0; $i < 60; $i++) {
+            $this->acesso($token)->assertForbidden();
+            $this->uso($token, ['enviados' => 1, 'respostas' => 0, 'resolvidos' => 0, 'por_processo' => []])
+                ->assertForbidden();
+        }
+
+        $this->acesso($token)->assertTooManyRequests();
+        $this->assertDatabaseCount('rotina_uso', 0);
+
+        // outro IP segue com o próprio contador
+        $this->withServerVariables(['REMOTE_ADDR' => '10.0.0.2'])->withToken($token)
+            ->getJson('/rotina/acesso')
+            ->assertForbidden();
+    }
+
     public function test_quem_comprou_so_o_kit_nao_libera_aparelho(): void
     {
         $compra = $this->comprarPeloPagBank('kit');

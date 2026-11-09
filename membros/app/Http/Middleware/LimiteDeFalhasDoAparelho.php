@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Aplica o limiter rotina-aparelho-falhas (AppServiceProvider) antes do
- * middleware aparelho, para contar os 401 que ele devolve.
+ * middleware aparelho, para contar os 401 e 403 que ele devolve.
  *
  * Um throttle:rotina-aparelho-falhas direto na rota não serve: o Laravel
  * ordena todo ThrottleRequests depois de AuthenticatesRequests, e o aparelho
