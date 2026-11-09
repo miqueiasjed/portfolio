@@ -18,7 +18,7 @@ O código mora na pasta `membros/` do repositório do site.
 1. **Novo site** no mesmo servidor: domínio `membros.miqueias.ia.br`, projeto Laravel, PHP 8.3+.
 2. **Repositório:** `miqueiasjed/portfolio`, branch `main`.
 3. **Web Directory:** `/membros/public`.
-4. **Banco:** crie um MySQL `membros` (ou use SQLite).
+4. **Banco:** MySQL do próprio servidor, banco e usuário `membros`.
 5. **Environment** (`.env` do site): copie do `.env.example` e preencha `APP_KEY` (o Forge gera), `APP_URL=https://membros.miqueias.ia.br`, `APP_LOCALE=pt_BR`, banco, `PAGBANK_TOKEN`, `PAGBANK_SANDBOX` e o bloco do Resend.
    Como o Forge grava o `.env` na raiz do site e o Laravel lê em `membros/`, crie o link uma vez:
    `ln -sfn /home/forge/membros.miqueias.ia.br/.env /home/forge/membros.miqueias.ia.br/membros/.env`
@@ -54,6 +54,16 @@ Domínio `miqueias.ia.br` verificado no Resend (registros DNS na Cloudflare). O 
 3. Troque para o token de produção e `PAGBANK_SANDBOX=false`.
 
 A URL de aviso é enviada em cada checkout (`notification_urls`), não precisa configurar no painel.
+
+## Administração
+
+Painel em `membros.miqueias.ia.br/admin` (e-mail e senha, só para quem é `is_admin`): vendas, receita, compras com busca, liberar acesso na mão e revogar (reembolso).
+
+Criar ou trocar a senha de um admin (a senha nunca vai em texto claro):
+
+```bash
+php artisan membros:admin email@x.com --hash="$(php -r 'echo password_hash("NOVA_SENHA", PASSWORD_BCRYPT);')"
+```
 
 ## Comandos úteis
 

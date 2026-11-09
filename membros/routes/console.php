@@ -5,6 +5,7 @@ use App\Models\Purchase;
 use App\Models\User;
 use App\Services\Acesso;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 // Libera um produto na mão (cortesia, pagamento fora do PagBank, suporte) e manda o link de acesso.
@@ -44,3 +45,22 @@ Artisan::command('membros:compras {--limite=20}', function () {
                 number_format($c->valor_centavos / 100, 2, ',', '.'), $c->origem ?? '—',
             ]));
 })->purpose('Lista as últimas compras');
+
+// Cria ou atualiza o acesso de administrador. A senha chega já como hash (bcrypt),
+// para nunca ficar em texto claro em log de servidor ou no repositório.
+Artisan::command('membros:admin {email} {--hash= : hash bcrypt da senha}', function () {
+    $hash = (string) $this->option('hash');
+
+    if (! str_starts_with($hash, '$2y$')) {
+        $this->error('Passe --hash com um hash bcrypt ($2y$...). Gere com: php -r "echo password_hash(\'SENHA\', PASSWORD_BCRYPT);"');
+
+        return 1;
+    }
+
+    $usuario = User::firstOrNew(['email' => mb_strtolower($this->argument('email'))]);
+    $usuario->forceFill(['is_admin' => true, 'email_verified_at' => now()])->save();
+    // grava o hash direto, sem passar pelo cast "hashed"
+    DB::table('users')->where('id', $usuario->id)->update(['password' => $hash]);
+
+    $this->info("Administrador {$usuario->email} pronto.");
+})->purpose('Cria ou atualiza um administrador da área de membros');

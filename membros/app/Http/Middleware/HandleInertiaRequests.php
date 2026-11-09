@@ -39,6 +39,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'usuario' => fn () => $request->user()?->only(['name', 'email']),
             'site' => config('membros.site_url'),
+            'aviso' => fn () => $request->session()->get('aviso'),
         ];
     }
 }
