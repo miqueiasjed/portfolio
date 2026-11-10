@@ -20,8 +20,21 @@ body {
     @apply bg-creme text-tinta font-sans font-light antialiased;
 }
 
+/* rótulo: cinza de apoio só sobre grafite; sobre creme, papel ou branco usa a cor do texto (contraste, regra do Plano 4).
+   A cor vem do fundo mais próximo, por variável herdada, para valer também em bloco claro dentro de seção escura. */
 .rotulo {
-    @apply text-xs tracking-[0.28em] uppercase text-apoio;
+    @apply text-xs tracking-[0.28em] uppercase;
+    color: var(--rotulo-cor, var(--color-tinta));
+}
+
+.bg-grafite {
+    --rotulo-cor: var(--color-apoio);
+}
+
+.bg-creme,
+.bg-papel,
+.bg-white {
+    --rotulo-cor: var(--color-tinta);
 }
 
 .btn {

@@ -105,7 +105,8 @@ export function ListaCurso({ slug, modulos, atualId = null, proximaId = null, es
     }
 
     const filete = escuro ? 'border-filete' : 'border-filete-claro';
-    const fraco = 'text-apoio';
+    // cinza de apoio só sobre grafite; sobre creme fica abaixo do contraste legível
+    const fraco = escuro ? 'text-apoio' : 'text-tinta';
     const hover = escuro ? 'hover:bg-white/5' : 'hover:bg-white';
 
     return (
