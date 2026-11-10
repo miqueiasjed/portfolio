@@ -16,7 +16,7 @@ Laravel + React (Inertia). Vende produtos digitais pelo PagBank, libera o acesso
 O código mora na pasta `membros/` do repositório do site.
 
 1. **Novo site** no mesmo servidor: domínio `membros.miqueias.ia.br`, projeto Laravel, PHP 8.3+.
-2. **Repositório:** `miqueiasjed/portfolio`, branch `kit-isso-nunca-deveria-ser-manual`. Este site não tem deploy automático: publica só pelo botão Deploy do Forge. O site principal (`miqueias.ia.br`) segue a branch `main` com deploy automático.
+2. **Repositório:** `miqueiasjed/portfolio`, branch `kit-isso-nunca-deveria-ser-manual`. Este site tem deploy automático desde 09/11/2026: todo push nessa branch publica em produção. O site principal (`miqueias.ia.br`) segue a branch `main` com deploy automático.
 3. **Web Directory:** `/membros/public`.
 4. **Banco:** MySQL do próprio servidor, banco e usuário `membros`.
 5. **Environment** (`.env` do site): copie do `.env.example` e preencha `APP_KEY` (o Forge gera), `APP_URL=https://membros.miqueias.ia.br`, `APP_LOCALE=pt_BR`, banco, `PAGBANK_TOKEN`, `PAGBANK_SANDBOX` e `RESEND_API`.
