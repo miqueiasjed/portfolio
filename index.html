@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Miquéias Mesquita | Desenvolvedor de sistemas para operações</title>
-  <meta name="description" content="Encontro o fluxo que trava a operação de negócios que já vendem. O Mapa do Gargalo entrega o fluxo redesenhado, uma decisão priorizada e um ativo pronto para uso.">
+  <meta name="description" content="Sistemas sob medida para operações que cresceram. Raio-X da Operação gratuito, Desenho do Sistema com preço fechado por fase, implementação por fases e acompanhamento.">
   <meta property="og:title" content="Miquéias Mesquita | Desenvolvedor de sistemas para operações">
-  <meta property="og:description" content="O crescimento para quando a operação não acompanha. Conheça o Mapa do Gargalo com Ativo de Arranque.">
+  <meta property="og:description" content="Antes de construir, você recebe o desenho do seu sistema com preço fechado por fase.">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#F5F2EC">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -502,6 +502,23 @@
 
     .products-grid > div:not(:last-child) {
       border-right: 1px solid var(--line);
+    }
+
+    .products-grid.is-path {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+    }
+
+    .products-grid.is-path .product-card:nth-child(odd) {
+      border-right: 1px solid var(--line);
+    }
+
+    .products-grid.is-path .product-card:nth-child(-n+2) {
+      border-bottom: 1px solid var(--line);
+    }
+
+    @media (max-width: 960px) {
+      .products-grid.is-path .product-card { border-right: none; border-bottom: 1px solid var(--line); }
+      .products-grid.is-path .product-card:last-child { border-bottom: none; }
     }
 
     .product-card {
@@ -1284,7 +1301,7 @@
         <a href="#metodo">Método</a>
         <a href="#provas">Provas</a>
         <a href="#sobre">Sobre</a>
-        <a class="nav-cta" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20qual%20frente%20serve%20para%20o%20meu%20momento.">Falar agora</a>
+        <a class="nav-cta" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20contar%20onde%20minha%20opera%C3%A7%C3%A3o%20trava.">Me conta onde trava</a>
       </nav>
     </div>
   </header>
@@ -1292,14 +1309,14 @@
   <main id="conteudo">
     <section class="hero" id="topo">
       <div class="shell">
-        <p class="eyebrow">Sessão individual · Treinamento · Sistema sob medida</p>
+        <p class="eyebrow">Sistemas sob medida</p>
         <div class="divider"></div>
-        <h1>O crescimento para quando a operação não acompanha.</h1>
-        <p class="lead">Encontro onde a operação trava, sozinho, com o time ou com uma empresa inteira. Você sai com uma mudança aplicada, um time treinado ou um sistema sob medida, conforme o que travou.</p>
+        <h1>Sistema para operações que cresceram.</h1>
+        <p class="lead">O pedido que se perde no WhatsApp, a planilha que só uma pessoa entende, a cobrança que depende de alguém lembrar. Eu desenho e construo o sistema que tira isso da mão da sua equipe, do jeito que a sua empresa trabalha.</p>
 
         <div class="hero-actions">
-          <a class="btn btn-dark" href="#produto">Ver as frentes de trabalho</a>
-          <p class="hero-note">Preço e prazo definidos depois de entender o seu fluxo.</p>
+          <a class="btn btn-dark" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20site%20e%20quero%20contar%20onde%20minha%20opera%C3%A7%C3%A3o%20trava.">Me conta onde trava</a>
+          <p class="hero-note"><a href="#produto">Raio-X → Desenho → Fases → Acompanhamento</a></p>
         </div>
 
         <div class="flow-panel" aria-labelledby="flow-title">
@@ -1358,36 +1375,43 @@
         <div class="section-intro">
           <div>
             <p class="eyebrow">Como trabalho</p>
-            <h2>Três frentes, conforme o que o seu momento pede.</h2>
+            <h2>Do primeiro papo ao sistema rodando, em quatro passos.</h2>
           </div>
-          <p class="lead">Preço e prazo saem da conversa, não da tela. Cada frente resolve uma necessidade diferente: autonomia, time treinado ou sistema pronto.</p>
+          <p class="lead">Antes de construir, você recebe o desenho com preço fechado por fase. Você só investe na construção sabendo o que vai receber, em quanto tempo e por quanto.</p>
         </div>
 
-        <div class="products-grid">
+        <div class="products-grid is-path">
           <article class="product-card">
-            <p class="eyebrow">Faça sozinho</p>
-            <h3>Sessão individual</h3>
-            <p class="grow">Pra quem quer sair de uma sessão com produtividade real, sem depender de ninguém. Entro no seu processo de verdade e você sai com uma tarefa que não volta mais pra sua mão.</p>
-            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20uma%20sess%C3%A3o%20individual.">Quero uma sessão</a>
+            <p class="eyebrow">Passo 1 · Gratuito</p>
+            <h3>Raio-X da Operação</h3>
+            <p class="grow">Em 40 minutos você descobre onde sua operação trava e se precisa mesmo de um sistema. Em até 48 horas chega a devolutiva com o Mapa do Gargalo resumido. Se a resposta for que você não precisa de sistema agora, eu digo.</p>
+            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20site%20e%20quero%20fazer%20o%20Raio-X%20da%20Opera%C3%A7%C3%A3o.">Quero meu Raio-X</a>
           </article>
 
           <article class="product-card">
-            <p class="eyebrow">Faça com o time</p>
-            <h3>Treinamento para equipes</h3>
-            <p class="grow">Presencial em Fortaleza ou na cidade da sua empresa. O time inteiro aprende a tirar da mão o que hoje é manual, junto, no mesmo processo real.</p>
-            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20treinar%20minha%20equipe.">Quero treinar meu time</a>
-          </article>
-
-          <article class="product-card">
-            <p class="eyebrow">Faça por mim</p>
-            <h3>Sistema customizado</h3>
-            <p>Mapeio o fluxo, encontro o gargalo e construo a solução sob medida pra resolver. Começa pelo Mapa do Gargalo e segue pra uma Sprint quando o fluxo pede implementação completa.</p>
+            <p class="eyebrow">Passo 2</p>
+            <h3>Desenho do Sistema</h3>
+            <p>Veja seu sistema desenhado, por fases e com preço fechado, antes de investir um real na construção.</p>
             <ul class="deliverables">
-              <li>Fluxo mapeado e gargalo identificado</li>
-              <li>Sistema implementado e equipe treinada</li>
-              <li>Indicador medido antes e depois</li>
+              <li>Dois encontros e checagem de segurança das ferramentas atuais</li>
+              <li>Mapa do Gargalo completo</li>
+              <li>Planta do Sistema com preço fechado por fase</li>
             </ul>
-            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20um%20sistema%20sob%20medida%20para%20a%20minha%20opera%C3%A7%C3%A3o.">Quero um sistema sob medida</a>
+            <a class="btn btn-outline" href="desenho/">Conhecer o Desenho</a>
+          </article>
+
+          <article class="product-card">
+            <p class="eyebrow">Passo 3</p>
+            <h3>Implementação por fases</h3>
+            <p class="grow">Construo uma fase de cada vez, com a primeira parte funcionando em até 45 dias. Em cada fase eu entrego, você testa e a gente segue.</p>
+            <a class="btn btn-outline" href="#metodo">Ver como funciona</a>
+          </article>
+
+          <article class="product-card">
+            <p class="eyebrow">Passo 4</p>
+            <h3>Acompanhamento</h3>
+            <p class="grow">Com o sistema no ar, eu sigo junto: hospedagem, cópia de segurança, correções e relatório mensal, com horas definidas por mês.</p>
+            <a class="btn btn-outline" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20site%20e%20quero%20saber%20sobre%20o%20acompanhamento%20do%20meu%20sistema.">Quero acompanhamento</a>
           </article>
         </div>
       </div>
@@ -1395,29 +1419,29 @@
 
     <section class="method" id="metodo">
       <div class="shell">
-        <p class="eyebrow">Método OPS · Sistema customizado</p>
+        <p class="eyebrow">Implementação por fases</p>
         <div class="divider"></div>
-        <h2>O trabalho começa pelo gargalo e termina com um indicador.</h2>
-        <p class="lead">Esse passo a passo vale pra frente Sistema customizado. Sessão individual e Treinamento para equipes têm entrega mais direta, sem as três etapas. Ferramentas existentes continuam quando resolvem bem. Cada decisão nasce do fluxo real e do resultado contratado.</p>
+        <h2>Cada fase termina com algo funcionando, testado e medido.</h2>
+        <p class="lead">Ferramentas que já resolvem bem continuam. O sistema nasce do jeito que a sua equipe trabalha, não de um modelo pronto, e cada fase tem critério de aceite combinado na Planta do Sistema.</p>
 
         <div class="method-grid">
           <article class="method-step">
             <span class="method-number">01</span>
-            <h3>Diagnóstico</h3>
-            <p>Mapeio processo, dado, dependência e ponto único de falha. A decisão vira um material que a equipe consegue usar.</p>
-            <small>Entrega: Mapa do Gargalo com Ativo de Arranque.</small>
+            <h3>Eu entrego</h3>
+            <p>A fase sai pronta para uso, com as telas e o fluxo que estão na Planta.</p>
+            <small>Entrega: a fase funcionando.</small>
           </article>
           <article class="method-step">
             <span class="method-number">02</span>
-            <h3>Organização</h3>
-            <p>Defino o fluxo, o responsável, o escopo e o critério de aceite.</p>
-            <small>Entrega: processo e cronograma visíveis.</small>
+            <h3>Você testa</h3>
+            <p>Sua equipe usa no dia a dia e aponta o que precisa de ajuste antes de seguir.</p>
+            <small>Entrega: a fase aceita pelo critério combinado.</small>
           </article>
           <article class="method-step">
             <span class="method-number">03</span>
-            <h3>Implementação</h3>
-            <p>Coloco o fluxo em operação, treino a equipe e acompanho o indicador.</p>
-            <small>Entrega: operação funcionando e medida.</small>
+            <h3>Segue e monitora</h3>
+            <p>Partimos para a próxima fase e acompanhamos o indicador de antes e depois.</p>
+            <small>Entrega: o resultado medido.</small>
           </article>
         </div>
       </div>
@@ -1427,10 +1451,10 @@
       <div class="shell">
         <div class="section-intro">
           <div>
-            <p class="eyebrow">Critério de fit · Sistema customizado</p>
+            <p class="eyebrow">Para quem é</p>
             <h2>O estágio do negócio define a prioridade.</h2>
           </div>
-          <p class="lead">A empresa já vende, possui equipe e perdeu clareza entre as etapas da operação. Sessão individual e Treinamento não têm essa exigência. O mesmo método já foi aplicado em faculdade, escola, indústria, clínica, ótica e educação digital.</p>
+          <p class="lead">A empresa já vende, tem equipe e cresceu mais rápido do que os processos. O mesmo caminho já foi aplicado em faculdade, escola, indústria, clínica, ótica e educação digital.</p>
         </div>
 
         <div class="fit-grid">
@@ -1689,11 +1713,11 @@
         <div>
           <p class="eyebrow">Próximo passo</p>
           <div class="divider"></div>
-          <h2>Se a operação já vende e um fluxo ainda depende de conferência, comece pelo Mapa.</h2>
+          <h2>Me conta onde a sua operação trava.</h2>
         </div>
         <div class="cta-side">
-          <p>Envie uma mensagem com a etapa que mais gera retrabalho. Eu confirmo se o Mapa do Gargalo é a entrada adequada.</p>
-          <a class="btn btn-light" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20entender%20se%20o%20Mapa%20do%20Gargalo%20serve%20para%20minha%20opera%C3%A7%C3%A3o.">Quero avaliar meu fluxo</a>
+          <p>Mande no WhatsApp a etapa que mais gera retrabalho. Eu respondo e, se fizer sentido, marcamos o Raio-X da Operação: 40 minutos, sem custo.</p>
+          <a class="btn btn-light" href="https://wa.me/5585994181234?text=Oi%2C%20Miqu%C3%A9ias.%20Vim%20pelo%20portf%C3%B3lio%20e%20quero%20contar%20onde%20minha%20opera%C3%A7%C3%A3o%20trava.">Me conta onde trava</a>
         </div>
       </div>
     </section>

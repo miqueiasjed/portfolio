@@ -1,19 +1,19 @@
 # Portfólio Miquéias Mesquita
 
-Site profissional de Miquéias Mesquita, Desenvolvedor de sistemas para operações. A oferta atende negócios de qualquer setor que já vendem, têm equipe e precisam corrigir um fluxo crítico.
+Site profissional de Miquéias Mesquita, Desenvolvedor de sistemas para operações. A oferta atende negócios de qualquer setor que já vendem, têm equipe e cresceram mais rápido do que os processos.
 
 ## O que o site apresenta
 
 - Posicionamento profissional e proposta de trabalho.
 - Problemas operacionais que o serviço ajuda a resolver.
-- Três frentes de trabalho, sem preço exibido na tela: sessão individual, treinamento para equipes e sistema customizado (Mapa do Gargalo e Sprint, sem depender de uma plataforma pronta).
+- O caminho do cliente, sem preço exibido na tela: Raio-X da Operação (gratuito), Desenho do Sistema, Implementação por fases e Acompanhamento. Página própria do Desenho em `desenho/`.
 - Projetos em produção usados como prova de capacidade, em setores diferentes.
-- Forma de condução do Mapa até a implantação e a medição.
+- Como cada fase da implementação é entregue, testada e medida.
 - Informações sobre experiência e áreas de atuação.
 - Canais de contato para novos projetos.
 
 ## Para quem foi feito
 
-O critério é o estágio do negócio, não o setor. A sessão individual e o treinamento para equipes são abertos a qualquer negócio local. O sistema customizado pede um negócio que já vende, tem equipe e perdeu clareza entre as etapas da operação, em qualquer setor.
+O critério é o estágio do negócio, não o setor: um negócio que já vende, tem equipe e cresceu mais rápido do que os processos.
 
 O método já foi aplicado em faculdade, escola de idiomas, clínica, indústria, ótica, plataforma de mídia e educação digital. Os cases desses setores estão na seção de provas do site.
