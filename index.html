@@ -337,41 +337,6 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
 .wa-tip{position:fixed;right:92px;bottom:34px;z-index:90;background:#fff;color:var(--navy);font-size:13px;font-weight:600;padding:8px 14px;border-radius:10px;box-shadow:0 10px 30px -10px rgba(0,0,0,.3);opacity:0;transform:translateX(10px);transition:.4s var(--ease);pointer-events:none}
 .wa-float:hover+.wa-tip{opacity:1;transform:none}
 
-/* modal */
-.modal{position:fixed;inset:0;z-index:300;display:grid;place-items:center;padding:20px;visibility:hidden}
-.modal.open{visibility:visible}
-.modal-bg{position:absolute;inset:0;background:rgba(15,22,31,.7);backdrop-filter:blur(8px);opacity:0;transition:opacity .4s}
-.modal.open .modal-bg{opacity:1}
-.modal-box{position:relative;width:min(640px,100%);max-height:calc(100svh - 40px);overflow:auto;background:linear-gradient(180deg,#1b232e,#12181f);color:var(--ivory);border:1px solid rgba(255,255,255,.08);border-radius:26px;padding:44px 44px 36px;transform:translateY(40px) scale(.96);opacity:0;transition:transform .55s var(--ease),opacity .4s;box-shadow:0 50px 100px -30px rgba(0,0,0,.8)}
-.modal.open .modal-box{transform:none;opacity:1}
-@media(max-width:560px){.modal-box{padding:34px 22px 26px}}
-.m-close{position:absolute;top:16px;right:16px;width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:var(--ivory);font-size:22px;transition:background .3s,transform .4s var(--ease)}
-.m-close:hover{background:var(--orange);transform:rotate(90deg)}
-.modal .eyebrow{color:var(--amber)}
-.modal h3{font-size:28px;margin:14px 0 6px;color:#fff}
-.modal .m-sub{color:rgba(250,247,243,.6);font-size:15px;margin-bottom:28px}
-.field{margin-bottom:20px}
-.field label{display:block;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(250,247,243,.72);margin-bottom:10px}
-.field input,.field select,.field textarea{width:100%;padding:16px 18px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);font:inherit;font-size:16px;color:#fff;transition:border-color .3s,box-shadow .3s,background .3s}
-.field input::placeholder,.field textarea::placeholder{color:rgba(250,247,243,.38)}
-.field select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23F89C3C' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;padding-right:48px}
-.field select:invalid{color:rgba(250,247,243,.45)}
-.field select option{background:#1b232e;color:#fff}
-.field textarea{resize:vertical;min-height:120px}
-.field input:hover,.field select:hover,.field textarea:hover{border-color:rgba(255,255,255,.22)}
-.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--orange);background:rgba(208,86,29,.06);box-shadow:0 0 0 4px rgba(208,86,29,.18)}
-.field.err input,.field.err select{border-color:#e5533d}
-.field .msg{display:none;font-size:12px;color:#ff8a75;margin-top:6px}
-.field.err .msg{display:block}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:520px){.row2{grid-template-columns:1fr;gap:0}}
-.m-submit{width:100%;justify-content:center;margin-top:8px;padding:18px 28px;font-size:16px}
-.m-legal{font-size:12.5px;color:rgba(250,247,243,.45);margin-top:16px;text-align:center}
-.m-legal a{color:var(--amber);border-bottom:1px solid currentColor}
-.m-done{text-align:center;padding:26px 0 8px}
-.m-done .ok{width:84px;height:84px;margin:0 auto 22px;border-radius:50%;background:var(--orange);display:grid;place-items:center;animation:pop .6s var(--ease)}
-@keyframes pop{from{transform:scale(0)}60%{transform:scale(1.15)}}
-.m-done p{color:rgba(250,247,243,.7);margin:10px auto 26px;max-width:42ch}
 [hidden]{display:none!important}
 
 /* case em destaque */
@@ -423,7 +388,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
       <li><a href="#cases">Cases</a></li>
       <li><a href="#faq">Dúvidas</a></li>
     </ul>
-    <button class="btn btn-primary" data-open>Solicitar diagnóstico <span class="arr">→</span></button>
+    <a class="btn btn-primary" href="/diagnostico/">Solicitar diagnóstico <span class="arr">→</span></a>
     <button class="burger" aria-label="Abrir menu" id="burger"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -431,7 +396,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
 <div class="mobile-menu" id="mmenu" aria-hidden="true">
   <button class="close" id="mclose" aria-label="Fechar menu">×</button>
   <a href="#metodo">Método</a><a href="#solucoes">Soluções</a><a href="#quem">Quem está por trás</a><a href="#cases">Cases</a><a href="#faq">Dúvidas</a>
-  <button class="btn btn-primary" data-open style="width:fit-content;margin-top:20px">Solicitar diagnóstico <span class="arr">→</span></button>
+  <a class="btn btn-primary" href="/diagnostico/" style="width:fit-content;margin-top:20px">Solicitar diagnóstico <span class="arr">→</span></a>
 </div>
 
 <main>
@@ -456,7 +421,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
     <h1 class="rv d1">IA que transforma processos em <span class="rotator" id="rot"><span class="on">lucro.</span><span>eficiência.</span><span>escala.</span><span>margem.</span></span></h1>
     <p class="lead rv d2">Mapeamos sua operação, identificamos onde o dinheiro está escapando e implementamos soluções de IA que aumentam a <strong style="color:#fff">eficiência e a lucratividade</strong> do seu negócio — com método, não com modismo.</p>
     <div class="hero-ctas rv d3">
-      <button class="btn btn-primary" data-open>Solicitar diagnóstico estratégico <span class="arr">→</span></button>
+      <a class="btn btn-primary" href="/diagnostico/">Solicitar diagnóstico estratégico <span class="arr">→</span></a>
       <a href="#metodo" class="btn btn-ghost">Conhecer o método</a>
     </div>
     <div class="hero-stats rv d4">
@@ -495,7 +460,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
     </div>
     <div class="cost-banner rv">
       <p>IA não é sobre tecnologia. É sobre <span class="hl">direcionar sua empresa</span> para o que gera resultado.</p>
-      <button class="btn btn-primary" data-open>Quero meu diagnóstico <span class="arr">→</span></button>
+      <a class="btn btn-primary" href="/diagnostico/">Quero meu diagnóstico <span class="arr">→</span></a>
     </div>
   </div>
 </section>
@@ -530,7 +495,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
         <div class="tagline">Projetos personalizados de IA para a sua operação.</div>
         <p>Mapeamos seus processos e desenhamos soluções sob medida — automações, agentes e integrações pensadas para o seu modelo de negócio.</p>
         <ul><li>Diagnóstico</li><li>Projeto sob medida</li><li>100% online</li></ul>
-        <div class="sol-foot"><button class="btn btn-primary" data-open="Consultoria Online">Aplicar <span class="arr">→</span></button></div>
+        <div class="sol-foot"><a class="btn btn-primary" href="/diagnostico/?solucao=Consultoria%20Online">Aplicar <span class="arr">→</span></a></div>
       </article>
       <article class="sol rv d1" data-spot>
         <div class="sol-top"><div class="sol-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/><path d="M8 9h8M8 13h5"/></svg></div><span class="sol-n">02</span></div>
@@ -538,7 +503,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
         <div class="tagline">Um pré-vendedor que atende, qualifica e agenda 24h por dia.</div>
         <p>Seus leads respondidos em segundos, qualificados com critério e entregues prontos para o seu time comercial fechar.</p>
         <ul><li>Atendimento 24/7</li><li>Qualificação automática</li><li>Integração com CRM</li></ul>
-        <div class="sol-foot"><button class="btn btn-primary" data-open="Implementação SDR IA">Aplicar <span class="arr">→</span></button></div>
+        <div class="sol-foot"><a class="btn btn-primary" href="/diagnostico/?solucao=Implementa%C3%A7%C3%A3o%20SDR%20IA">Aplicar <span class="arr">→</span></a></div>
       </article>
       <article class="sol rv" data-spot>
         <div class="sol-top"><div class="sol-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 14.2c2.9-.6 6 1.2 6 4.8"/></svg></div><span class="sol-n">03</span></div>
@@ -546,7 +511,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
         <div class="tagline">Dois dias presenciais para transformar o seu time.</div>
         <p>Imersão dentro da sua empresa: capacitamos líderes e equipes a aplicar IA nas rotinas reais, com casos práticos do seu próprio negócio.</p>
         <ul><li>2 dias presenciais</li><li>Treinamento prático</li><li>Plano de adoção</li></ul>
-        <div class="sol-foot"><button class="btn btn-primary" data-open="IA In Company">Aplicar <span class="arr">→</span></button></div>
+        <div class="sol-foot"><a class="btn btn-primary" href="/diagnostico/?solucao=IA%20In%20Company">Aplicar <span class="arr">→</span></a></div>
       </article>
       <article class="sol featured rv d1" data-spot>
         <span class="badge">Mais completo</span>
@@ -555,7 +520,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
         <div class="tagline">Acompanhamento estratégico contínuo, lado a lado com a liderança.</div>
         <p>Um especialista em IA direcionando decisões da sua empresa ao longo do tempo, somado à imersão presencial com o time. Para quem quer transformação de verdade.</p>
         <ul><li>Advisor estratégico</li><li>Imersão In Company</li><li>Acompanhamento de indicadores</li></ul>
-        <div class="sol-foot"><button class="btn btn-primary" data-open="IA Advisor + In Company">Aplicar <span class="arr">→</span></button></div>
+        <div class="sol-foot"><a class="btn btn-primary" href="/diagnostico/?solucao=IA%20Advisor%20%2B%20In%20Company">Aplicar <span class="arr">→</span></a></div>
       </article>
     </div>
   </div>
@@ -580,7 +545,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
         <div class="cred"><b>+R$30mi</b><span>em operações sob gestão com IA</span></div>
         <div class="cred"><b>IA</b><span>aplicada a grandes negócios</span></div>
       </div>
-      <button class="btn btn-primary rv d4" data-open>Conversar com o Miquéias <span class="arr">→</span></button>
+      <a class="btn btn-primary rv d4" href="/diagnostico/">Conversar com o Miquéias <span class="arr">→</span></a>
     </div>
   </div>
 </section>
@@ -639,7 +604,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
       <article class="start rv d2"><span class="k">PASSO 03</span><h4>Direcionamento</h4><p>Você recebe a proposta com o formato ideal, as prioridades e o retorno esperado.</p></article>
       <article class="start rv d3"><span class="k">PASSO 04</span><h4>Implementação</h4><p>As soluções entram em operação, o time é treinado e os indicadores passam a ser acompanhados.</p></article>
     </div>
-    <div style="text-align:center;margin-top:48px" class="rv"><button class="btn btn-primary" data-open>Começar pelo passo 01 <span class="arr">→</span></button></div>
+    <div style="text-align:center;margin-top:48px" class="rv"><a class="btn btn-primary" href="/diagnostico/">Começar pelo passo 01 <span class="arr">→</span></a></div>
   </div>
 </section>
 
@@ -668,7 +633,7 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
     <h2 class="rv d1">Descubra quanto a IA pode <span class="hl">devolver ao seu caixa.</span></h2>
     <p class="rv d2">Preencha a aplicação em menos de 2 minutos. Nossa equipe analisa o seu caso e retorna com os próximos passos do seu diagnóstico estratégico.</p>
     <div class="hero-ctas rv d3">
-      <button class="btn btn-primary" data-open>Solicitar diagnóstico estratégico <span class="arr">→</span></button>
+      <a class="btn btn-primary" href="/diagnostico/">Solicitar diagnóstico estratégico <span class="arr">→</span></a>
     </div>
     <p class="small-note rv d4">Ficou com alguma dúvida? <a data-wa href="#" target="_blank" rel="noopener">Fale com a gente no WhatsApp</a></p>
   </div>
@@ -687,57 +652,6 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
 
 <a class="wa-float" data-wa href="#" target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15.1L2 22l5-1.3A10 10 0 1012 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.4z"/></svg></a>
 <div class="wa-tip">Dúvidas? Fale no WhatsApp</div>
-
-<!-- MODAL / FORMULÁRIO
-     Formulário apenas em HTML. Para conectar ao CRM: preencha o atributo action (e method)
-     do <form id="apply">, ou cole aqui o embed/script do CRM mantendo os mesmos campos (name="...").
--->
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
-  <div class="modal-bg" data-close></div>
-  <div class="modal-box">
-    <button class="m-close" data-close aria-label="Fechar">×</button>
-    <div id="m-form">
-      <span class="eyebrow">Aplicação</span>
-      <h3 id="m-title">Solicite seu diagnóstico estratégico</h3>
-      <p class="m-sub">Leva menos de 2 minutos. Nossa equipe analisa e retorna pelo WhatsApp.</p>
-      <form id="apply" action="" method="post" novalidate>
-        <div class="field"><label for="f-nome">Nome completo</label><input id="f-nome" name="nome" autocomplete="name" placeholder="Seu nome" required><div class="msg">Informe seu nome.</div></div>
-        <div class="row2">
-          <div class="field"><label for="f-email">E-mail</label><input id="f-email" name="email" type="email" autocomplete="email" placeholder="voce@empresa.com.br" required><div class="msg">Informe um e-mail válido.</div></div>
-          <div class="field"><label for="f-wa">WhatsApp</label><input id="f-wa" name="whatsapp" type="tel" autocomplete="tel" placeholder="(85) 99999 9999" required><div class="msg">Informe um WhatsApp válido.</div></div>
-        </div>
-        <div class="field"><label for="f-ig">Instagram</label><input id="f-ig" name="instagram" placeholder="@suaempresa ou @seunome"></div>
-        <div class="field"><label for="f-prog">Qual solução mais te interessa?</label>
-          <select id="f-prog" name="solucao" required>
-            <option value="">Selecione uma solução</option>
-            <option>Consultoria Online</option>
-            <option>Implementação SDR IA</option>
-            <option>IA In Company</option>
-            <option>IA Advisor + In Company</option>
-            <option>Ainda não sei, quero uma indicação</option>
-          </select><div class="msg">Selecione uma solução.</div></div>
-        <div class="field"><label for="f-fat">Faturamento mensal atual</label>
-          <select id="f-fat" name="faturamento" required>
-            <option value="">Selecione uma faixa</option>
-            <option>Até R$ 50 mil</option>
-            <option>R$ 50 mil a R$ 100 mil</option>
-            <option>R$ 100 mil a R$ 500 mil</option>
-            <option>R$ 500 mil a R$ 1 milhão</option>
-            <option>Acima de R$ 1 milhão</option>
-          </select><div class="msg">Selecione uma faixa.</div></div>
-        <div class="field"><label for="f-desafio">O que você quer resolver com IA?</label><textarea id="f-desafio" name="desafio" rows="4" placeholder="Conte em poucas linhas o gargalo ou a ideia que você quer tirar do papel."></textarea></div>
-        <button type="submit" class="btn btn-primary m-submit">Enviar aplicação <span class="arr">→</span></button>
-        <p class="m-legal">Seus dados são usados apenas para contato sobre o diagnóstico. Dúvidas? <a data-wa href="#" target="_blank" rel="noopener">Fale no WhatsApp</a>.</p>
-      </form>
-    </div>
-    <div class="m-done" id="m-done" hidden>
-      <div class="ok"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-      <h3>Falta só um passo</h3>
-      <p>Obrigado, <span id="done-name"></span>. Abrimos o WhatsApp com a sua aplicação já escrita: é só tocar em enviar. Se a conversa não abriu, use o botão abaixo.</p>
-      <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener">Enviar aplicação pelo WhatsApp</a>
-    </div>
-  </div>
-</div>
 
 <script>
 /* ====== CONFIGURAÇÃO ====== */
@@ -765,7 +679,7 @@ addEventListener('scroll', onScroll, {passive:true}); onScroll();
 const mm = $('#mmenu');
 $('#burger').onclick = () => { mm.classList.add('open'); mm.setAttribute('aria-hidden','false'); };
 const closeMM = () => { mm.classList.remove('open'); mm.setAttribute('aria-hidden','true'); };
-$('#mclose').onclick = closeMM; $$('a,button[data-open]', mm).forEach(a => a.addEventListener('click', closeMM));
+$('#mclose').onclick = closeMM; $$('a', mm).forEach(a => a.addEventListener('click', closeMM));
 
 /* hero curves */
 (() => {
@@ -903,60 +817,6 @@ $$('.faq-item').forEach(it => $('.faq-q', it).addEventListener('click', () => {
   if (!open) { it.classList.add('open'); $('.faq-q', it).setAttribute('aria-expanded','true'); }
 }));
 
-/* modal + formulário */
-const modal = $('#modal'), form = $('#apply'), mForm = $('#m-form'), mDone = $('#m-done');
-let lastFocus;
-const openModal = pre => {
-  lastFocus = document.activeElement;
-  if (!mDone.hidden) { form.reset(); mDone.hidden = true; mForm.hidden = false; }
-  if (pre) $('#f-prog').value = pre;
-  modal.classList.add('open'); document.body.style.overflow = 'hidden';
-  setTimeout(() => $('#f-nome').focus({preventScroll:true}), 120);
-};
-const closeModal = () => { modal.classList.remove('open'); document.body.style.overflow = ''; lastFocus && lastFocus.focus(); };
-$$('[data-open]').forEach(b => b.addEventListener('click', () => openModal(b.dataset.open)));
-$$('[data-close]', modal).forEach(b => b.addEventListener('click', closeModal));
-addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-
-const validate = () => {
-  let ok = true;
-  $$('[required]', form).forEach(inp => {
-    let v = inp.value.trim().length > 0;
-    if (inp.type === 'email') v = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(inp.value.trim());
-    if (inp.type === 'tel') v = inp.value.replace(/\D/g,'').length >= 10;
-    inp.closest('.field').classList.toggle('err', !v); if (!v) ok = false;
-  });
-  const firstErr = $('.err input, .err select', form); firstErr && firstErr.focus();
-  return ok;
-};
-$$('.field input, .field select', form).forEach(i => ['input','change'].forEach(ev => i.addEventListener(ev, () => i.closest('.field').classList.remove('err'))));
-
-/* máscara de telefone */
-$('#f-wa').addEventListener('input', e => {
-  let d = e.target.value.replace(/\D/g,'').slice(0,11);
-  e.target.value = d.length > 6 ? `(${d.slice(0,2)}) ${d.slice(2,d.length-4)} ${d.slice(-4)}` : d.length > 2 ? `(${d.slice(0,2)}) ${d.slice(2)}` : d;
-});
-
-form.addEventListener('submit', e => {
-  if (!validate()) { e.preventDefault(); return; }
-  /* Com o action do CRM preenchido, o envio segue normalmente para ele. */
-  if (form.getAttribute('action')) return;
-  e.preventDefault();
-  const data = Object.fromEntries(new FormData(form));
-  $('#done-name').textContent = (data.nome || '').split(' ')[0];
-  /* Enquanto o formulário não tem CRM ligado, a aplicação segue inteira pelo WhatsApp. */
-  const linhas = [
-    'Olá! Quero aplicar para o diagnóstico estratégico da Vector IA.', '',
-    `Nome: ${data.nome}`, `E-mail: ${data.email}`, `WhatsApp: ${data.whatsapp}`,
-    data.instagram ? `Instagram: ${data.instagram}` : '',
-    `Solução de interesse: ${data.solucao}`, `Faturamento mensal: ${data.faturamento}`,
-    data.desafio ? `O que quero resolver: ${data.desafio}` : ''
-  ].filter((l, i) => l || i === 1);
-  const link = waLink(linhas.join('\n'));
-  $('[data-wa]', mDone).href = link;
-  window.open(link, '_blank', 'noopener');
-  mForm.hidden = true; mDone.hidden = false;
-});
 </script>
 </body>
 </html>
