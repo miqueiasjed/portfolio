@@ -732,9 +732,9 @@ footer{background:var(--navy-3);color:rgba(250,247,243,.6);padding:60px 0 40px;f
     </div>
     <div class="m-done" id="m-done" hidden>
       <div class="ok"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg></div>
-      <h3>Aplicação recebida!</h3>
-      <p>Obrigado, <span id="done-name"></span>. Nossa equipe vai analisar o seu caso e entrar em contato pelo WhatsApp em breve.</p>
-      <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener">Adiantar conversa no WhatsApp</a>
+      <h3>Falta só um passo</h3>
+      <p>Obrigado, <span id="done-name"></span>. Abrimos o WhatsApp com a sua aplicação já escrita: é só tocar em enviar. Se a conversa não abriu, use o botão abaixo.</p>
+      <a class="btn btn-wa" data-wa href="#" target="_blank" rel="noopener">Enviar aplicação pelo WhatsApp</a>
     </div>
   </div>
 </div>
@@ -944,8 +944,17 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   const data = Object.fromEntries(new FormData(form));
   $('#done-name').textContent = (data.nome || '').split(' ')[0];
-  const msg = `Olá! Acabei de aplicar pelo site da Vector IA.\n\nNome: ${data.nome}\nSolução de interesse: ${data.solucao}\nFaturamento: ${data.faturamento}`;
-  $('[data-wa]', mDone).href = waLink(msg);
+  /* Enquanto o formulário não tem CRM ligado, a aplicação segue inteira pelo WhatsApp. */
+  const linhas = [
+    'Olá! Quero aplicar para o diagnóstico estratégico da Vector IA.', '',
+    `Nome: ${data.nome}`, `E-mail: ${data.email}`, `WhatsApp: ${data.whatsapp}`,
+    data.instagram ? `Instagram: ${data.instagram}` : '',
+    `Solução de interesse: ${data.solucao}`, `Faturamento mensal: ${data.faturamento}`,
+    data.desafio ? `O que quero resolver: ${data.desafio}` : ''
+  ].filter((l, i) => l || i === 1);
+  const link = waLink(linhas.join('\n'));
+  $('[data-wa]', mDone).href = link;
+  window.open(link, '_blank', 'noopener');
   mForm.hidden = true; mDone.hidden = false;
 });
 </script>
